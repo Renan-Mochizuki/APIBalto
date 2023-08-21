@@ -1,0 +1,42 @@
+{
+  "development": {
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "username": "Renan-Mochizuki",
+    "password": "Fu4dMsUtSh3X",
+    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "database": "bd_balto"
+  },
+  "test": {
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "username": "Renan-Mochizuki",
+    "password": "Fu4dMsUtSh3X",
+    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "database": "bd_balto"
+  },
+  "production": {
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    },
+    "username": "Renan-Mochizuki",
+    "password": "Fu4dMsUtSh3X",
+    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "database": "bd_balto"
+  },
+  "urlRootNode": "http://26.7.171.108:3000/"
+}
