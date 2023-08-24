@@ -55,7 +55,7 @@ cadastro.post('/cadpessoa', async (req, res) => {
                 {
                   IDD: user.TB_PESSOA_ID,
                   exp: new Date().getTime() + 3600 * 1000, // expiration date, required, in ms, absolute to 1/1/1970
-                  additional: "payload"
+                  
                 }, // body
                 chave, // secret
                 {

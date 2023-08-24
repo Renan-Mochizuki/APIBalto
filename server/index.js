@@ -13,6 +13,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req,res) => {
+    res.send('API Balto');
+});
+
 app.use(autenticacao);
 app.use(cadastro);
 app.use(alteracao);
