@@ -50,10 +50,28 @@ cadastro.post('/cadpessoa', async (req, res) => {
             TB_PESSOA_SOCKET_ID,
         }).then(user => {
             // Cria o token
-            jwt.sign({ 'TB_PESSOA_IDD': user.TB_PESSOA_ID }, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
-                if (err) console.log(err);
-                return res.status(201).json({ 'token': token, message: "Cadastrado" }); // Envia o token
-            })
+
+            sign(
+                {
+                  IDD: user.TB_PESSOA_ID,
+                  exp: new Date().getTime() + 3600 * 1000, // expiration date, required, in ms, absolute to 1/1/1970
+                  additional: "payload"
+                }, // body
+                chave, // secret
+                {
+                  alg: "HS256"
+                }
+              ).then(token => {
+                console.log(token);
+                return res.status(201).json({ 'token': token, message: "Cadastrado" });
+                
+              }) // token as the only argument
+              .catch(console.error); // possible errors
+
+            // jwt.sign({ 'TB_PESSOA_IDD': user.TB_PESSOA_ID }, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
+            //     if (err) console.log(err);
+            //     return res.status(201).json({ 'token': token, message: "Cadastrado" }); // Envia o token
+            // })
         }).catch(error => { // Caso o cadastrar falhar
             res.status(400).json({ message: "Falha ao cadastrar" });
         });
