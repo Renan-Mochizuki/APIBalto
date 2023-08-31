@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 cadastro.post('/cadpessoa', async (req, res) => {
     try {
         const { TB_TIPO_ID, TB_PESSOA_NOME, TB_PESSOA_NOME_PERFIL, TB_PESSOA_EMAIL, TB_PESSOA_SENHA, TB_PESSOA_CEP, TB_PESSOA_UF, TB_PESSOA_CIDADE, TB_PESSOA_BAIRRO, TB_PESSOA_RUA, TB_PESSOA_NUMERO, TB_PESSOA_COMPLEMENTO, TB_PESSOA_DT_NASC, TB_PESSOA_CPF, TB_PESSOA_WHATSAPP, TB_PESSOA_INSTAGRAM, TB_PESSOA_FACEBOOK, TB_PESSOA_TELEFONE1, TB_PESSOA_TELEFONE2, TB_PESSOA_ANIMAL_CASA, TB_PESSOA_ANIMAL_ESPACO, TB_PESSOA_ANIMAL_PASSEAR, TB_PESSOA_ANIMAL_AUSENCIA, TB_PESSOA_ANIMAL_FAMILIA, TB_PESSOA_ANIMAL_RUA, TB_PESSOA_ANIMAL_QUANTIDADE, TB_PESSOA_CRMV, TB_PESSOA_CNPJ, TB_PESSOA_PIX, TB_PESSOA_LINK, TB_PESSOA_IMG, TB_PESSOA_ATIVO, TB_PESSOA_SOCKET_ID } = req.body;
-         // Recebe os campos do front-end
+        // Recebe os campos do front-end
         const verExistenciaEmail = await model.TB_PESSOA.findOne({ where: { TB_PESSOA_EMAIL } });
         // Verifica se já existe uma pessoa cadastrada com o email
         if (verExistenciaEmail)
@@ -50,7 +50,12 @@ cadastro.post('/cadpessoa', async (req, res) => {
             TB_PESSOA_SOCKET_ID,
         }).then(user => {
             // Cria o token
-            jwt.sign({ 'TB_PESSOA_IDD': user.TB_PESSOA_ID }, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
+            const payload = {
+                'TB_PESSOA_IDD': user.TB_PESSOA_ID,
+                'TB_TIPO_IDD': user.TB_TIPO_ID,
+            };
+
+            jwt.sign(payload, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
                 if (err) console.log(err);
                 return res.status(201).json({ 'token': token, message: "Cadastrado" }); // Envia o token
             })
@@ -65,13 +70,13 @@ cadastro.post('/cadpessoa', async (req, res) => {
 cadastro.post('/cadseguindo', async (req, res) => {
     try {
         const { TB_PESSOA_SEGUIDORA_ID, TB_PESSOA_SEGUIDA_ID } = req.body;
-         // Recebe os campos do front-end
+        // Recebe os campos do front-end
         await model.TB_SEGUINDO.create({ // Cadastra
             TB_PESSOA_SEGUIDORA_ID,
             TB_PESSOA_SEGUIDA_ID,
         });
         return res.status(200).json({ message: "Cadastrado" });
-    } catch (error) { 
+    } catch (error) {
         return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
