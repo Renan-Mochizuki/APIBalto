@@ -13,15 +13,16 @@ autenticacao.post('/login', function (req, res) {
             .then(user => {
                 if (!user) // Se o usuário não for encontrado
                     return res.status(401).json({ message: 'Usuário ou senha inválidos.' });
-                jwt.sign({ // Criar o token
+
+                const payload = {
                     'TB_PESSOA_IDD': user.TB_PESSOA_ID,
-                    'TB_PESSOA_NOME_PERFIL': user.TB_PESSOA_NOME_PERFIL,
-                    'TB_PESSOA_EMAIL': user.TB_PESSOA_EMAIL,
-                    'TB_PESSOA_IMG': user.TB_PESSOA_IMG
-                }, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
+                    'TB_TIPO_IDD': user.TB_TIPO_ID,
+                };
+
+                jwt.sign(payload, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
                     if (err) console.log(err);
-                    return res.status(201).json({ 'token': token }); // Enviar o token
-                });
+                    return res.status(201).json({ 'token': token, message: "Autenticado" }); // Envia o token
+                })
             }).catch(error => { // Caso o select falhar
                 res.status(400).json({ message: "Houve um erro ao selecionar" });
             });
