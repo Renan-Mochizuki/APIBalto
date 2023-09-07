@@ -19,13 +19,14 @@ selecao.get('/selpessoa/', async (req, res) => {
 
 selecao.post('/selpessoa/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_NOME_PERFIL, TB_TIPO_ID, TB_PESSOA_CIDADE } = req.body // Receba as opções de filtro do frontend
+        const { TB_PESSOA_ID, TB_PESSOA_NOME_PERFIL, TB_TIPO_ID, TB_PESSOA_CIDADE } = req.body // Receba as opções de filtro do frontend
 
         let whereClause = {};
 
         whereClause.TB_PESSOA_STATUS = 'ATIVADO'; 
 
         // Coloque os where que foram pedidos pelo frontend
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_PESSOA_CIDADE) whereClause.TB_PESSOA_CIDADE = TB_PESSOA_CIDADE;
         if (TB_PESSOA_NOME_PERFIL) whereClause.TB_PESSOA_NOME_PERFIL = TB_PESSOA_NOME_PERFIL;
         if (TB_TIPO_ID) whereClause.TB_TIPO_ID = TB_TIPO_ID;
