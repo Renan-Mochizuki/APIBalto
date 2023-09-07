@@ -60,7 +60,8 @@ cadastro.post('/cadpessoa', async (req, res) => {
                 return res.status(201).json({ 'token': token, message: "Cadastrado" }); // Envia o token
             })
         }).catch(error => { // Caso o cadastrar falhar
-            res.status(400).json({ message: "Falha ao cadastrar" });
+            console.error(error);
+            return res.status(400).json({ message: "Falha ao cadastrar" });
         });
     } catch (error) {
         return res.status(500).json({ message: "Erro ao cadastrar" });

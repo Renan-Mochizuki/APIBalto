@@ -8,7 +8,8 @@ selecao.get('/selpessoa/', async (req, res) => {
         const Selecionar = await model.TB_PESSOA.findAll({ // Selecione todos campos com status ativado
             where: {
                 TB_PESSOA_STATUS: 'ATIVADO'
-            }
+            },
+            attributes: { exclude: ['TB_PESSOA_SENHA'] } // Excluindo TB_PESSOA_SENHA do select
         });
         res.status(200).json(Selecionar);
     } catch (error) {
@@ -30,7 +31,8 @@ selecao.post('/selpessoa/filtrar', async (req, res) => {
         if (TB_TIPO_ID) whereClause.TB_TIPO_ID = TB_TIPO_ID;
 
         const Selecionar = await model.TB_PESSOA.findAll({
-            where: whereClause
+            where: whereClause,
+            attributes: { exclude: ['TB_PESSOA_SENHA'] }
         });
         res.status(200).json(Selecionar);
     } catch (error) {

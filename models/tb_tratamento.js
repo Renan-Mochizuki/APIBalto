@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_ANIMAL_ID: DataTypes.INTEGER,
     TB_PESSOA_ID: DataTypes.INTEGER,
-    TB_TRATAMENTO_DESCRICAO: DataTypes.STRING,
+    TB_TRATAMENTO_DESCRICAO: DataTypes.STRING(512),
     TB_TRATAMENTO_DT_INICIO: DataTypes.DATE,
     TB_TRATAMENTO_DT_FINAL: DataTypes.DATE,
     TB_TRATAMENTO_ANONIMO: DataTypes.BOOLEAN,

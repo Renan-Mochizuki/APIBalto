@@ -11,6 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING
     },
   }, {
+    timestamps: false,
     freezeTableName: true,
     tableName: 'TB_TIPO',
   });

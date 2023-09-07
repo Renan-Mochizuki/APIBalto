@@ -11,23 +11,26 @@ module.exports = {
       },
       TB_PESSOA_NOME: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_NOME_PERFIL: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
+      },
+      TB_PESSOA_BIO: {
+        type: Sequelize.STRING(256)
       },
       TB_PESSOA_EMAIL: {
         allowNull: false,
         unique: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_SENHA: {
         allowNull: false,
         set(val) {
           this.setDataValue('TB_PESSOA_SENHA', md5(val));
         },
-        type: Sequelize.STRING
+        type: Sequelize.STRING(32)
       },
       TB_PESSOA_CEP: {
         type: Sequelize.CHAR(8)
@@ -36,19 +39,19 @@ module.exports = {
         type: Sequelize.CHAR(2)
       },
       TB_PESSOA_CIDADE: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_BAIRRO: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(64)
       },
       TB_PESSOA_RUA: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_NUMERO: {
         type: Sequelize.INTEGER
       },
       TB_PESSOA_COMPLEMENTO: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_DT_NASC: {
         type: Sequelize.DATEONLY
@@ -57,19 +60,19 @@ module.exports = {
         type: Sequelize.CHAR(11)
       },
       TB_PESSOA_WHATSAPP: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       TB_PESSOA_INSTAGRAM: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_FACEBOOK: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_TELEFONE1: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       TB_PESSOA_TELEFONE2: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       TB_PESSOA_ANIMAL_CASA: {
         type: Sequelize.STRING(12)
@@ -81,7 +84,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       TB_PESSOA_ANIMAL_AUSENCIA: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_ANIMAL_FAMILIA: {
         type: Sequelize.BOOLEAN
@@ -99,13 +102,13 @@ module.exports = {
         type: Sequelize.CHAR(14)
       },
       TB_PESSOA_PIX: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256)
       },
       TB_PESSOA_LINK: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_PESSOA_IMG: {
-        type: Sequelize.TEXT /* BLOB */
+        type: Sequelize.BLOB
       },
       TB_PESSOA_ATIVO: {
         type: Sequelize.BOOLEAN,

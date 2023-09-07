@@ -2,32 +2,39 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_POSTAGEM_ANIMAL', {
-      TB_POSTAGEM_ANIMAL_ID: {
+    await queryInterface.createTable('TB_POSTAGEM', {
+      TB_POSTAGEM_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TB_ANIMAL_ID: {
+      TB_PESSOA_ID: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'TB_ANIMAL',
-          key: 'TB_ANIMAL_ID'
+          model: 'TB_PESSOA',
+          key: 'TB_PESSOA_ID'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_POSTAGEM_ID: {
+      TB_POSTAGEM_IMG1: {
+        type: Sequelize.BLOB
+      },
+      TB_POSTAGEM_VIDEO: {
+        type: Sequelize.BLOB
+      },
+      TB_POSTAGEM_TEXTO: {
+        type: Sequelize.STRING(256)
+      },
+      TB_POSTAGEM_TEXTO_ALTERADO: {
+        type: Sequelize.STRING(256)
+      },
+      TB_POSTAGEM_STATUS: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'TB_POSTAGEM',
-          key: 'TB_POSTAGEM_ID'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+        type: Sequelize.STRING(10),
+        defaultValue: 'ATIVADO'
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_POSTAGEM_ANIMAL');
+    await queryInterface.dropTable('TB_POSTAGEM');
   }
 };

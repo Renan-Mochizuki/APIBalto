@@ -31,7 +31,7 @@ module.exports = {
       },
       TB_TRATAMENTO_DESCRICAO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(512)
       },
       TB_TRATAMENTO_DT_INICIO: {
         allowNull: false,

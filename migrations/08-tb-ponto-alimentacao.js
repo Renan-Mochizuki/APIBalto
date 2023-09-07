@@ -2,22 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_ADOCAO', {
-      TB_ADOCAO_ID: {
+    await queryInterface.createTable('TB_PONTO_ALIMENTACAO', {
+      TB_PONTO_ALIMENTACAO_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      TB_ANIMAL_ID: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'TB_ANIMAL',
-          key: 'TB_ANIMAL_ID'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
       },
       TB_PESSOA_ID: {
         allowNull: false,
@@ -29,10 +19,18 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_ADOCAO_SITUACAO: {
+      TB_PONTO_ALIMENTACAO_LATITUDE: {
         allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 'EM ANDAMENTO'
+        type: Sequelize.DECIMAL
+      },
+      TB_PONTO_ALIMENTACAO_LONGITUDE: {
+        allowNull: false,
+        type: Sequelize.DECIMAL
+      },
+      TB_PONTO_ALIMENTACAO_STATUS: {
+        allowNull: false,
+        type: Sequelize.STRING(10),
+        defaultValue: 'ATIVADO'
       },
       createdAt: {
         allowNull: false,
@@ -45,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_ADOCAO');
+    await queryInterface.dropTable('TB_PONTO_ALIMENTACAO');
   }
 };

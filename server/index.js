@@ -1,6 +1,8 @@
 "user strict";
 const express = require('express');
 const cors = require('cors');
+const favicon = require('serve-favicon');
+const path = require('path');
 const bodyParser = require('body-parser');
 const autenticacao = require("./autenticacaoserver");
 const cadastro = require("./cadastrarserver");
@@ -16,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req,res) => {
     res.send('API Balto');
 });
+app.use(favicon(path.join(__dirname,'..','public','img','favicon.ico')));
 
 app.use(autenticacao);
 app.use(cadastro);

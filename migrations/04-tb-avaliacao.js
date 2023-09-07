@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       TB_AVALIACAO_TEXTO: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256)
       },
       createdAt: {
         allowNull: false,

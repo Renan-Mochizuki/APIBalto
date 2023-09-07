@@ -21,7 +21,7 @@ module.exports = {
       },
       TB_ANIMAL_NOME: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(64)
       },
       TB_ANIMAL_IDADE: {
         allowNull: false,
@@ -29,26 +29,23 @@ module.exports = {
       },
       TB_ANIMAL_IDADE_TIPO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(5)
       },
       TB_ANIMAL_PORTE: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(7)
       },
       TB_ANIMAL_PESO: {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      TB_ANIMAL_COR: {
-        type: Sequelize.STRING
-      },
       TB_ANIMAL_SEXO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(16)
       },
       TB_ANIMAL_ESPECIE: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(8)
       },
       TB_ANIMAL_SAUDE: {
         allowNull: false,
@@ -56,7 +53,7 @@ module.exports = {
       },
       TB_ANIMAL_DESCRICAO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256)
       },
       TB_ANIMAL_ALERTA: {
         allowNull: false,
@@ -65,35 +62,35 @@ module.exports = {
       TB_ANIMAL_LOCALIZACAO_UF: {
         allowNull: false,
         type: Sequelize.CHAR(2)
-      }, 
+      },
       TB_ANIMAL_LOCALIZACAO_CIDADE: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_ANIMAL_LOCALIZACAO_BAIRRO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(64)
       },
       TB_ANIMAL_LOCALIZACAO_RUA: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_ANIMAL_CUIDADO_ESPECIAL: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256)
       },
       TB_ANIMAL_VERMIFUGADO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(12)
       },
       TB_ANIMAL_CASTRADO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(12)
       },
       TB_ANIMAL_MICROCHIP: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(12)
       },
       TB_ANIMAL_LOCAL_RESGATE: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       TB_ANIMAL_IMG1: {
         type: Sequelize.BLOB
@@ -112,7 +109,7 @@ module.exports = {
       },
       TB_ANIMAL_STATUS: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(10),
         defaultValue: 'ATIVADO'
       },
       createdAt: {

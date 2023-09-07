@@ -2,16 +2,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_SITUACAO', {
-      TB_SITUACAO_ID: {
+    await queryInterface.createTable('TB_TEMPERAMENTO', {
+      TB_TEMPERAMENTO_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TB_SITUACAO_DESCRICAO: {
+      TB_TEMPERAMENTO_TIPO: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(128)
       },
       createdAt: {
         allowNull: false,
@@ -22,16 +22,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    const dataToInsert = [
-      {
-        TB_SITUACAO_DESCRICAO: 'Saudável',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ];
-    return queryInterface.bulkInsert('TB_SITUACAO', dataToInsert);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_SITUACAO');
+    await queryInterface.dropTable('TB_TEMPERAMENTO');
   }
 };

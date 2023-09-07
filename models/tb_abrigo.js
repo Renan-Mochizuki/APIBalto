@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_ANIMAL_ID: DataTypes.INTEGER,
     TB_PESSOA_ID: DataTypes.INTEGER,
     TB_ABRIGO_DT_ABRIGO: DataTypes.DATE,
-    TB_ABRIGO_SITUACAO: DataTypes.STRING
+    TB_ABRIGO_SITUACAO: DataTypes.STRING(12)
   }, {
     freezeTableName: true,
     tableName: "TB_ABRIGO",

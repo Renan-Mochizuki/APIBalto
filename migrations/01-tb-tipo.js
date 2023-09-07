@@ -13,46 +13,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(16)
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
     const dataToInsert = [
       {
-        TB_TIPO_DESCRICAO: 'USUARIO',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'USUARIO'
       },
       {
-        TB_TIPO_DESCRICAO: 'VETERINARIO',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'VETERINARIO'
       },
       {
-        TB_TIPO_DESCRICAO: 'INSTITUICAO',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'INSTITUICAO'
       },
       {
-        TB_TIPO_DESCRICAO: 'PROTETOR',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'PROTETOR'
       },
       {
-        TB_TIPO_DESCRICAO: 'ABRIGO',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'ABRIGO'
       },
       {
-        TB_TIPO_DESCRICAO: 'ESTABELECIMENTO',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        TB_TIPO_DESCRICAO: 'ESTABELECIMENTO'
       },
+      {
+        TB_TIPO_DESCRICAO: 'ADMINISTRADOR'
+      }
     ];
     return queryInterface.bulkInsert('TB_TIPO', dataToInsert);
   },

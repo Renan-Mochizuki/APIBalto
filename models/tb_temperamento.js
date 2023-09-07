@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    TB_TEMPERAMENTO_TIPO: DataTypes.STRING
+    TB_TEMPERAMENTO_TIPO: DataTypes.STRING(128)
   }, {
     freezeTableName: true,
     tableName: "TB_TEMPERAMENTO",

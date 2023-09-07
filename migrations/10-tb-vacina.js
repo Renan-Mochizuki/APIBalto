@@ -2,22 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_ANIMAL_TRAUMA', {
-      TB_ANIMAL_TRAUMA_ID: {
+    await queryInterface.createTable('TB_VACINA', {
+      TB_VACINA_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      TB_TRAUMA_ID: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'TB_TRAUMA',
-          key: 'TB_TRAUMA_ID'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
       },
       TB_ANIMAL_ID: {
         allowNull: false,
@@ -28,6 +18,13 @@ module.exports = {
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
+      },
+      TB_VACINA_DT_APLICACAO: {
+        type: Sequelize.DATE
+      },
+      TB_VACINA_TIPO: {
+        allowNull: false,
+        type: Sequelize.STRING(64)
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_ANIMAL_TRAUMA');
+    await queryInterface.dropTable('TB_VACINA');
   }
 };

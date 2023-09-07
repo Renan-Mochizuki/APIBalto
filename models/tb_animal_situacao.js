@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_SITUACAO_ID: DataTypes.INTEGER,
     TB_ANIMAL_ID: DataTypes.INTEGER,
   }, {
+    timestamps: false,
     freezeTableName: true,
     tableName: "TB_ANIMAL_SITUACAO",
   });

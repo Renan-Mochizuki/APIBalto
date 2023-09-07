@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA_AVALIADA_ID: DataTypes.INTEGER,
     TB_PESSOA_AVALIADORA_ID: DataTypes.INTEGER,
     TB_AVALIACAO_NOTA: DataTypes.FLOAT,
-    TB_AVALIACAO_TEXTO: DataTypes.STRING,
+    TB_AVALIACAO_TEXTO: DataTypes.TEXT(256),
   }, {
     freezeTableName: true,
     tableName: "TB_AVALIACAO",

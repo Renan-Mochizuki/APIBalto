@@ -2,24 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_ABRIGO', {
-      TB_ABRIGO_ID: {
+    await queryInterface.createTable('TB_MENSAGEM', {
+      TB_MENSAGEM_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TB_ANIMAL_ID: {
+      TB_CHAT_ID: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'TB_ANIMAL',
-          key: 'TB_ANIMAL_ID'
+          model: 'TB_CHAT',
+          key: 'TB_CHAT_ID'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_PESSOA_ID: {
+      TB_PESSOA_REMETENTE_ID: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'TB_PESSOA',
@@ -28,14 +29,19 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_ABRIGO_DT_ABRIGO: {
-        allowNull: false,
-        type: Sequelize.DATE
+      TB_MENSAGEM_TEXTO: {
+        type: Sequelize.STRING(256)
       },
-      TB_ABRIGO_SITUACAO: {
+      TB_MENSAGEM_IMG: {
+        type: Sequelize.BLOB
+      },
+      TB_MENSAGEM_TEXTO_ALTERADO: {
+        type: Sequelize.STRING(256)
+      },
+      TB_MENSAGEM_STATUS: {
         allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 'EM ANDAMENTO'
+        type: Sequelize.STRING(10),
+        defaultValue: 'ATIVADO'
       },
       createdAt: {
         allowNull: false,
@@ -48,6 +54,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_ABRIGO');
+    await queryInterface.dropTable('TB_MENSAGEM');
   }
 };

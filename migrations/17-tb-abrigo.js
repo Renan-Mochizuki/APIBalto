@@ -2,15 +2,24 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_PONTO_ALIMENTACAO', {
-      TB_PONTO_ALIMENTACAO_ID: {
+    await queryInterface.createTable('TB_ABRIGO', {
+      TB_ABRIGO_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TB_PESSOA_ID: {
+      TB_ANIMAL_ID: {
         allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'TB_ANIMAL',
+          key: 'TB_ANIMAL_ID'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      TB_PESSOA_ID: {
         type: Sequelize.INTEGER,
         references: {
           model: 'TB_PESSOA',
@@ -19,18 +28,14 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_PONTO_ALIMENTACAO_LATITUDE: {
+      TB_ABRIGO_DT_ABRIGO: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.DATE
       },
-      TB_PONTO_ALIMENTACAO_LONGITUDE: {
+      TB_ABRIGO_SITUACAO: {
         allowNull: false,
-        type: Sequelize.DECIMAL
-      },
-      TB_PONTO_ALIMENTACAO_STATUS: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: 'ATIVADO'
+        type: Sequelize.STRING(12),
+        defaultValue: 'EM ANDAMENTO'
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_PONTO_ALIMENTACAO');
+    await queryInterface.dropTable('TB_ABRIGO');
   }
 };

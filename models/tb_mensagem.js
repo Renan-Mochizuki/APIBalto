@@ -6,26 +6,17 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        TB_ANIMAL_ID: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'TB_ANIMAL',
-                key: 'TB_ANIMAL_ID'
-            },
-            onUpdate: 'cascade',
-            onDelete: 'cascade'
-        },
-        TB_MENSAGEM_TEXTO: DataTypes.TEXT,
-        TB_MENSAGEM_IMG: DataTypes.TEXT,
-        TB_MENSAGEM_TEXTO_ALTERADO: DataTypes.TEXT,
-        TB_PESSOA_DESTINATARIO_ID: {
+        TB_CHAT_ID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: "TB_PESSOA",
-                key: "TB_PESSOA_ID"
+                model: "TB_CHAT",
+                key: "TB_CHAT_ID"
             }
         },
+        TB_MENSAGEM_TEXTO: DataTypes.STRING(256),
+        TB_MENSAGEM_IMG: DataTypes.BLOB,
+        TB_MENSAGEM_TEXTO_ALTERADO: DataTypes.STRING(256),
         TB_PESSOA_REMETENTE_ID: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -35,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         TB_MENSAGEM_CHAT_ID: DataTypes.STRING,
-        TB_MENSAGEM_STATUS: DataTypes.STRING,
+        TB_MENSAGEM_STATUS: DataTypes.STRING(10),
     }, {
         freezeTableName: true,
         tableName: 'TB_MENSAGEM',
@@ -47,7 +38,6 @@ module.exports = function (sequelize, DataTypes) {
             as: 'user'
         });
         TB_MENSAGEM.belongsTo(models.TB_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
-        TB_MENSAGEM.hasMany(models.TB_DENUNCIA, { foreignKey: "TB_MENSAGEM_ID" });
     };
     return TB_MENSAGEM;
 };

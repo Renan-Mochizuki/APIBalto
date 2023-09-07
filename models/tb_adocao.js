@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_ANIMAL_ID: DataTypes.INTEGER,
     TB_PESSOA_ID: DataTypes.INTEGER,
-    TB_ADOCAO_SITUACAO: DataTypes.STRING,
+    TB_ADOCAO_SITUACAO: DataTypes.STRING(12),
   }, {
     freezeTableName: true,
     tableName: "TB_ADOCAO",
