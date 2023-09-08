@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_TIPO_DESCRICAO: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING(16)
     },
   }, {
     timestamps: false,
