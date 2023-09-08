@@ -166,6 +166,26 @@ selecao.get('/selpostagem/', async (req, res) => {
     }
 });
 
+selecao.post('/selpostagem/filtrar', async (req, res) => {
+    try {
+        const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO } = req.body
+
+        let whereClause = {};
+
+        whereClause.TB_POSTAGEM_STATUS = 'ATIVADO'; 
+
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+        if (TB_POSTAGEM_TEXTO) whereClause.TB_POSTAGEM_TEXTO = TB_POSTAGEM_TEXTO;
+
+        const Selecionar = await model.TB_POSTAGEM.findAll({
+            where: whereClause,
+        });
+        res.status(200).json(Selecionar);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao selecionar' });
+    }
+});
+
 selecao.get('/selsituacao/', async (req, res) => {
     try {
         const Selecionar = await model.TB_SITUACAO.findAll();
