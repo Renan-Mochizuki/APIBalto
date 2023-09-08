@@ -41,7 +41,6 @@ module.exports = function (sequelize, DataTypes) {
         TB_CHAT.belongsTo(models.TB_PESSOA, {
             foreignKey: 'TB_PESSOA_REMETENTE_ID',
             targetKey: 'TB_PESSOA_ID',
-            as: 'user'
         });
         TB_CHAT.belongsTo(models.TB_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
         TB_CHAT.hasMany(models.TB_MENSAGEM, { foreignKey: "TB_CHAT_ID" });

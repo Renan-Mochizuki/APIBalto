@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node server",
     "migrate": "npx sequelize-cli db:migrate",
-    "seed": "npx sequelize-cli db:seed:all"
+    "seed": "npx sequelize-cli db:seed:all",
+    "database": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
   },
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {

@@ -15,10 +15,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.send('API Balto');
 });
-app.use(favicon(path.join(__dirname,'..','public','img','favicon.ico')));
+app.use(favicon(path.join(__dirname, '..', 'public', 'img', 'favicon.ico')));
 
 app.use(autenticacao);
 app.use(cadastro);
@@ -28,5 +28,5 @@ app.use(exclusao);
 
 const port = 3000;
 app.listen(port, () => {
-    console.log('Servidor Rodando');
+    console.log('Servidor Rodando. URL Local: http://localhost:'+port);
 });

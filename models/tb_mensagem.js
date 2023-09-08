@@ -36,7 +36,6 @@ module.exports = function (sequelize, DataTypes) {
             targetKey: 'TB_PESSOA_ID',
             as: 'user'
         });
-        TB_MENSAGEM.belongsTo(models.TB_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
     };
     return TB_MENSAGEM;
 };

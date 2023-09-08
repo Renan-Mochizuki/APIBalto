@@ -122,7 +122,7 @@ selecao.post('/selanimal/filtrar/', async (req, res) => {
     }
 });
 
-selecao.get('/selchat/filtrar', async (req, res) => {
+selecao.post('/selchat/filtrar', async (req, res) => {
     try {
         const { TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID } = req.body
 
@@ -137,11 +137,11 @@ selecao.get('/selchat/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
-selecao.get('/selmensagem/filtrar', async (req, res) => {
+selecao.post('/selmensagem/filtrar', async (req, res) => {
     try {
         const { TB_CHAT_ID, TB_PESSOA_REMETENTE_ID } = req.body
 
@@ -156,7 +156,7 @@ selecao.get('/selmensagem/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -192,7 +192,7 @@ selecao.post('/selpontoalimentacao/filtrar', async (req, res) => {
     }
 });
 
-selecao.get('/selformulariodiario/filtrar', async (req, res) => {
+selecao.post('/selformulariodiario/filtrar', async (req, res) => {
     try {
         const { TB_PONTO_ALIMENTACAO_ID } = req.body
 
@@ -206,11 +206,11 @@ selecao.get('/selformulariodiario/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
-selecao.get('/selvacina/filtrar', async (req, res) => {
+selecao.post('/selvacina/filtrar', async (req, res) => {
     try {
         const { TB_ANIMAL_ID } = req.body
 
@@ -224,7 +224,7 @@ selecao.get('/selvacina/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -233,7 +233,7 @@ selecao.get('/selcor/', async (req, res) => {
         const Selecionar = await model.TB_COR.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -242,7 +242,7 @@ selecao.get('/seltemperamento/', async (req, res) => {
         const Selecionar = await model.TB_TEMPERAMENTO.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -251,7 +251,7 @@ selecao.get('/selsituacao/', async (req, res) => {
         const Selecionar = await model.TB_SITUACAO.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -260,7 +260,7 @@ selecao.get('/seltrauma/', async (req, res) => {
         const Selecionar = await model.TB_TRAUMA.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -289,11 +289,11 @@ selecao.get('/seladocao/', async (req, res) => {
         const Selecionar = await model.TB_ADOCAO.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
-selecao.get('/seladocao/filtrar', async (req, res) => {
+selecao.post('/seladocao/filtrar', async (req, res) => {
     try {
         const { TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
@@ -308,11 +308,11 @@ selecao.get('/seladocao/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
-selecao.get('/selabrigo/filtrar', async (req, res) => {
+selecao.post('/selabrigo/filtrar', async (req, res) => {
     try {
         const { TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
@@ -327,7 +327,7 @@ selecao.get('/selabrigo/filtrar', async (req, res) => {
 
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao cadastrar' })
+        res.status(500).json({ message: 'Erro ao selecionar' })
     }
 });
 
@@ -369,7 +369,7 @@ selecao.get('/seldenuncia/', async (req, res) => {
         const Selecionar = await model.TB_DENUNCIA.findAll();
         res.status(200).json(Selecionar);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao selecionar' });
+        res.status(500).json({ message: 'Erro ao selecionar' + error });
     }
 });
 

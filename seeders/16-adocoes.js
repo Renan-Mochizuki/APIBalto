@@ -5,6 +5,7 @@ module.exports = {
             {
                 TB_ANIMAL_ID: 3,
                 TB_PESSOA_ID: 1,
+                TB_ADOCAO_DT_ADOCAO: new Date(),
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
