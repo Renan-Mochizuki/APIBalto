@@ -48,7 +48,8 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA_LINK: DataTypes.STRING(128),
     TB_PESSOA_IMG: DataTypes.BLOB,
     TB_PESSOA_ATIVO: DataTypes.BOOLEAN,
-    TB_PESSOA_SOCKET_ID: DataTypes.STRING,
+    TB_PESSOA_LATITUDE: DataTypes.DECIMAL,
+    TB_PESSOA_LONGITUDE: DataTypes.DECIMAL,
     TB_PESSOA_STATUS: DataTypes.STRING(10),
   }, {
     freezeTableName: true,

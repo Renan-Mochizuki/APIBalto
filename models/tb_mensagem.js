@@ -25,7 +25,6 @@ module.exports = function (sequelize, DataTypes) {
                 key: "TB_PESSOA_ID"
             }
         },
-        TB_MENSAGEM_CHAT_ID: DataTypes.STRING,
         TB_MENSAGEM_STATUS: DataTypes.STRING(10),
     }, {
         freezeTableName: true,

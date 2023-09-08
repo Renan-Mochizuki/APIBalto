@@ -29,6 +29,10 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      TB_ADOCAO_DT_ADOCAO: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
       TB_ADOCAO_SITUACAO: {
         allowNull: false,
         type: Sequelize.STRING(12),

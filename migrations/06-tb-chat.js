@@ -38,7 +38,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            TB_MENSAGEM_STATUS: {
+            TB_CHAT_STATUS: {
                 allowNull: false,
                 type: Sequelize.STRING(10),
                 defaultValue: 'ATIVADO'

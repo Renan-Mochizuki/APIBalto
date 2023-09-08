@@ -114,9 +114,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
-      TB_PESSOA_SOCKET_ID: {
-        type: Sequelize.STRING,
-        defaultValue: null,
+      TB_PESSOA_LATITUDE: {
+        type: Sequelize.DECIMAL
+      },
+      TB_PESSOA_LONGITUDE: {
+        type: Sequelize.DECIMAL
       },
       TB_PESSOA_STATUS: {
         allowNull: false,
