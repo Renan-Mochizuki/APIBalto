@@ -61,10 +61,11 @@ selecao.post('/selseguindo/filtrar', async (req, res) => {
 
 selecao.post('/selavaliacao/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_AVALIADA_ID, TB_PESSOA_AVALIADORA_ID } = req.body
+        const { TB_AVALIACAO_ID, TB_PESSOA_AVALIADA_ID, TB_PESSOA_AVALIADORA_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_AVALIACAO_ID) whereClause.TB_AVALIACAO_ID = TB_AVALIACAO_ID;
         if (TB_PESSOA_AVALIADA_ID) whereClause.TB_PESSOA_AVALIADA_ID = TB_PESSOA_AVALIADA_ID;
         if (TB_PESSOA_AVALIADORA_ID) whereClause.TB_PESSOA_AVALIADORA_ID = TB_PESSOA_AVALIADORA_ID;
 
@@ -92,13 +93,14 @@ selecao.get('/selanimal/', async (req, res) => {
 
 selecao.post('/selanimal/filtrar/', async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_ESPECIE, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_SEXO, TB_ANIMAL_SAUDE, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP } = req.body
+        const { TB_PESSOA_ID, TB_ANIMAL_ID, TB_ANIMAL_ESPECIE, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_SEXO, TB_ANIMAL_SAUDE, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP } = req.body
 
         let whereClause = {};
 
         whereClause.TB_ANIMAL_STATUS = 'ATIVADO';
 
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
         if (TB_ANIMAL_ESPECIE) whereClause.TB_ANIMAL_ESPECIE = TB_ANIMAL_ESPECIE;
         if (TB_ANIMAL_IDADE) whereClause.TB_ANIMAL_IDADE = TB_ANIMAL_IDADE;
         if (TB_ANIMAL_IDADE_TIPO) whereClause.TB_ANIMAL_IDADE_TIPO = TB_ANIMAL_IDADE_TIPO;
@@ -124,10 +126,11 @@ selecao.post('/selanimal/filtrar/', async (req, res) => {
 
 selecao.post('/selchat/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID } = req.body
+        const { TB_CHAT_ID, TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
         if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
 
@@ -143,12 +146,13 @@ selecao.post('/selchat/filtrar', async (req, res) => {
 
 selecao.post('/selmensagem/filtrar', async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_PESSOA_REMETENTE_ID } = req.body
+        const { TB_CHAT_ID, TB_MENSAGEM_ID, TB_PESSOA_REMETENTE_ID } = req.body
 
         let whereClause = {};
 
-        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
+        if (TB_MENSAGEM_ID) whereClause.TB_MENSAGEM_ID = TB_MENSAGEM_ID;
+        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: whereClause
@@ -175,12 +179,13 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
 
 selecao.post('/selpontoalimentacao/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_ID } = req.body
+        const { TB_PONTO_ALIMENTACAO_ID, TB_PESSOA_ID } = req.body
 
         let whereClause = {};
 
         whereClause.TB_PONTO_ALIMENTACAO_STATUS = 'ATIVADO';
 
+        if (TB_PONTO_ALIMENTACAO_ID) whereClause.TB_PONTO_ALIMENTACAO_ID = TB_PONTO_ALIMENTACAO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
 
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
@@ -194,10 +199,11 @@ selecao.post('/selpontoalimentacao/filtrar', async (req, res) => {
 
 selecao.post('/selformulariodiario/filtrar', async (req, res) => {
     try {
-        const { TB_PONTO_ALIMENTACAO_ID } = req.body
+        const { TB_FORMULARIO_DIARIO_ID, TB_PONTO_ALIMENTACAO_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_FORMULARIO_DIARIO_ID) whereClause.TB_FORMULARIO_DIARIO_ID = TB_FORMULARIO_DIARIO_ID;
         if (TB_PONTO_ALIMENTACAO_ID) whereClause.TB_PONTO_ALIMENTACAO_ID = TB_PONTO_ALIMENTACAO_ID;
 
         const Selecionar = await model.TB_VACINA.findAll({
@@ -212,10 +218,11 @@ selecao.post('/selformulariodiario/filtrar', async (req, res) => {
 
 selecao.post('/selvacina/filtrar', async (req, res) => {
     try {
-        const { TB_ANIMAL_ID } = req.body
+        const { TB_VACINA_ID, TB_ANIMAL_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_VACINA_ID) whereClause.TB_VACINA_ID = TB_VACINA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
 
         const Selecionar = await model.TB_VACINA.findAll({
@@ -266,12 +273,13 @@ selecao.get('/seltrauma/', async (req, res) => {
 
 selecao.post('/seltratamento/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
+        const { TB_TRATAMENTO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
         let whereClause = {};
 
         whereClause.TB_POSTAGEM_STATUS = 'ATIVADO';
 
+        if (TB_TRATAMENTO_ID) whereClause.TB_TRATAMENTO_ID = TB_TRATAMENTO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
 
@@ -295,10 +303,11 @@ selecao.get('/seladocao/', async (req, res) => {
 
 selecao.post('/seladocao/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
+        const { TB_ADOCAO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_ADOCAO_ID) whereClause.TB_ADOCAO_ID = TB_ADOCAO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
 
@@ -314,10 +323,11 @@ selecao.post('/seladocao/filtrar', async (req, res) => {
 
 selecao.post('/selabrigo/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
+        const { TB_ABRIGO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
         let whereClause = {};
 
+        if (TB_ABRIGO_ID) whereClause.TB_ABRIGO_ID = TB_ABRIGO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
 
@@ -346,12 +356,13 @@ selecao.get('/selpostagem/', async (req, res) => {
 
 selecao.post('/selpostagem/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO } = req.body
+        const { TB_POSTAGEM_ID, TB_PESSOA_ID, TB_POSTAGEM_TEXTO } = req.body
 
         let whereClause = {};
 
         whereClause.TB_POSTAGEM_STATUS = 'ATIVADO';
 
+        if (TB_POSTAGEM_ID) whereClause.TB_POSTAGEM_ID = TB_POSTAGEM_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_POSTAGEM_TEXTO) whereClause.TB_POSTAGEM_TEXTO = TB_POSTAGEM_TEXTO;
 
