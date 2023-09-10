@@ -17,7 +17,7 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', async (req, res) => {
             TB_PESSOA_NOME,
             TB_PESSOA_NOME_PERFIL,
             TB_PESSOA_EMAIL,
-            TB_PESSOA_SENHA: md5(TB_PESSOA_SENHA),
+            ...(TB_PESSOA_SENHA && { TB_PESSOA_SENHA: md5(TB_PESSOA_SENHA) }),
             TB_PESSOA_CEP,
             TB_PESSOA_UF,
             TB_PESSOA_CIDADE,
@@ -49,6 +49,7 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', async (req, res) => {
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
+        console.error(error)
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });
