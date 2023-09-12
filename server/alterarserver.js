@@ -50,6 +50,7 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', async (req, res) => {
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error)
+        console.error(error);
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });
@@ -94,6 +95,7 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', async (req, res) => {
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });
@@ -121,6 +123,7 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', async (req, res) => {
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });
@@ -145,6 +148,7 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) 
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });
@@ -176,6 +180,7 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', async (req, res) => {
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao atualizar" });
     }
 });

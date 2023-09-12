@@ -64,6 +64,7 @@ cadastro.post('/cadpessoa', async (req, res) => {
             return res.status(400).json({ message: "Falha ao cadastrar" });
         });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
@@ -78,6 +79,7 @@ cadastro.post('/cadseguindo', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
@@ -94,13 +96,14 @@ cadastro.post('/cadavaliacao', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
 cadastro.post('/cadanimal', async (req, res) => {
     try {
-        const { TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE, TB_ANIMAL_IMG1, TB_ANIMAL_IMG2, TB_ANIMAL_IMG3, TB_ANIMAL_IMG4, TB_ANIMAL_IMG5, TB_ANIMAL_DT_CAD, TB_PESSOA_ID } = req.body
+        const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE, TB_ANIMAL_IMG1, TB_ANIMAL_IMG2, TB_ANIMAL_IMG3, TB_ANIMAL_IMG4, TB_ANIMAL_IMG5 } = req.body
         await model.TB_ANIMAL.create({
             TB_PESSOA_ID,
             TB_ANIMAL_NOME,
@@ -121,7 +124,6 @@ cadastro.post('/cadanimal', async (req, res) => {
             TB_ANIMAL_VERMIFUGADO,
             TB_ANIMAL_CASTRADO,
             TB_ANIMAL_MICROCHIP,
-            TB_ANIMAL_DT_CAD,
             TB_ANIMAL_LOCAL_RESGATE,
             TB_ANIMAL_IMG1,
             TB_ANIMAL_IMG2,
@@ -131,7 +133,8 @@ cadastro.post('/cadanimal', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -145,7 +148,8 @@ cadastro.post('/cadpontoalimentacao', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -159,7 +163,8 @@ cadastro.post('/cadformulariodiario', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -173,7 +178,8 @@ cadastro.post('/cadvacina', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -185,7 +191,8 @@ cadastro.post('/cadtemperamento', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -197,7 +204,8 @@ cadastro.post('/cadsituacao', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -209,7 +217,8 @@ cadastro.post('/cadtrauma', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -226,7 +235,8 @@ cadastro.post('/cadtratamento', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -240,7 +250,8 @@ cadastro.post('/cadadocao', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -255,7 +266,8 @@ cadastro.post('/cadabrigo', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -277,7 +289,8 @@ cadastro.post('/cadpostagem', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -298,7 +311,8 @@ cadastro.post('/caddenuncia', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -311,7 +325,8 @@ cadastro.post('/cadanimaltemperamento', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -324,7 +339,8 @@ cadastro.post('/cadanimalsituacao', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -337,7 +353,8 @@ cadastro.post('/cadanimaltrauma', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 
@@ -350,7 +367,8 @@ cadastro.post('/cadpostagemanimal', async (req, res) => {
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
-        return res.status(500).json({ message: "Erro ao casatrar" });
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar" });
     }
 });
 

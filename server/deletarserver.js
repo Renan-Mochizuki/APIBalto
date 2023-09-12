@@ -17,6 +17,7 @@ exclusao.put('/delpessoa/:TB_PESSOA_ID', async (req, res) => {
         });
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
+        console.error(error);
         return res.status(500).json("Erro ao deletar");
     }
 });
@@ -35,6 +36,7 @@ exclusao.put('/delanimal/:TB_ANIMAL_ID', async (req, res) => {
         });
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
+        console.error(error);
         return res.status(500).json("Erro ao deletar");
     }
 });
@@ -53,6 +55,7 @@ exclusao.put('/delmensagem/:TB_MENSAGEM_ID', async (req, res) => {
         });
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
+        console.error(error);
         return res.status(500).json("Erro ao deletar");
 
 
@@ -73,6 +76,7 @@ exclusao.put('/delpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) =
         });
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
+        console.error(error);
         return res.status(500).json("Erro ao deletar");
     }
 });
@@ -91,6 +95,7 @@ exclusao.put('/delpostagem/:TB_POSTAGEM', async (req, res) => {
         });
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
+        console.error(error);
         return res.status(500).json("Erro ao deletar");
     }
 });

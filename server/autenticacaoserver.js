@@ -24,11 +24,12 @@ autenticacao.post('/login', function (req, res) {
                     return res.status(201).json({ 'token': token, message: "Autenticado" }); // Envia o token
                 })
             }).catch(error => { // Caso o select falhar
-                res.status(400).json({ message: "Houve um erro ao selecionar" });
+                console.error(error);
+                return res.status(400).json({ message: "Houve um erro ao selecionar" });
             });
     }
-    catch (erro) {
-        console.error(erro);
+    catch (error) {
+        console.error(error);
         return res.status(500).json({ message: "Houve um erro ao fazer o login. Tente novamente mais tarde." });
     }
 });

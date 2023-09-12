@@ -18,7 +18,6 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_PESSOA_NOME: DataTypes.STRING(128),
     TB_PESSOA_NOME_PERFIL: DataTypes.STRING(128),
-    TB_PESSOA_NOME_PERFIL: DataTypes.STRING(256),
     TB_PESSOA_EMAIL: DataTypes.STRING(128),
     TB_PESSOA_SENHA: DataTypes.STRING(32),
     TB_PESSOA_CEP: DataTypes.CHAR(8),
