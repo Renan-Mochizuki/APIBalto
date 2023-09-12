@@ -81,11 +81,11 @@ exclusao.put('/delpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) =
     }
 });
 
-exclusao.put('/delpostagem/:TB_POSTAGEM', async (req, res) => {
+exclusao.put('/delpostagem/:TB_POSTAGEM_ID', async (req, res) => {
     const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
 
     try {
-        const campo = await model.TB_POSTAGEM_ID.findByPk(TB_POSTAGEM_ID);
+        const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
 
         if (!campo)
             return res.status(404).json("Campo não encontrado");
@@ -93,6 +93,22 @@ exclusao.put('/delpostagem/:TB_POSTAGEM', async (req, res) => {
         await campo.update({
             TB_POSTAGEM_STATUS: 'DESATIVADO'
         });
+        return res.status(200).json("Campo deletado com sucesso");
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Erro ao deletar");
+    }
+});
+
+exclusao.put('/delseguindo/:TB_SEGUINDO_ID', async (req, res) => {
+    const TB_SEGUINDO_ID = req.params.TB_SEGUINDO_ID;
+    try {
+        const campo = await model.TB_SEGUINDO.findByPk(TB_SEGUINDO_ID);
+
+        if (!campo)
+            return res.status(404).json("Campo não encontrado");
+
+        await campo.destroy();
         return res.status(200).json("Campo deletado com sucesso");
     } catch (error) {
         console.error(error);
