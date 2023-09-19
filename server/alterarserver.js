@@ -182,7 +182,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Rota para receber a imagem
-app.put('/upload', upload.single('image'), async (req, res) => {
+alteracao.put('/upload', upload.single('image'), async (req, res) => {
     try {
         // req.file.buffer contém os dados da imagem em formato de buffer
         const imageBuffer = req.file.buffer;
