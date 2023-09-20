@@ -177,26 +177,4 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', async (req, res) => {
     }
 });
 
-const multer = require('multer'); 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-// Rota para receber a imagem
-alteracao.put('/upload', upload.single('image'), async (req, res) => {
-    try {
-        // req.file.buffer contém os dados da imagem em formato de buffer
-        const imageBuffer = req.file.buffer;
-
-        // Use o Sequelize para inserir a imagem no banco de dados
-        const pessoa = await model.TB_PESSOA.update({
-            TB_PESSOA_IMG: imageBuffer,
-        });
-
-        res.status(200).json({ message: 'Imagem cadastrada com sucesso!' });
-    } catch (error) {
-        console.error('Erro ao cadastrar imagem:', error);
-        res.status(500).json({ error: 'Erro ao cadastrar imagem' });
-    }
-});
-
 module.exports = alteracao;
