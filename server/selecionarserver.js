@@ -9,7 +9,7 @@ selecao.get('/selpessoa/', async (req, res) => {
             where: {
                 TB_PESSOA_STATUS: 'ATIVADO'
             },
-            attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] } // Excluindo TB_PESSOA_SENHA do select
+            attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] } // Excluindo TB_PESSOA_SENHA e TB_PESSOA_IMG do select
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -34,7 +34,7 @@ selecao.post('/selpessoa/filtrar', async (req, res) => {
 
         const Selecionar = await model.TB_PESSOA.findAll({
             where: whereClause,
-            attributes: { exclude: ['TB_PESSOA_SENHA'] }
+            attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -87,7 +87,8 @@ selecao.get('/selanimal/', async (req, res) => {
         const Selecionar = await model.TB_ANIMAL.findAll({
             where: {
                 TB_ANIMAL_STATUS: 'ATIVADO'
-            }
+            },
+            attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] }
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -121,7 +122,8 @@ selecao.post('/selanimal/filtrar/', async (req, res) => {
         if (TB_ANIMAL_LOCALIZACAO_CIDADE) whereClause.TB_ANIMAL_LOCALIZACAO_CIDADE = TB_ANIMAL_LOCALIZACAO_CIDADE;
 
         const Selecionar = await model.TB_ANIMAL.findAll({
-            where: whereClause
+            where: whereClause,
+            attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] }
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -162,7 +164,8 @@ selecao.post('/selmensagem/filtrar', async (req, res) => {
         if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
-            where: whereClause
+            where: whereClause,
+            attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
 
         return res.status(200).json(Selecionar);
@@ -217,7 +220,8 @@ selecao.post('/selformulariodiario/filtrar', async (req, res) => {
         if (TB_PONTO_ALIMENTACAO_ID) whereClause.TB_PONTO_ALIMENTACAO_ID = TB_PONTO_ALIMENTACAO_ID;
 
         const Selecionar = await model.TB_VACINA.findAll({
-            where: whereClause
+            where: whereClause,
+            attributes: { exclude: ['TB_FORMULARIO_DIARIO_IMG'] }
         });
 
         return res.status(200).json(Selecionar);
@@ -365,7 +369,8 @@ selecao.get('/selpostagem/', async (req, res) => {
     try {
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: {
-                TB_POSTAGEM_STATUS: 'ATIVADO'
+                TB_POSTAGEM_STATUS: 'ATIVADO',
+                attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_IMG2', 'TB_POSTAGEM_IMG3', 'TB_POSTAGEM_IMG4', 'TB_POSTAGEM_IMG5', 'TB_POSTAGEM_VIDEO'] }
             }
         });
         return res.status(200).json(Selecionar);
@@ -389,6 +394,7 @@ selecao.post('/selpostagem/filtrar', async (req, res) => {
 
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: whereClause,
+            attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_IMG2', 'TB_POSTAGEM_IMG3', 'TB_POSTAGEM_IMG4', 'TB_POSTAGEM_IMG5', 'TB_POSTAGEM_VIDEO'] }
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -399,7 +405,9 @@ selecao.post('/selpostagem/filtrar', async (req, res) => {
 
 selecao.get('/seldenuncia/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_DENUNCIA.findAll();
+        const Selecionar = await model.TB_DENUNCIA.findAll({
+            attributes: { exclude: ['TB_DENUNCIA_IMG1', 'TB_DENUNCIA_IMG2', 'TB_DENUNCIA_IMG3'] }
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -412,12 +420,86 @@ selecao.get('/selpessoaimg/:TB_PESSOA_ID', async (req, res) => {
         const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
         const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID);
 
-        if (campo.TB_PESSOA_IMG == null) {
+        if (campo.TB_PESSOA_IMG == null)
             return res.status(404).json({ message: 'Campo não encontrado' });
-        }
 
         res.setHeader('Content-Type', 'image/png');
         res.send(campo.TB_PESSOA_IMG);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
+    }
+});
+
+selecao.get('/selanimalimg/:TB_ANIMAL_ID', async (req, res) => {
+    try {
+        const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
+        const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
+
+        if (campo.TB_ANIMAL_IMG1 == null)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(campo.TB_ANIMAL_IMG1);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
+    }
+});
+
+selecao.get('/selmensagemimg/:TB_MENSAGEM_ID', async (req, res) => {
+    try {
+        const TB_MENSAGEM_ID = req.params.TB_MENSAGEM_ID;
+        const campo = await model.TB_MENSAGEM.findByPk(TB_MENSAGEM_ID);
+
+        if (campo.TB_MENSAGEM_IMG == null)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(campo.TB_MENSAGEM_IMG);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
+    }
+});
+
+selecao.get('/selformulariodiarioimg/:TB_FORMULARIO_DIARIO_ID', async (req, res) => {
+    try {
+        const TB_FORMULARIO_DIARIO_ID = req.params.TB_FORMULARIO_DIARIO_ID;
+        const campo = await model.TB_FORMULARIO_DIARIO.findByPk(TB_FORMULARIO_DIARIO_ID);
+
+        if (campo.TB_FORMULARIO_DIARIO_IMG == null)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(campo.TB_FORMULARIO_DIARIO_IMG);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
+    }
+});
+
+selecao.get('/selpostagemimg/:TB_POSTAGEM_ID', async (req, res) => {
+    try {
+        const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
+        const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
+
+        if (campo.TB_POSTAGEM_IMG1 == null)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(campo.TB_POSTAGEM_IMG1);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
+    }
+});
+
+selecao.get('/seldenunciaimg/:TB_DENUNCIA_ID', async (req, res) => {
+    try {
+        const TB_DENUNCIA_ID = req.params.TB_DENUNCIA_ID;
+        const campo = await model.TB_DENUNCIA.findByPk(TB_DENUNCIA_ID);
+
+        if (campo.TB_DENUNCIA_IMG1 == null)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+
+        res.setHeader('Content-Type', 'image/png');
+        res.send(campo.TB_DENUNCIA_IMG1);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem' });
     }

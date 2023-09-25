@@ -1,6 +1,8 @@
 const express = require('express');
-var md5 = require('md5');
-let model = require('../models');
+const md5 = require('md5');
+const model = require('../models');
+const multer = require('multer');
+const upload = multer();
 
 let alteracao = express();
 
