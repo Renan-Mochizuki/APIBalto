@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.send('API Balto');
+  res.send('API Balto');
 });
 app.use(favicon(path.join(__dirname, '..', 'public', 'img', 'favicon.ico')));
 
@@ -28,5 +28,5 @@ app.use(exclusao);
 
 const port = 3000;
 app.listen(port, () => {
-    console.log('Servidor Rodando. URL Local: http://localhost:'+port);
+  console.log('Servidor Rodando. URL Local: http://localhost:' + port);
 });

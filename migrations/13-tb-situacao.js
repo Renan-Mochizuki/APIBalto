@@ -22,14 +22,6 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    const dataToInsert = [
-      {
-        TB_SITUACAO_DESCRICAO: 'Saudável',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ];
-    return queryInterface.bulkInsert('TB_SITUACAO', dataToInsert);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('TB_SITUACAO');
