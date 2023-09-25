@@ -412,15 +412,14 @@ selecao.get('/selpessoaimg/:TB_PESSOA_ID', async (req, res) => {
         const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
         const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID);
 
-        if (!campo) {
+        if (campo.TB_PESSOA_IMG == null) {
             return res.status(404).json({ message: 'Campo não encontrado' });
         }
 
         res.setHeader('Content-Type', 'image/png');
         res.send(campo.TB_PESSOA_IMG);
     } catch (error) {
-        console.error('Erro ao buscar imagem:', error);
-        res.status(500).json({ message: 'Erro ao buscar imagem' });
+        return res.status(500).json({ message: 'Erro ao buscar imagem' });
     }
 });
 

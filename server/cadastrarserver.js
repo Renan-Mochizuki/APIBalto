@@ -16,8 +16,11 @@ cadastro.post('/cadpessoa', upload.single('image'), async (req, res) => {
         // Verifica se já existe uma pessoa cadastrada com o email
         if (verExistenciaEmail)
             return res.status(409).json({ message: 'Este email já está sendo utilizado.' });
+        let imageBuffer = null;
         // Receber o buffer da imagem
-        const imageBuffer = req.file.buffer;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_PESSOA.create({ // Cadastra
             TB_TIPO_ID,
             TB_PESSOA_NOME,
@@ -107,7 +110,10 @@ cadastro.post('/cadavaliacao', async (req, res) => {
 cadastro.post('/cadanimal', upload.single('image'), async (req, res) => {
     try {
         const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE } = req.body
-        const imageBuffer = req.file.buffer;
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_ANIMAL.create({
             TB_PESSOA_ID,
             TB_ANIMAL_NOME,
@@ -158,12 +164,16 @@ cadastro.post('/cadpontoalimentacao', async (req, res) => {
     }
 });
 
-cadastro.post('/cadformulariodiario', async (req, res) => {
+cadastro.post('/cadformulariodiario', upload.single('image'), async (req, res) => {
     try {
-        const { TB_FORMULARIO_DIARIO_DT_ABASTECIMENTO, TB_FORMULARIO_DIARIO_IMG, TB_PONTO_ALIMENTACAO_ID } = req.body
+        const { TB_FORMULARIO_DIARIO_DT_ABASTECIMENTO, TB_PONTO_ALIMENTACAO_ID } = req.body
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_FORMULARIO_DIARIO.create({
             TB_PONTO_ALIMENTACAO_ID,
-            TB_FORMULARIO_DIARIO_IMG,
+            TB_FORMULARIO_DIARIO_IMG: imageBuffer,
             TB_FORMULARIO_DIARIO_DT_ABASTECIMENTO,
         });
         return res.status(200).json({ message: "Cadastrado" });
@@ -276,19 +286,22 @@ cadastro.post('/cadabrigo', async (req, res) => {
     }
 });
 
-cadastro.post('/cadpostagem', async (req, res) => {
+cadastro.post('/cadpostagem', upload.single('image'), async (req, res) => {
     try {
-        const { TB_POSTAGEM_IMG1, TB_POSTAGEM_VIDEO, TB_POSTAGEM_TEXTO, TB_POSTAGEM_TEXTO_ALTERADO, TB_POSTAGEM_IMG2, TB_POSTAGEM_IMG3, TB_POSTAGEM_IMG4, TB_POSTAGEM_IMG5, TB_POSTAGEM_DT, TB_POSTAGEM_DT_ALTERACAO, TB_PESSOA_ID } = req.body
+        const { TB_POSTAGEM_TEXTO, TB_POSTAGEM_TEXTO_ALTERADO, TB_POSTAGEM_DT_ALTERACAO, TB_PESSOA_ID } = req.body
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_POSTAGEM.create({
             TB_PESSOA_ID,
-            TB_POSTAGEM_IMG1,
-            TB_POSTAGEM_IMG2,
-            TB_POSTAGEM_IMG3,
-            TB_POSTAGEM_IMG4,
-            TB_POSTAGEM_IMG5,
-            TB_POSTAGEM_DT,
+            TB_POSTAGEM_IMG1: imageBuffer,
+            // TB_POSTAGEM_IMG2,
+            // TB_POSTAGEM_IMG3,
+            // TB_POSTAGEM_IMG4,
+            // TB_POSTAGEM_IMG5,
             TB_POSTAGEM_DT_ALTERACAO,
-            TB_POSTAGEM_VIDEO,
+            // TB_POSTAGEM_VIDEO,
             TB_POSTAGEM_TEXTO,
             TB_POSTAGEM_TEXTO_ALTERADO,
         });
@@ -299,9 +312,13 @@ cadastro.post('/cadpostagem', async (req, res) => {
     }
 });
 
-cadastro.post('/caddenuncia', async (req, res) => {
+cadastro.post('/caddenuncia', upload.single('image'), async (req, res) => {
     try {
-        const { TB_PESSOA_DENUNCIANTE_ID, TB_MENSAGEM_ID, TB_POSTAGEM_ID, TB_PESSOA_DENUNCIADA_ID, TB_DENUNCIA_TEXTO, TB_DENUNCIA_DT, TB_DENUNCIA_MOTIVO, TB_DENUNCIA_IMG1, TB_DENUNCIA_IMG2, TB_DENUNCIA_IMG3 } = req.body
+        const { TB_PESSOA_DENUNCIANTE_ID, TB_MENSAGEM_ID, TB_POSTAGEM_ID, TB_PESSOA_DENUNCIADA_ID, TB_DENUNCIA_TEXTO, TB_DENUNCIA_DT, TB_DENUNCIA_MOTIVO } = req.body
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_DENUNCIA.create({
             TB_PESSOA_DENUNCIANTE_ID,
             TB_MENSAGEM_ID,
@@ -310,9 +327,9 @@ cadastro.post('/caddenuncia', async (req, res) => {
             TB_DENUNCIA_TEXTO,
             TB_DENUNCIA_DT,
             TB_DENUNCIA_MOTIVO,
-            TB_DENUNCIA_IMG1,
-            TB_DENUNCIA_IMG2,
-            TB_DENUNCIA_IMG3,
+            TB_DENUNCIA_IMG1: imageBuffer,
+            // TB_DENUNCIA_IMG2,
+            // TB_DENUNCIA_IMG3,
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
