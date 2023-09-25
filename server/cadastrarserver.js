@@ -2,18 +2,22 @@
 const express = require('express');
 let cadastro = express.Router();
 const model = require("../models")
-var chave = require('../config/appConfig').secret;
-var md5 = require('md5');
-var jwt = require('jsonwebtoken');
+const chave = require('../config/appConfig').secret;
+const md5 = require('md5');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const upload = multer();
 
-cadastro.post('/cadpessoa', async (req, res) => {
+cadastro.post('/cadpessoa', upload.single('image'), async (req, res) => {
     try {
-        const { TB_TIPO_ID, TB_PESSOA_NOME, TB_PESSOA_NOME_PERFIL, TB_PESSOA_EMAIL, TB_PESSOA_SENHA, TB_PESSOA_CEP, TB_PESSOA_UF, TB_PESSOA_CIDADE, TB_PESSOA_BAIRRO, TB_PESSOA_RUA, TB_PESSOA_NUMERO, TB_PESSOA_COMPLEMENTO, TB_PESSOA_DT_NASC, TB_PESSOA_CPF, TB_PESSOA_WHATSAPP, TB_PESSOA_INSTAGRAM, TB_PESSOA_FACEBOOK, TB_PESSOA_TELEFONE1, TB_PESSOA_TELEFONE2, TB_PESSOA_ANIMAL_CASA, TB_PESSOA_ANIMAL_ESPACO, TB_PESSOA_ANIMAL_PASSEAR, TB_PESSOA_ANIMAL_AUSENCIA, TB_PESSOA_ANIMAL_FAMILIA, TB_PESSOA_ANIMAL_RUA, TB_PESSOA_ANIMAL_QUANTIDADE, TB_PESSOA_CRMV, TB_PESSOA_CNPJ, TB_PESSOA_PIX, TB_PESSOA_LINK, TB_PESSOA_IMG, TB_PESSOA_ATIVO, TB_PESSOA_SOCKET_ID } = req.body;
+        const { TB_TIPO_ID, TB_PESSOA_NOME, TB_PESSOA_NOME_PERFIL, TB_PESSOA_EMAIL, TB_PESSOA_SENHA, TB_PESSOA_CEP, TB_PESSOA_UF, TB_PESSOA_CIDADE, TB_PESSOA_BAIRRO, TB_PESSOA_RUA, TB_PESSOA_NUMERO, TB_PESSOA_COMPLEMENTO, TB_PESSOA_DT_NASC, TB_PESSOA_CPF, TB_PESSOA_WHATSAPP, TB_PESSOA_INSTAGRAM, TB_PESSOA_FACEBOOK, TB_PESSOA_TELEFONE1, TB_PESSOA_TELEFONE2, TB_PESSOA_ANIMAL_CASA, TB_PESSOA_ANIMAL_ESPACO, TB_PESSOA_ANIMAL_PASSEAR, TB_PESSOA_ANIMAL_AUSENCIA, TB_PESSOA_ANIMAL_FAMILIA, TB_PESSOA_ANIMAL_RUA, TB_PESSOA_ANIMAL_QUANTIDADE, TB_PESSOA_CRMV, TB_PESSOA_CNPJ, TB_PESSOA_PIX, TB_PESSOA_LINK, TB_PESSOA_SOCKET_ID } = req.body;
         // Recebe os campos do front-end
         const verExistenciaEmail = await model.TB_PESSOA.findOne({ where: { TB_PESSOA_EMAIL } });
         // Verifica se já existe uma pessoa cadastrada com o email
         if (verExistenciaEmail)
             return res.status(409).json({ message: 'Este email já está sendo utilizado.' });
+        // Receber o buffer da imagem
+        const imageBuffer = req.file.buffer;
         await model.TB_PESSOA.create({ // Cadastra
             TB_TIPO_ID,
             TB_PESSOA_NOME,
@@ -45,8 +49,7 @@ cadastro.post('/cadpessoa', async (req, res) => {
             TB_PESSOA_CNPJ,
             TB_PESSOA_PIX,
             TB_PESSOA_LINK,
-            TB_PESSOA_IMG,
-            TB_PESSOA_ATIVO,
+            TB_PESSOA_IMG: imageBuffer,
             TB_PESSOA_SOCKET_ID,
         }).then(user => {
             // Cria o token
@@ -101,9 +104,10 @@ cadastro.post('/cadavaliacao', async (req, res) => {
     }
 });
 
-cadastro.post('/cadanimal', async (req, res) => {
+cadastro.post('/cadanimal', upload.single('image'), async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE, TB_ANIMAL_IMG1, TB_ANIMAL_IMG2, TB_ANIMAL_IMG3, TB_ANIMAL_IMG4, TB_ANIMAL_IMG5 } = req.body
+        const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE } = req.body
+        const imageBuffer = req.file.buffer;
         await model.TB_ANIMAL.create({
             TB_PESSOA_ID,
             TB_ANIMAL_NOME,
@@ -126,11 +130,11 @@ cadastro.post('/cadanimal', async (req, res) => {
             TB_ANIMAL_CASTRADO,
             TB_ANIMAL_MICROCHIP,
             TB_ANIMAL_LOCAL_RESGATE,
-            TB_ANIMAL_IMG1,
-            TB_ANIMAL_IMG2,
-            TB_ANIMAL_IMG3,
-            TB_ANIMAL_IMG4,
-            TB_ANIMAL_IMG5,
+            TB_ANIMAL_IMG1: imageBuffer,
+            // TB_ANIMAL_IMG2,
+            // TB_ANIMAL_IMG3,
+            // TB_ANIMAL_IMG4,
+            // TB_ANIMAL_IMG5,
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
