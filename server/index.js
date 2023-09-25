@@ -48,7 +48,7 @@ app.put('/upload', upload.single('image'), async (req, res) => {
     res.status(200).json({ message: 'Imagem cadastrada com sucesso!' });
   } catch (error) {
     console.error('Erro ao cadastrar imagem:', error);
-    res.status(500).json({ error: 'Erro ao cadastrar imagem' });
+    res.status(500).json({ message: 'Erro ao cadastrar imagem' });
   }
 });
 
