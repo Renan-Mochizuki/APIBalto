@@ -109,12 +109,13 @@ cadastro.post('/cadavaliacao', async (req, res) => {
 
 cadastro.post('/cadanimal', upload.single('image'), async (req, res) => {
     try {
-        const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE } = req.body
+        const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADO_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE,
+            TEMPERAMENTOS, SITUACOES, TRAUMAS } = req.body
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
         }
-        await model.TB_ANIMAL.create({
+        const response = await model.TB_ANIMAL.create({
             TB_PESSOA_ID,
             TB_ANIMAL_NOME,
             TB_ANIMAL_IDADE,
@@ -141,8 +142,8 @@ cadastro.post('/cadanimal', upload.single('image'), async (req, res) => {
             // TB_ANIMAL_IMG3,
             // TB_ANIMAL_IMG4,
             // TB_ANIMAL_IMG5,
-        });
-        return res.status(200).json({ message: "Cadastrado" });
+        })
+        return res.status(200).json({ message: "Cadastrado", TB_ANIMAL_IDD: response.TB_ANIMAL_ID});
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar" });

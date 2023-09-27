@@ -76,6 +76,7 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('image'), async (req, re
         if (req.file) {
             imageBuffer = req.file.buffer;
         }
+        
         await campo.update({
             TB_ANIMAL_NOME,
             TB_ANIMAL_IDADE,

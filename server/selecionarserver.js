@@ -88,7 +88,13 @@ selecao.get('/selanimal/', async (req, res) => {
             where: {
                 TB_ANIMAL_STATUS: 'ATIVADO'
             },
-            attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] }
+            attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -435,8 +441,10 @@ selecao.get('/selanimalimg/:TB_ANIMAL_ID', async (req, res) => {
         const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
         const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
 
-        if (campo.TB_ANIMAL_IMG1 == null)
+        if (!campo)
             return res.status(404).json({ message: 'Campo não encontrado' });
+        if(campo.TB_ANIMAL_IMG1 == null)
+            return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/png');
         res.send(campo.TB_ANIMAL_IMG1);
