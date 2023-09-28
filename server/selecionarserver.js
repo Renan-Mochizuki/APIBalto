@@ -376,8 +376,8 @@ selecao.get('/selpostagem/', async (req, res) => {
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: {
                 TB_POSTAGEM_STATUS: 'ATIVADO',
-                attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_IMG2', 'TB_POSTAGEM_IMG3', 'TB_POSTAGEM_IMG4', 'TB_POSTAGEM_IMG5', 'TB_POSTAGEM_VIDEO'] }
-            }
+            },
+            attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_VIDEO'] }
         });
         return res.status(200).json(Selecionar);
     } catch (error) {

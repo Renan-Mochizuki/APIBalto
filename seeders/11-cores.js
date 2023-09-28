@@ -24,9 +24,6 @@ module.exports = {
                 TB_COR_DESCRICAO: 'Dourado'
             },
             {
-                TB_COR_DESCRICAO: 'Dourado'
-            },
-            {
                 TB_COR_DESCRICAO: 'Rajado'
             },
         ];
