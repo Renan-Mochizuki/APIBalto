@@ -63,7 +63,7 @@ cadastro.post('/cadpessoa', upload.single('image'), async (req, res) => {
 
             jwt.sign(payload, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
                 if (err) console.log(err);
-                return res.status(201).json({ 'token': token, message: "Cadastrado" }); // Envia o token
+                return res.status(201).json({ 'token': token, message: "Cadastrado", TB_PESSOA_IDD: user.TB_PESSOA_ID}); // Envia o token
             })
         }).catch(error => { // Caso o cadastrar falhar
             console.error(error);

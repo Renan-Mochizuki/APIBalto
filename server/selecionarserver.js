@@ -489,8 +489,10 @@ selecao.get('/selpessoaimg/:TB_PESSOA_ID', async (req, res) => {
         const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
         const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID);
 
-        if (campo.TB_PESSOA_IMG == null)
+        if (!campo)
             return res.status(404).json({ message: 'Campo não encontrado' });
+        if (campo.TB_PESSOA_IMG == null)
+            return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/png');
         res.send(campo.TB_PESSOA_IMG);
