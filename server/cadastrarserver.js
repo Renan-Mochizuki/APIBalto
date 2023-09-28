@@ -143,7 +143,26 @@ cadastro.post('/cadanimal', upload.single('image'), async (req, res) => {
             // TB_ANIMAL_IMG4,
             // TB_ANIMAL_IMG5,
         })
-        return res.status(200).json({ message: "Cadastrado", TB_ANIMAL_IDD: response.TB_ANIMAL_ID});
+        const TB_ANIMAL_IDD = response.TB_ANIMAL_ID;
+        for (const temperamento of TEMPERAMENTOS) {
+            await model.TB_ANIMAL_TEMPERAMENTO.create({
+                TB_ANIMAL_ID: TB_ANIMAL_IDD,
+                TB_TEMPERAMENTO_ID: temperamento,
+            });
+        }
+        for (const situacao of SITUACOES) {
+            await model.TB_ANIMAL_SITUACAO.create({
+                TB_ANIMAL_ID: TB_ANIMAL_IDD,
+                TB_SITUACAO_ID: situacao,
+            });
+        }
+        for (const trauma of TRAUMAS) {
+            await model.TB_ANIMAL_TEMPERAMENTO.create({
+                TB_ANIMAL_ID: TB_ANIMAL_IDD,
+                TB_TRAUMA_ID: trauma,
+            });
+        }
+        return res.status(200).json({ message: "Cadastrado", TB_ANIMAL_IDD });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar" });

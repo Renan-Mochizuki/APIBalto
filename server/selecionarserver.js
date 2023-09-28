@@ -421,6 +421,69 @@ selecao.get('/seldenuncia/', async (req, res) => {
     }
 });
 
+selecao.get('/seltemperamentos/:TB_ANIMAL_ID', async (req, res) => {
+    try {
+        const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
+        const Selecionar = await model.TB_ANIMAL_TEMPERAMENTO.findAll({
+            where: {
+                TB_ANIMAL_ID
+            },
+            include: [
+                {
+                    model: model.TB_TEMPERAMENTO,
+                    attributes: ['TB_TEMPERAMENTO_TIPO'],
+                },
+            ],
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar' })
+    }
+});
+
+selecao.get('/selsituacoes/:TB_ANIMAL_ID', async (req, res) => {
+    try {
+        const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
+        const Selecionar = await model.TB_ANIMAL_SITUACAO.findAll({
+            where: {
+                TB_ANIMAL_ID
+            },
+            include: [
+                {
+                    model: model.TB_SITUACAO,
+                    attributes: ['TB_SITUACAO_DESCRICAO'],
+                },
+            ],
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar' })
+    }
+});
+
+selecao.get('/seltraumas/:TB_ANIMAL_ID', async (req, res) => {
+    try {
+        const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
+        const Selecionar = await model.TB_ANIMAL_TRAUMA.findAll({
+            where: {
+                TB_ANIMAL_ID
+            },
+            include: [
+                {
+                    model: model.TB_TRAUMA,
+                    attributes: ['TB_TRAUMA_DESCRICAO'],
+                },
+            ],
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar' })
+    }
+});
+
 selecao.get('/selpessoaimg/:TB_PESSOA_ID', async (req, res) => {
     try {
         const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
@@ -443,7 +506,7 @@ selecao.get('/selanimalimg/:TB_ANIMAL_ID', async (req, res) => {
 
         if (!campo)
             return res.status(404).json({ message: 'Campo não encontrado' });
-        if(campo.TB_ANIMAL_IMG1 == null)
+        if (campo.TB_ANIMAL_IMG1 == null)
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/png');
