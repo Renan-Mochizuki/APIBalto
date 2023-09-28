@@ -377,7 +377,13 @@ selecao.get('/selpostagem/', async (req, res) => {
             where: {
                 TB_POSTAGEM_STATUS: 'ATIVADO',
             },
-            attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_VIDEO'] }
+            attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_VIDEO'] },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
