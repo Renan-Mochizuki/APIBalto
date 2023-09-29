@@ -3,6 +3,16 @@ let model = require('../models');
 
 let selecao = express();
 
+selecao.get('/seltipo/', async (req, res) => {
+    try {
+        const Selecionar = await model.TB_TIPO.findAll();
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar' });
+    }
+});
+
 selecao.get('/selpessoa/', async (req, res) => {
     try {
         const Selecionar = await model.TB_PESSOA.findAll({ // Selecione todos campos com status ativado
@@ -277,7 +287,7 @@ selecao.get('/selsituacoes/', async (req, res) => {
 
 selecao.get('/seltraumas/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_ANIMAL_COR.findAll({
+        const Selecionar = await model.TB_ANIMAL_TRAUMA.findAll({
             include: [
                 {
                     model: model.TB_TRAUMA,

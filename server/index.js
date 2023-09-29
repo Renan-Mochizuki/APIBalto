@@ -9,6 +9,7 @@ const cadastro = require("./cadastrarRoute");
 const alteracao = require("./alterarRoute");
 const selecao = require("./selecionarRoute");
 const selecaoFiltrar = require('./selecionarFiltrarRoute');
+const selecaoAssociativa = require('./selecionarAssociativaRoute');
 const selecaoImagem = require("./selecionarImagemRoute");
 const exclusao = require("./deletarRoute");
 
@@ -26,6 +27,7 @@ app.use(cadastro);
 app.use(alteracao);
 app.use(selecao);
 app.use(selecaoFiltrar);
+app.use(selecaoAssociativa);
 app.use(selecaoImagem);
 app.use(exclusao);
 
