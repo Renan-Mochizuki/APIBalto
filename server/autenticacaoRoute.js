@@ -1,10 +1,11 @@
 "user strict";
-var express = require('express');
-var autenticacao = express.Router();
-var jwt = require('jsonwebtoken');
-var chave = require('../config/appConfig').secret;
-var model = require('../models');
-var md5 = require('md5');
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const chave = require('../config/appConfig').secret;
+const model = require('../models');
+const md5 = require('md5');
+
+let autenticacao = express.Router();
 
 autenticacao.post('/login', async (req, res) => {
     try {
@@ -26,7 +27,7 @@ autenticacao.post('/login', async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Houve um erro ao fazer o login. Tente novamente mais tarde." });
+        return res.status(500).json({ message: "Houve um erro ao fazer o login. Tente novamente mais tarde.", error: error.message});
     }
 });
 

@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_PESSOA_REMETENTE_ID: {
+      TB_PESSOA_ID: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {

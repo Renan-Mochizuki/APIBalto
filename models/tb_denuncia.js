@@ -24,6 +24,12 @@ module.exports = function (sequelize, DataTypes) {
     TB_DENUNCIA.belongsTo(models.TB_PESSOA, {
       foreignKey: "TB_PESSOA_DENUNCIANTE_ID",
       targetKey: 'TB_PESSOA_ID',
+      as: 'TB_PESSOA_DENUNCIANTE'
+    });
+    TB_DENUNCIA.belongsTo(models.TB_PESSOA, {
+      foreignKey: "TB_PESSOA_DENUNCIADA_ID",
+      targetKey: 'TB_PESSOA_ID',
+      as: 'TB_PESSOA_DENUNCIADA'
     });
     TB_DENUNCIA.belongsTo(models.TB_POSTAGEM, { foreignKey: "TB_POSTAGEM_ID" });
     TB_DENUNCIA.belongsTo(models.TB_CHAT, { foreignKey: "TB_CHAT_ID" });

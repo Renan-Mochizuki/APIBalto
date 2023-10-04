@@ -1,17 +1,7 @@
 const express = require('express');
-let model = require('../models');
+const model = require('../models');
 
-let selecao = express();
-
-selecao.get('/seltipo/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_TIPO.findAll();
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
-    }
-});
+let selecao = express.Router();
 
 selecao.get('/selpessoa/', async (req, res) => {
     try {
@@ -24,7 +14,22 @@ selecao.get('/selpessoa/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
+    }
+});
+
+selecao.get('/selpessoas/', async (req, res) => {
+    try {
+        const Selecionar = await model.TB_PESSOA.findAll({
+            where: {
+                TB_PESSOA_STATUS: 'ATIVADO'
+            },
+            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -34,7 +39,7 @@ selecao.get('/selseguindo/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -44,7 +49,7 @@ selecao.get('/selavaliacao/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -65,7 +70,7 @@ selecao.get('/selanimal/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -79,7 +84,7 @@ selecao.get('/selchat/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -93,7 +98,7 @@ selecao.get('/selmensagem/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -102,12 +107,18 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
             where: {
                 TB_PONTO_ALIMENTACAO_STATUS: 'ATIVADO'
-            }
+            },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_TIPO_ID'],
+                },
+            ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -117,7 +128,7 @@ selecao.get('/selformulariodiario/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -127,7 +138,7 @@ selecao.get('/selvacina/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -137,7 +148,7 @@ selecao.get('/selcor/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -147,7 +158,7 @@ selecao.get('/seltemperamento/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -157,7 +168,7 @@ selecao.get('/selsituacao/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -167,37 +178,58 @@ selecao.get('/seltrauma/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
 selecao.get('/seltratamento/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_TRATAMENTO.findAll();
+        const Selecionar = await model.TB_TRATAMENTO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                },
+            ],
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
 selecao.get('/seladocao/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_ADOCAO.findAll();
+        const Selecionar = await model.TB_ADOCAO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
 selecao.get('/selabrigo/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_ABRIGO.findAll();
+        const Selecionar = await model.TB_ABRIGO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -218,104 +250,31 @@ selecao.get('/selpostagem/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
 selecao.get('/seldenuncia/', async (req, res) => {
     try {
         const Selecionar = await model.TB_DENUNCIA.findAll({
-            attributes: { exclude: ['TB_DENUNCIA_IMG1', 'TB_DENUNCIA_IMG2', 'TB_DENUNCIA_IMG3'] }
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
-    }
-});
-
-selecao.get('/selcores/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ANIMAL_COR.findAll({
+            attributes: { exclude: ['TB_DENUNCIA_IMG1', 'TB_DENUNCIA_IMG2', 'TB_DENUNCIA_IMG3'] },
             include: [
                 {
-                    model: model.TB_COR,
-                    attributes: ['TB_COR_DESCRICAO'],
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DENUNCIANTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DENUNCIADA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
-    }
-});
-
-selecao.get('/seltemperamentos/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ANIMAL_TEMPERAMENTO.findAll({
-            include: [
-                {
-                    model: model.TB_TEMPERAMENTO,
-                    attributes: ['TB_TEMPERAMENTO_TIPO'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
-    }
-});
-
-selecao.get('/selsituacoes/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ANIMAL_SITUACAO.findAll({
-            include: [
-                {
-                    model: model.TB_SITUACAO,
-                    attributes: ['TB_SITUACAO_DESCRICAO'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
-    }
-});
-
-selecao.get('/seltraumas/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ANIMAL_TRAUMA.findAll({
-            include: [
-                {
-                    model: model.TB_TRAUMA,
-                    attributes: ['TB_TRAUMA_DESCRICAO'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
-    }
-});
-
-selecao.get('/selmarcacoes/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_POSTAGEM_ANIMAL.findAll({
-            include: [
-                {
-                    model: model.TB_ANIMAL,
-                    attributes: ['TB_ANIMAL_NOME'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 

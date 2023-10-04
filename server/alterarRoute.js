@@ -4,9 +4,9 @@ const model = require('../models');
 const multer = require('multer');
 const upload = multer();
 
-let alteracao = express();
+let alteracao = express.Router();
 
-alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('image'), async (req, res) => {
+alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res) => {
     const TB_PESSOA_ID = req.params.TB_PESSOA_ID; // Pega o ID do front-end pelos paramêtros
     const { TB_PESSOA_NOME, TB_PESSOA_NOME_PERFIL, TB_PESSOA_BIO, TB_PESSOA_EMAIL, TB_PESSOA_SENHA, TB_PESSOA_CEP, TB_PESSOA_UF, TB_PESSOA_CIDADE, TB_PESSOA_BAIRRO, TB_PESSOA_RUA, TB_PESSOA_NUMERO, TB_PESSOA_COMPLEMENTO, TB_PESSOA_DT_NASC, TB_PESSOA_CPF, TB_PESSOA_WHATSAPP, TB_PESSOA_INSTAGRAM, TB_PESSOA_FACEBOOK, TB_PESSOA_TELEFONE1, TB_PESSOA_TELEFONE2, TB_PESSOA_ANIMAL_CASA, TB_PESSOA_ANIMAL_ESPACO, TB_PESSOA_ANIMAL_PASSEAR, TB_PESSOA_ANIMAL_AUSENCIA, TB_PESSOA_ANIMAL_FAMILIA, TB_PESSOA_ANIMAL_RUA, TB_PESSOA_ANIMAL_QUANTIDADE, TB_PESSOA_CRMV, TB_PESSOA_CNPJ, TB_PESSOA_PIX, TB_PESSOA_LINK, TB_PESSOA_ATIVO, TB_PESSOA_SOCKET_ID, TB_PESSOA_LATITUDE, TB_PESSOA_LONGITUDE }
         = req.body; // Recebe os campos do front-end
@@ -59,11 +59,11 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('image'), async (req, re
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erro ao atualizar" });
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
     }
 });
 
-alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('image'), async (req, res) => {
+alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res) => {
     const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
     const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADOS_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE } = req.body;
 
@@ -108,11 +108,11 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('image'), async (req, re
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erro ao atualizar" });
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
     }
 });
 
-alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('image'), async (req, res) => {
+alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_MENSAGEM_ID = req.params.TB_MENSAGEM_ID;
     const { TB_MENSAGEM_TEXTO_ALTERADO, TB_PESSOA_REMENTE_ID, TB_PESSOA_DESTINARIO_ID } = req.body
 
@@ -134,13 +134,13 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('image'), async (req
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erro ao atualizar" });
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
     }
 });
 
 alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) => {
     const TB_PONTO_ALIMENTACAO_ID = req.params.TB_PONTO_ALIMENTACAO_ID;
-    const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE, TB_PESSOA_ID }
+    const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE }
         = req.body
 
     try {
@@ -151,17 +151,58 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) 
 
         await campo.update({
             TB_PONTO_ALIMENTACAO_LATITUDE,
-            TB_PONTO_ALIMENTACAO_LONGITUDE,
-            TB_PESSOA_ID,
+            TB_PONTO_ALIMENTACAO_LONGITUDE
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erro ao atualizar" });
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
     }
 });
 
-alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('image'), async (req, res) => {
+alteracao.put('/altadocao/:TB_ADOCAO_ID', async (req, res) => {
+    const TB_ADOCAO_ID = req.params.TB_ADOCAO_ID;
+    const { TB_ADOCAO_SITUACAO }
+        = req.body
+
+    try {
+        const campo = await model.TB_ADOCAO.findByPk(TB_ADOCAO_ID);
+
+        if (!campo)
+            return res.status(404).json({ message: "Campo não encontrado" });
+
+        await campo.update({
+            TB_ADOCAO_SITUACAO
+        });
+        return res.status(200).json({ message: "Campo atualizado com sucesso" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
+    }
+});
+
+alteracao.put('/altabrigo/:TB_ABRIGO_ID', async (req, res) => {
+    const TB_ABRIGO_ID = req.params.TB_ABRIGO_ID;
+    const { TB_ABRIGO_SITUACAO }
+        = req.body
+
+    try {
+        const campo = await model.TB_ABRIGO.findByPk(TB_ABRIGO_ID);
+
+        if (!campo)
+            return res.status(404).json({ message: "Campo não encontrado" });
+
+        await campo.update({
+            TB_ABRIGO_SITUACAO
+        });
+        return res.status(200).json({ message: "Campo atualizado com sucesso" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
+    }
+});
+
+alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
     const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO }
         = req.body
@@ -188,7 +229,7 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('image'), async (req
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erro ao atualizar" });
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
     }
 });
 

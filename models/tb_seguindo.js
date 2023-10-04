@@ -13,7 +13,16 @@ module.exports = function (sequelize, DataTypes) {
     tableName: "TB_SEGUINDO",
   });
   TB_SEGUINDO.associate = function (models) {
-    TB_SEGUINDO.belongsTo(models.TB_PESSOA, { foreignKey: "TB_PESSOA_SEGUIDA_ID" });
+    TB_SEGUINDO.belongsTo(models.TB_PESSOA, { 
+      foreignKey: "TB_PESSOA_SEGUIDA_ID",
+      targetKey: 'TB_PESSOA_ID',
+      as: 'TB_PESSOA_SEGUIDA'
+     });
+     TB_SEGUINDO.belongsTo(models.TB_PESSOA, { 
+      foreignKey: "TB_PESSOA_SEGUIDORA_ID",
+      targetKey: 'TB_PESSOA_ID',
+      as: 'TB_PESSOA_SEGUIDORA'
+     });
   };
   return TB_SEGUINDO;
 };

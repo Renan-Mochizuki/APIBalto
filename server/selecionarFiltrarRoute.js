@@ -1,7 +1,7 @@
 const express = require('express');
-let model = require('../models');
+const model = require('../models');
 
-let selecaoFiltrar = express();
+let selecaoFiltrar = express.Router();
 
 selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
     try {
@@ -24,7 +24,30 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
+    }
+});
+
+selecaoFiltrar.post('/selpessoas/filtrar', async (req, res) => {
+    try {
+        const { TB_PESSOA_ID, TB_PESSOA_NOME_PERFIL, TB_TIPO_ID } = req.body
+
+        let whereClause = {};
+
+        whereClause.TB_PESSOA_STATUS = 'ATIVADO';
+
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+        if (TB_PESSOA_NOME_PERFIL) whereClause.TB_PESSOA_NOME_PERFIL = TB_PESSOA_NOME_PERFIL;
+        if (TB_TIPO_ID) whereClause.TB_TIPO_ID = TB_TIPO_ID;
+
+        const Selecionar = await model.TB_PESSOA.findAll({
+            where: whereClause,
+            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -43,7 +66,7 @@ selecaoFiltrar.post('/selseguindo/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -63,7 +86,7 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -104,40 +127,19 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
-    }
-});
-
-selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
-    try {
-        const { TB_CHAT_ID, TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID } = req.body
-
-        let whereClause = {};
-
-        if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
-        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
-        if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
-
-        const Selecionar = await model.TB_CHAT.findAll({
-            where: whereClause
-        });
-
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
 selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_MENSAGEM_ID, TB_PESSOA_REMETENTE_ID } = req.body
+        const { TB_CHAT_ID, TB_MENSAGEM_ID, TB_PESSOA_ID } = req.body
 
         let whereClause = {};
 
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_MENSAGEM_ID) whereClause.TB_MENSAGEM_ID = TB_MENSAGEM_ID;
-        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: whereClause,
@@ -147,7 +149,7 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -164,11 +166,17 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
 
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
             where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_TIPO_ID'],
+                },
+            ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -189,7 +197,7 @@ selecaoFiltrar.post('/selformulariodiario/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -209,7 +217,7 @@ selecaoFiltrar.post('/selvacina/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -230,14 +238,14 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
@@ -256,7 +264,7 @@ selecaoFiltrar.post('/seladocao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });
@@ -264,7 +272,7 @@ selecaoFiltrar.post('/seladocao/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -283,7 +291,7 @@ selecaoFiltrar.post('/selabrigo/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });
@@ -291,7 +299,7 @@ selecaoFiltrar.post('/selabrigo/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' })
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -320,7 +328,7 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar' });
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
 
