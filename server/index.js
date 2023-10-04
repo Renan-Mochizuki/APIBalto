@@ -56,7 +56,7 @@ app.post('/send-code', async (req, res) => {
     res.status(200).json({ message: 'Código enviado com sucesso.' });
   } catch (error) {
     console.error('Erro ao enviar o email:', error);
-    res.status(500).json({ error: 'Erro ao enviar o email.' });
+    res.status(500).json({ error: 'Erro ao enviar o email.' + error });
   }
 });
 
