@@ -31,7 +31,7 @@ app.use(exclusao);
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'noresponsebaltopetgate@gmail.com',
+    user: 'noreplybaltopetgate@gmail.com',
     pass: 'ermelindaetec187',
   },
 });
