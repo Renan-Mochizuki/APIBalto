@@ -21,6 +21,9 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Usuário desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -44,6 +47,9 @@ selecaoFiltrar.post('/selpessoas/filtrar', async (req, res) => {
             where: whereClause,
             attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Usuário desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -124,10 +130,39 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Animal desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
+    }
+});
+
+selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
+    try {
+        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
+
+        let whereClause = {};
+
+        whereClause.TB_MENSAGEM_STATUS = 'ATIVADO';
+
+        if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
+        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
+        if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
+        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
+
+        const Selecionar = await model.TB_CHAT.findAll({
+            where: whereClause
+        });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Chat desativado' });
+        }
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
     }
 });
 
@@ -137,6 +172,8 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
 
         let whereClause = {};
 
+        whereClause.TB_MENSAGEM_STATUS = 'ATIVADO';
+
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_MENSAGEM_ID) whereClause.TB_MENSAGEM_ID = TB_MENSAGEM_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
@@ -145,7 +182,9 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Mensagem desativada' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -173,6 +212,9 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -325,6 +367,9 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Postagem desativada' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

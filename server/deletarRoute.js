@@ -309,4 +309,23 @@ exclusao.put('/delpostagemanimal/:TB_POSTAGEM_ANIMAL_ID', async (req, res) => {
     }
 });
 
+exclusao.put('/reativarpessoa/:TB_PESSOA_ID', async (req, res) => {
+    const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
+
+    try {
+        const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID);
+
+        if (!campo)
+            return res.status(404).json("Campo não encontrado");
+
+        await campo.update({
+            TB_PESSOA_STATUS: 'ATIVADO'
+        });
+        return res.status(200).json("Campo reativado com sucesso");
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({message: "Erro ao reativar", error: error.message});
+    }
+});
+
 module.exports = exclusao;

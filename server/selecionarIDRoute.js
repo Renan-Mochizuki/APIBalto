@@ -15,6 +15,9 @@ selecaoID.get('/selpessoa/:TB_PESSOA_ID', async (req, res) => {
             },
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Usuário desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -71,6 +74,9 @@ selecaoID.get('/selanimal/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Animal desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -84,12 +90,16 @@ selecaoID.get('/selchat/:TB_PESSOA_ID', async (req, res) => {
 
         const Selecionar = await model.TB_CHAT.findAll({
             where: {
+                TB_CHAT_STATUS: 'ATIVADO',
                 [Op.or]: [
                     { TB_PESSOA_REMETENTE_ID: TB_PESSOA_ID },
                     { TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_ID }
                 ]
             },
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Chat desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -103,11 +113,14 @@ selecaoID.get('/selmensagem/:TB_CHAT_ID', async (req, res) => {
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: {
+                TB_MENSAGEM_STATUS: 'ATIVADO',
                 TB_CHAT_ID
             },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Mensagem desativada' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -131,6 +144,9 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -212,6 +228,9 @@ selecaoID.get('/selpostagem/:TB_PESSOA_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) {
+            return res.status(404).json({ message: 'Postagem desativada' });
+        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

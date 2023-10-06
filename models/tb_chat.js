@@ -32,7 +32,6 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         TB_CHAT_STATUS: DataTypes.STRING(10),
-
     }, {
         freezeTableName: true,
         tableName: 'TB_CHAT',
