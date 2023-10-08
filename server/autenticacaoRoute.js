@@ -1,4 +1,3 @@
-"user strict";
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const chave = require('../config/appConfig').secret;
@@ -9,8 +8,13 @@ let autenticacao = express.Router();
 
 autenticacao.post('/login', async (req, res) => {
     try {
-        const user = await model.TB_PESSOA.findOne({ where: { TB_PESSOA_EMAIL: req.body.TB_PESSOA_EMAIL, TB_PESSOA_SENHA: md5(req.body.TB_PESSOA_SENHA) } })
-        // Procure o usuario com email e senha
+        const user = await model.TB_PESSOA.findOne({ // Procure o usuario ativado com email e senha
+            where: {
+                TB_PESSOA_EMAIL: req.body.TB_PESSOA_EMAIL,
+                TB_PESSOA_SENHA: md5(req.body.TB_PESSOA_SENHA),
+                TB_PESSOA_STATUS: 'ATIVADO'
+            }
+        })
 
         if (!user) // Se o usuário não for encontrado
             return res.status(401).json({ message: 'Usuário ou senha inválidos.' });
@@ -27,7 +31,7 @@ autenticacao.post('/login', async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Houve um erro ao fazer o login. Tente novamente mais tarde.", error: error.message});
+        return res.status(500).json({ message: "Houve um erro ao fazer o login. Tente novamente mais tarde.", error: error.message });
     }
 });
 

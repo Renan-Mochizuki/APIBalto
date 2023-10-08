@@ -1,18 +1,18 @@
-"user strict";
 const express = require('express');
 const cors = require('cors');
 const favicon = require('serve-favicon');
 const path = require('path');
 const bodyParser = require('body-parser');
-const autenticacao = require("./autenticacaoRoute");
-const cadastro = require("./cadastrarRoute");
-const alteracao = require("./alterarRoute");
-const selecao = require("./selecionarRoute");
+const autenticacao = require('./autenticacaoRoute');
+const cadastro = require('./cadastrarRoute');
+const alteracao = require('./alterarRoute');
+const selecao = require('./selecionarRoute');
 const selecaoFiltrar = require('./selecionarFiltrarRoute');
 const selecaoID = require('./selecionarIDRoute');
 const selecaoAssociativa = require('./selecionarAssociativaRoute');
-const selecaoImagem = require("./selecionarImagemRoute");
-const exclusao = require("./deletarRoute");
+const selecaoImagem = require('./selecionarImagemRoute');
+const selecaoOtimizado = require('./selecionarOtimizadoRoute');
+const exclusao = require('./deletarRoute');
 
 let app = express();
 app.use(cors());
@@ -31,6 +31,7 @@ app.use(selecaoFiltrar);
 app.use(selecaoID);
 app.use(selecaoAssociativa);
 app.use(selecaoImagem);
+app.use(selecaoOtimizado);
 app.use(exclusao);
 
 const port = 3000;

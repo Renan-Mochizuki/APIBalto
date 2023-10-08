@@ -21,35 +21,8 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Usuário desativado' });
-        }
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
-    }
-});
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário desativado' });
 
-selecaoFiltrar.post('/selpessoas/filtrar', async (req, res) => {
-    try {
-        const { TB_PESSOA_ID, TB_PESSOA_NOME_PERFIL, TB_TIPO_ID } = req.body
-
-        let whereClause = {};
-
-        whereClause.TB_PESSOA_STATUS = 'ATIVADO';
-
-        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
-        if (TB_PESSOA_NOME_PERFIL) whereClause.TB_PESSOA_NOME_PERFIL = TB_PESSOA_NOME_PERFIL;
-        if (TB_TIPO_ID) whereClause.TB_TIPO_ID = TB_TIPO_ID;
-
-        const Selecionar = await model.TB_PESSOA.findAll({
-            where: whereClause,
-            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
-        });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Usuário desativado' });
-        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -130,9 +103,8 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Animal desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -154,11 +126,22 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
         if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
 
         const Selecionar = await model.TB_CHAT.findAll({
-            where: whereClause
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_REMETENTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DESTINATARIO',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Chat desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -182,9 +165,8 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Mensagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -208,13 +190,12 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Ponto de alimentação desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -367,9 +348,8 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Postagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

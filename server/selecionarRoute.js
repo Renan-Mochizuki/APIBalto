@@ -11,27 +11,8 @@ selecao.get('/selpessoa/', async (req, res) => {
             },
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] } // Excluindo TB_PESSOA_SENHA e TB_PESSOA_IMG do select
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Usuário desativado' });
-        }
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
-    }
-});
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário desativado' }); // Enviar mensagem caso o select der uma array vazia
 
-selecao.get('/selpessoas/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_PESSOA.findAll({
-            where: {
-                TB_PESSOA_STATUS: 'ATIVADO'
-            },
-            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
-        });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Usuário desativado' });
-        }
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -73,9 +54,8 @@ selecao.get('/selanimal/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Animal desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -90,9 +70,8 @@ selecao.get('/selchat/', async (req, res) => {
                 TB_CHAT_STATUS: 'ATIVADO'
             }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Chat desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -108,9 +87,8 @@ selecao.get('/selmensagem/', async (req, res) => {
             },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Mensagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -127,13 +105,12 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Ponto de alimentação desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -266,9 +243,8 @@ selecao.get('/selpostagem/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Postagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

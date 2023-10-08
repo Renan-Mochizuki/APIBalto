@@ -15,9 +15,8 @@ selecaoID.get('/selpessoa/:TB_PESSOA_ID', async (req, res) => {
             },
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Usuário desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -74,9 +73,8 @@ selecaoID.get('/selanimal/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Animal desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -94,13 +92,41 @@ selecaoID.get('/selchat/:TB_PESSOA_ID', async (req, res) => {
                 [Op.or]: [
                     { TB_PESSOA_REMETENTE_ID: TB_PESSOA_ID },
                     { TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_ID }
-                ]
+                ],
             },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_REMETENTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DESTINATARIO',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Chat desativado' });
-        }
-        return res.status(200).json(Selecionar);
+
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
+
+
+        const FiltrarPessoa = Selecionar.map(item => {
+            const dadoNovo = { ...item };
+            if (dadoNovo.TB_PESSOA_DESTINATARIO_ID == TB_PESSOA_ID) {
+                dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
+                dadoNovo.TB_CHAT_INICIADO = false;
+            } else {
+                dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
+                dadoNovo.TB_CHAT_INICIADO = true;
+            }
+            delete dadoNovo["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
+            delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
+            return dadoNovo;
+        });
+
+        return res.status(200).json(FiltrarPessoa);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
@@ -118,9 +144,8 @@ selecaoID.get('/selmensagem/:TB_CHAT_ID', async (req, res) => {
             },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Mensagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -140,13 +165,12 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Ponto de alimentação desativado' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -228,9 +252,8 @@ selecaoID.get('/selpostagem/:TB_PESSOA_ID', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) {
-            return res.status(404).json({ message: 'Postagem desativada' });
-        }
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem desativada' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

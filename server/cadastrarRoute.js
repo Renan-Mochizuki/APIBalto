@@ -1,4 +1,3 @@
-"user strict";
 const express = require('express');
 const model = require("../models")
 const chave = require('../config/appConfig').secret;
