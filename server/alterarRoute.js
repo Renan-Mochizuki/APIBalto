@@ -15,7 +15,8 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res)
         const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID); // Encontre o campo pelo ID
         if (!campo) // Se não for encontrado o campo
             return res.status(404).json({ message: "Campo não encontrado" });
-        let imageBuffer = null;
+
+        let imageBuffer = undefined ;
         if (req.file) {
             imageBuffer = req.file.buffer;
         }
@@ -69,14 +70,13 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
 
     try {
         const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
         }
-        
+
         await campo.update({
             TB_ANIMAL_NOME,
             TB_ANIMAL_IDADE,
@@ -112,15 +112,32 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
     }
 });
 
+alteracao.put('/altchat/:TB_CHAT_ID', async (req, res) => {
+    const TB_CHAT_ID = req.params.TB_CHAT_ID;
+    const { TB_ANIMAL_ID } = req.body
+
+    try {
+        const campo = await model.TB_CHAT.findByPk(TB_CHAT_ID);
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+
+        await campo.update({
+            TB_ANIMAL_ID,
+        });
+        return res.status(200).json({ message: "Campo atualizado com sucesso" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao atualizar", error: error.message });
+    }
+});
+
 alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_MENSAGEM_ID = req.params.TB_MENSAGEM_ID;
     const { TB_MENSAGEM_TEXTO_ALTERADO, TB_PESSOA_REMENTE_ID, TB_PESSOA_DESTINARIO_ID } = req.body
 
     try {
         const campo = await model.TB_MENSAGEM.findByPk(TB_MENSAGEM_ID);
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
@@ -140,14 +157,11 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, 
 
 alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) => {
     const TB_PONTO_ALIMENTACAO_ID = req.params.TB_PONTO_ALIMENTACAO_ID;
-    const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE }
-        = req.body
+    const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE }= req.body
 
     try {
         const campo = await model.TB_PONTO_ALIMENTACAO.findByPk(TB_PONTO_ALIMENTACAO_ID);
-
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
             TB_PONTO_ALIMENTACAO_LATITUDE,
@@ -162,14 +176,11 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) 
 
 alteracao.put('/altadocao/:TB_ADOCAO_ID', async (req, res) => {
     const TB_ADOCAO_ID = req.params.TB_ADOCAO_ID;
-    const { TB_ADOCAO_SITUACAO }
-        = req.body
+    const { TB_ADOCAO_SITUACAO } = req.body
 
     try {
         const campo = await model.TB_ADOCAO.findByPk(TB_ADOCAO_ID);
-
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
             TB_ADOCAO_SITUACAO
@@ -183,14 +194,11 @@ alteracao.put('/altadocao/:TB_ADOCAO_ID', async (req, res) => {
 
 alteracao.put('/altabrigo/:TB_ABRIGO_ID', async (req, res) => {
     const TB_ABRIGO_ID = req.params.TB_ABRIGO_ID;
-    const { TB_ABRIGO_SITUACAO }
-        = req.body
+    const { TB_ABRIGO_SITUACAO }   = req.body
 
     try {
         const campo = await model.TB_ABRIGO.findByPk(TB_ABRIGO_ID);
-
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
             TB_ABRIGO_SITUACAO
@@ -204,14 +212,12 @@ alteracao.put('/altabrigo/:TB_ABRIGO_ID', async (req, res) => {
 
 alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
-    const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO }
-        = req.body
+    const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO }    = req.body
 
     try {
         const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
-        if (!campo)
-            return res.status(404).json({ message: "Campo não encontrado" });
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;

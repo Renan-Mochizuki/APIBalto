@@ -82,28 +82,28 @@ selecaoID.get('/selanimal/:TB_ANIMAL_ID', async (req, res) => {
     }
 });
 
-selecaoID.get('/selchat/:TB_PESSOA_ID', async (req, res) => {
+selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
     try {
-        const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
+        const TB_PESSOA_IDD = req.params.TB_PESSOA_IDD;
 
         const Selecionar = await model.TB_CHAT.findAll({
             where: {
                 TB_CHAT_STATUS: 'ATIVADO',
                 [Op.or]: [
-                    { TB_PESSOA_REMETENTE_ID: TB_PESSOA_ID },
-                    { TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_ID }
+                    { TB_PESSOA_REMETENTE_ID: TB_PESSOA_IDD },
+                    { TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_IDD }
                 ],
             },
             include: [
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 }
             ],
             raw: true
@@ -111,18 +111,25 @@ selecaoID.get('/selchat/:TB_PESSOA_ID', async (req, res) => {
 
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
 
-
         const FiltrarPessoa = Selecionar.map(item => {
             const dadoNovo = { ...item };
-            if (dadoNovo.TB_PESSOA_DESTINATARIO_ID == TB_PESSOA_ID) {
+            if (dadoNovo.TB_PESSOA_DESTINATARIO_ID == TB_PESSOA_IDD) {
                 dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
+                dadoNovo.TB_TIPO_ID = item["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
+                dadoNovo.TB_PESSOA_ID = item["TB_PESSOA_REMETENTE_ID"];
                 dadoNovo.TB_CHAT_INICIADO = false;
             } else {
                 dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
+                dadoNovo.TB_TIPO_ID = item["TB_PESSOA_DESTINATARIO.TB_TIPO_ID"];
+                dadoNovo.TB_PESSOA_ID = item["TB_PESSOA_DESTINATARIO_ID"];
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
             delete dadoNovo["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
             delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
+            delete dadoNovo["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
+            delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_TIPO_ID"];
+            delete dadoNovo["TB_PESSOA_REMETENTE_ID"];
+            delete dadoNovo["TB_PESSOA_DESTINATARIO_ID"];
             return dadoNovo;
         });
 
@@ -165,7 +172,7 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
             ],
         });

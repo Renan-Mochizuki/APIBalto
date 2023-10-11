@@ -13,6 +13,7 @@ const selecaoAssociativa = require('./selecionarAssociativaRoute');
 const selecaoImagem = require('./selecionarImagemRoute');
 const selecaoOtimizado = require('./selecionarOtimizadoRoute');
 const exclusao = require('./deletarRoute');
+const chat = require('./chatRoute');
 
 let app = express();
 app.use(cors());
@@ -33,6 +34,7 @@ app.use(selecaoAssociativa);
 app.use(selecaoImagem);
 app.use(selecaoOtimizado);
 app.use(exclusao);
+app.use(chat);
 
 const port = 3000;
 app.listen(port, () => {

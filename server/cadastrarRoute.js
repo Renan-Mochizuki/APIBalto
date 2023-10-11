@@ -180,6 +180,41 @@ cadastro.post('/cadanimal', upload.single('img'), async (req, res) => {
     }
 });
 
+cadastro.post('/cadchat', async (req, res) => {
+    try {
+        const { TB_ANIMAL_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
+        await model.TB_CHAT.create({
+            TB_ANIMAL_ID,
+            TB_PESSOA_DESTINATARIO_ID,
+            TB_PESSOA_REMETENTE_ID,
+        });
+        return res.status(200).json({ message: "Cadastrado" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
+    }
+});
+
+cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
+    try {
+        const { TB_CHAT_ID, TB_PESSOA_ID, TB_MENSAGEM_TEXTO } = req.body
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
+        await model.TB_MENSAGEM.create({
+            TB_CHAT_ID,
+            TB_PESSOA_ID,
+            TB_MENSAGEM_TEXTO,
+            TB_MENSAGEM_IMG: imageBuffer,
+        });
+        return res.status(200).json({ message: "Cadastrado" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
+    }
+});
+
 cadastro.post('/cadpontoalimentacao', async (req, res) => {
     try {
         const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE, TB_PESSOA_ID } = req.body

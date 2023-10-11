@@ -114,11 +114,11 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
 
 selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
+        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
 
         let whereClause = {};
 
-        whereClause.TB_MENSAGEM_STATUS = 'ATIVADO';
+        whereClause.TB_CHAT_STATUS = 'ATIVADO';
 
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
@@ -131,18 +131,29 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 }
             ],
+            raw: true
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
-
-        return res.status(200).json(Selecionar);
+        
+        const FiltrarPessoa = Selecionar.map(item => {
+            const dadoNovo = { ...item };
+            if (dadoNovo.TB_PESSOA_REMETENTE_ID == TB_PESSOA_ID) {
+                dadoNovo.TB_CHAT_INICIADO = false;
+            } else {
+                dadoNovo.TB_CHAT_INICIADO = true;
+            }
+            return dadoNovo;
+        });
+        
+        return res.status(200).json(FiltrarPessoa);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
@@ -190,7 +201,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
             ],
         });
