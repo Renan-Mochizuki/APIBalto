@@ -1,5 +1,6 @@
 const express = require('express');
 const model = require('../models');
+const { Op } = require('sequelize');
 
 let selecaoFiltrar = express.Router();
 
@@ -21,7 +22,7 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário desativado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -62,6 +63,7 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
         const Selecionar = await model.TB_AVALIACAO.findAll({
             where: whereClause,
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Avaliação não encontrada' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -103,7 +105,7 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal desativado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -114,7 +116,7 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
 
 selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
+        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID, TB_PESSOA_IDD } = req.body
 
         let whereClause = {};
 
@@ -124,6 +126,18 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
         if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
         if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
+        if (TB_PESSOA_ID && TB_PESSOA_IDD) {
+            whereClause[Op.or] = [
+                {
+                    TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_ID,
+                    TB_PESSOA_REMETENTE_ID: TB_PESSOA_IDD,
+                },
+                {
+                    TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_IDD,
+                    TB_PESSOA_REMETENTE_ID: TB_PESSOA_ID,
+                },
+            ];
+        }
 
         const Selecionar = await model.TB_CHAT.findAll({
             where: whereClause,
@@ -137,12 +151,16 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
                     attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                },
+                {
+                    model: model.TB_ANIMAL,
+                    attributes: ['TB_PESSOA_ID','TB_ANIMAL_NOME'],
                 }
             ],
             raw: true
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
-        
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat não encontrado' });
+
         const FiltrarPessoa = Selecionar.map(item => {
             const dadoNovo = { ...item };
             if (dadoNovo.TB_PESSOA_REMETENTE_ID == TB_PESSOA_ID) {
@@ -150,9 +168,17 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             } else {
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
+            if(dadoNovo["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID){
+                dadoNovo.TB_ANIMAL_CADASTRADO = false;
+            } else {
+                dadoNovo.TB_ANIMAL_CADASTRADO = true;
+            }
+            delete dadoNovo["TB_ANIMAL.TB_PESSOA_ID"];
+            dadoNovo.TB_ANIMAL_NOME = item["TB_ANIMAL.TB_ANIMAL_NOME"];
+            delete dadoNovo["TB_ANIMAL.TB_ANIMAL_NOME"];
             return dadoNovo;
         });
-        
+
         return res.status(200).json(FiltrarPessoa);
     } catch (error) {
         console.error(error);
@@ -176,7 +202,7 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem desativada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -205,7 +231,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação desativado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -227,7 +253,7 @@ selecaoFiltrar.post('/selformulariodiario/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_FORMULARIO_DIARIO_IMG'] }
         });
-
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Formulário diário não encontrado' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -359,7 +385,7 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem desativada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {

@@ -183,12 +183,12 @@ cadastro.post('/cadanimal', upload.single('img'), async (req, res) => {
 cadastro.post('/cadchat', async (req, res) => {
     try {
         const { TB_ANIMAL_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
-        await model.TB_CHAT.create({
+        const Cadastrar = await model.TB_CHAT.create({
             TB_ANIMAL_ID,
             TB_PESSOA_DESTINATARIO_ID,
             TB_PESSOA_REMETENTE_ID,
         });
-        return res.status(200).json({ message: "Cadastrado" });
+        return res.status(200).json({ message: "Cadastrado", Cadastrar });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });

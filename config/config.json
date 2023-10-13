@@ -5,12 +5,14 @@
       "ssl": {
         "require": true,
         "rejectUnauthorized": false
-      }
+      },
+      "useUTC": false
     },
     "username": "Renan-Mochizuki",
     "password": "Fu4dMsUtSh3X",
     "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
-    "database": "bd_balto"
+    "database": "bd_balto",
+    "timezone": "-03:00"
   },
   "test": {
     "dialect": "postgres",
@@ -18,12 +20,14 @@
       "ssl": {
         "require": true,
         "rejectUnauthorized": false
-      }
+      },
+      "useUTC": false
     },
     "username": "Renan-Mochizuki",
     "password": "Fu4dMsUtSh3X",
     "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
-    "database": "bd_balto"
+    "database": "bd_balto",
+    "timezone": "-03:00"
   },
   "production": {
     "dialect": "postgres",
@@ -31,11 +35,13 @@
       "ssl": {
         "require": true,
         "rejectUnauthorized": false
-      }
+      },
+      "useUTC": false
     },
     "username": "Renan-Mochizuki",
     "password": "Fu4dMsUtSh3X",
     "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
-    "database": "bd_balto"
+    "database": "bd_balto",
+    "timezone": "-03:00"
   }
 }

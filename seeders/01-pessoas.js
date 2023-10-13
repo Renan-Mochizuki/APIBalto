@@ -31,7 +31,7 @@ module.exports = {
                 TB_TIPO_ID: 2,
                 TB_PESSOA_NOME: 'Veterinário Paz',
                 TB_PESSOA_NOME_PERFIL: 'Veterinário Paz',
-                TB_PESSOA_EMAIL: 'veterinariopaz@gmail.com',
+                TB_PESSOA_EMAIL: 'veterinario@gmail.com',
                 TB_PESSOA_SENHA: md5('123'),
                 createdAt: new Date(),
                 updatedAt: new Date()

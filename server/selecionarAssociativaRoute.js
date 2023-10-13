@@ -102,6 +102,7 @@ selecaoAssociativa.get('/selcores/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Cores não encontrados' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -123,6 +124,7 @@ selecaoAssociativa.get('/seltemperamentos/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Temperamentos não encontrados' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -144,6 +146,7 @@ selecaoAssociativa.get('/selsituacoes/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Situações não encontradas' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -165,6 +168,7 @@ selecaoAssociativa.get('/seltraumas/:TB_ANIMAL_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Traumas não encontrados' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -186,6 +190,7 @@ selecaoAssociativa.get('/selmarcacoes/:TB_POSTAGEM_ID', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontrados' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
