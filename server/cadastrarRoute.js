@@ -288,10 +288,11 @@ cadastro.post('/cadtratamento', async (req, res) => {
 
 cadastro.post('/cadadocao', async (req, res) => {
     try {
-        const { TB_ADOCAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID } = req.body
+        const { TB_ADOCAO_SITUACAO, TB_ADOCAO_DT_ADOCAO, TB_ANIMAL_ID, TB_PESSOA_ID } = req.body
         await model.TB_ADOCAO.create({
             TB_ANIMAL_ID,
             TB_PESSOA_ID,
+            TB_ADOCAO_DT_ADOCAO,
             TB_ADOCAO_SITUACAO,
         });
         return res.status(200).json({ message: "Cadastrado" });
