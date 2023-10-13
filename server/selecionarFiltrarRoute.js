@@ -190,7 +190,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
             ],
         });
@@ -291,6 +291,7 @@ selecaoFiltrar.post('/seladocao/filtrar', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Adoção não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
