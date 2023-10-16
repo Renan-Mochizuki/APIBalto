@@ -230,6 +230,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
             ],
         });
@@ -307,7 +308,32 @@ selecaoFiltrar.post('/selsolicitacao/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Solicitação não encontrada' });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
+    }
+});
+
+selecaoFiltrar.post('/seladocao/filtrar', async (req, res) => {
+    try {
+        const { TB_ADOCAO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
+
+        let whereClause = {};
+
+        if (TB_ADOCAO_ID) whereClause.TB_ADOCAO_ID = TB_ADOCAO_ID;
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
+
+        const Selecionar = await model.TB_ADOCAO.findAll({
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                },
+            ],
+        });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
