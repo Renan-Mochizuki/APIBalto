@@ -10,7 +10,7 @@ selecaoID.get('/selpessoa/:TB_PESSOA_ID', async (req, res) => {
 
         const Selecionar = await model.TB_PESSOA.findAll({
             where: {
-                TB_PESSOA_STATUS: 'ATIVADO',
+                TB_PESSOA_STATUS: true,
                 TB_PESSOA_ID
             },
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
@@ -63,7 +63,7 @@ selecaoID.get('/selanimal/:TB_ANIMAL_ID', async (req, res) => {
 
         const Selecionar = await model.TB_ANIMAL.findAll({
             where: {
-                TB_ANIMAL_STATUS: 'ATIVADO',
+                TB_ANIMAL_STATUS: true,
                 TB_ANIMAL_ID
             },
             attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] },
@@ -89,7 +89,6 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
 
         const Selecionar = await model.TB_CHAT.findAll({
             where: {
-                TB_CHAT_STATUS: 'ATIVADO',
                 [Op.or]: [
                     { TB_PESSOA_REMETENTE_ID: TB_PESSOA_IDD },
                     { TB_PESSOA_DESTINATARIO_ID: TB_PESSOA_IDD }
@@ -147,7 +146,7 @@ selecaoID.get('/selmensagem/:TB_CHAT_ID', async (req, res) => {
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: {
-                TB_MENSAGEM_STATUS: 'ATIVADO',
+                TB_MENSAGEM_STATUS: true,
                 TB_CHAT_ID
             },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] },
@@ -170,7 +169,7 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
 
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
             where: {
-                TB_PONTO_ALIMENTACAO_STATUS: 'ATIVADO',
+                TB_PONTO_ALIMENTACAO_STATUS: true,
                 TB_PESSOA_ID
             },
             include: [
@@ -252,7 +251,7 @@ selecaoID.get('/selpostagem/:TB_PESSOA_ID', async (req, res) => {
 
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: {
-                TB_POSTAGEM_STATUS: 'ATIVADO',
+                TB_POSTAGEM_STATUS: true,
                 TB_PESSOA_ID
             },
             attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_IMG2', 'TB_POSTAGEM_IMG3', 'TB_POSTAGEM_IMG4', 'TB_POSTAGEM_IMG5', 'TB_POSTAGEM_VIDEO'] },

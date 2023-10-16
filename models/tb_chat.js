@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 key: "TB_PESSOA_ID"
             }
         },
-        TB_CHAT_STATUS: DataTypes.STRING(10),
+        TB_CHAT_STATUS: DataTypes.BOOLEAN,
     }, {
         freezeTableName: true,
         tableName: 'TB_CHAT',

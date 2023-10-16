@@ -13,7 +13,7 @@ exclusao.put('/delpessoa/:TB_PESSOA_ID', async (req, res) => {
             return res.status(404).json("Campo não encontrado");
 
         await campo.update({ // Desativar o registro
-            TB_PESSOA_STATUS: 'DESATIVADO'
+            TB_PESSOA_STATUS: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -56,12 +56,12 @@ exclusao.put('/delanimal/:TB_ANIMAL_ID', async (req, res) => {
     const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
 
     try {
-        const campo = await model.TB_ANIMAL_ID.findByPk(TB_ANIMAL_ID);
+        const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
 
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_ANIMAL_STATUS: 'DESATIVADO'
+            TB_ANIMAL_STATUS: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -74,12 +74,12 @@ exclusao.put('/delchat/:TB_CHAT_ID', async (req, res) => {
     const TB_CHAT_ID = req.params.TB_CHAT_ID;
 
     try {
-        const campo = await model.TB_CHAT_ID.findByPk(TB_CHAT_ID);
+        const campo = await model.TB_CHAT.findByPk(TB_CHAT_ID);
 
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_CHAT_STATUS: 'DESATIVADO'
+            TB_CHAT_STATUS: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -92,12 +92,12 @@ exclusao.put('/delmensagem/:TB_MENSAGEM_ID', async (req, res) => {
     const TB_MENSAGEM_ID = req.params.TB_MENSAGEM_ID;
 
     try {
-        const campo = await model.TB_MENSAGEM_ID.findByPk(TB_MENSAGEM_ID);
+        const campo = await model.TB_MENSAGEM.findByPk(TB_MENSAGEM_ID);
 
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_MENSAGEM_STATUS: 'DESATIVADO'
+            TB_MENSAGEM_STATUS: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -115,7 +115,7 @@ exclusao.put('/delpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) =
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_PONTO_ALIMENTACAO_ID: 'DESATIVADO'
+            TB_PONTO_ALIMENTACAO_ID: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -208,7 +208,7 @@ exclusao.put('/delpostagem/:TB_POSTAGEM_ID', async (req, res) => {
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_POSTAGEM_STATUS: 'DESATIVADO'
+            TB_POSTAGEM_STATUS: false
         });
         return res.status(200).json({message: "Campo deletado com sucesso"});
     } catch (error) {
@@ -301,7 +301,7 @@ exclusao.put('/reativarpessoa/:TB_PESSOA_ID', async (req, res) => {
         if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
 
         await campo.update({
-            TB_PESSOA_STATUS: 'ATIVADO'
+            TB_PESSOA_STATUS: true
         });
         return res.status(200).json({message: "Campo reativado com sucesso"});
     } catch (error) {

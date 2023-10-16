@@ -202,13 +202,13 @@ cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
         if (req.file) {
             imageBuffer = req.file.buffer;
         }
-        await model.TB_MENSAGEM.create({
+        const Cadastrar = await model.TB_MENSAGEM.create({
             TB_CHAT_ID,
             TB_PESSOA_ID,
             TB_MENSAGEM_TEXTO,
             TB_MENSAGEM_IMG: imageBuffer,
         });
-        return res.status(200).json({ message: "Cadastrado" });
+        return res.status(200).json({ message: "Cadastrado", Cadastrar });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
@@ -303,6 +303,25 @@ cadastro.post('/cadtrauma', async (req, res) => {
     }
 });
 
+
+cadastro.post('/cadsolicitacao', async (req, res) => {
+    try {
+        const { TB_SOLICITACAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID, TB_SOLICITACAO_DT_SOLICITACAO, TB_SOLICITACAO_DT_APROVACAO, TB_TIPO_SOLICITACAO_ID } = req.body
+        await model.TB_ADOCAO.create({
+            TB_ANIMAL_ID,
+            TB_PESSOA_ID,
+            TB_SOLICITACAO_SITUACAO,
+            TB_SOLICITACAO_DT_SOLICITACAO,
+            TB_SOLICITACAO_DT_APROVACAO,
+            TB_TIPO_SOLICITACAO_ID
+        });
+        return res.status(200).json({ message: "Cadastrado" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
+    }
+});
+
 cadastro.post('/cadtratamento', async (req, res) => {
     try {
         const { TB_TRATAMENTO_ANONIMO, TB_TRATAMENTO_DESCRICAO, TB_TRATAMENTO_DT_FINAL, TB_TRATAMENTO_DT_INICIO, TB_ANIMAL_ID, TB_PESSOA_ID } = req.body
@@ -313,37 +332,6 @@ cadastro.post('/cadtratamento', async (req, res) => {
             TB_TRATAMENTO_DT_INICIO,
             TB_TRATAMENTO_DT_FINAL,
             TB_TRATAMENTO_ANONIMO,
-        });
-        return res.status(200).json({ message: "Cadastrado" });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
-    }
-});
-
-cadastro.post('/cadadocao', async (req, res) => {
-    try {
-        const { TB_ADOCAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID } = req.body
-        await model.TB_ADOCAO.create({
-            TB_ANIMAL_ID,
-            TB_PESSOA_ID,
-            TB_ADOCAO_SITUACAO,
-        });
-        return res.status(200).json({ message: "Cadastrado" });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
-    }
-});
-
-cadastro.post('/cadabrigo', async (req, res) => {
-    try {
-        const { TB_ABRIGO_DT_ABRIGO, TB_ABRIGO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID } = req.body
-        await model.TB_ABRIGO.create({
-            TB_ANIMAL_ID,
-            TB_PESSOA_ID,
-            TB_ABRIGO_DT_ABRIGO,
-            TB_ABRIGO_SITUACAO,
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {

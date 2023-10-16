@@ -122,8 +122,8 @@ module.exports = {
       },
       TB_PESSOA_STATUS: {
         allowNull: false,
-        type: Sequelize.STRING(10),
-        defaultValue: 'ATIVADO'
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       TB_TIPO_ID: {
         allowNull: false,

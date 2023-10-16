@@ -15,10 +15,13 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         TB_MENSAGEM_TEXTO: DataTypes.STRING(256),
-        TB_MENSAGEM_IMG: DataTypes.BLOB,
         TB_MENSAGEM_TEXTO_ALTERADO: DataTypes.STRING(256),
+        TB_MENSAGEM_IMG: DataTypes.BLOB,
+        TB_MENSAGEM_POSSUI_IMG: DataTypes.BOOLEAN,
+        TB_MENSAGEM_LATITUDE: DataTypes.DECIMAL,
+        TB_MENSAGEM_LONGITUDE: DataTypes.DECIMAL,
         TB_PESSOA_ID: DataTypes.INTEGER,
-        TB_MENSAGEM_STATUS: DataTypes.STRING(10),
+        TB_MENSAGEM_STATUS: DataTypes.BOOLEAN,
     }, {
         freezeTableName: true,
         tableName: 'TB_MENSAGEM',

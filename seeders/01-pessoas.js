@@ -9,6 +9,13 @@ module.exports = {
                 TB_PESSOA_NOME_PERFIL: 'João',
                 TB_PESSOA_EMAIL: 'joao@gmail.com',
                 TB_PESSOA_SENHA: md5('123'),
+                TB_PESSOA_ANIMAL_CASA: "APARTAMENTO",
+                TB_PESSOA_ANIMAL_ESPACO: "MEDIO",
+                TB_PESSOA_ANIMAL_PASSEAR: 2,
+                TB_PESSOA_ANIMAL_AUSENCIA: "Meus familiares",
+                TB_PESSOA_ANIMAL_FAMILIA: true,
+                TB_PESSOA_ANIMAL_RUA: true,
+                TB_PESSOA_ANIMAL_QUANTIDADE: 2,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }, {

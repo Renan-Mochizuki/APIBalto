@@ -109,8 +109,8 @@ module.exports = {
       },
       TB_ANIMAL_STATUS: {
         allowNull: false,
-        type: Sequelize.STRING(10),
-        defaultValue: 'ATIVADO'
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,

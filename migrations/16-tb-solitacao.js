@@ -2,14 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('TB_CHAT', {
-            TB_CHAT_ID: {
+        await queryInterface.createTable('TB_SOLICITACAO', {
+            TB_SOLICITACAO_ID: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
             TB_ANIMAL_ID: {
+                allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'TB_ANIMAL',
@@ -18,7 +19,7 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            TB_PESSOA_DESTINATARIO_ID: {
+            TB_PESSOA_ID: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
@@ -28,20 +29,27 @@ module.exports = {
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
             },
-            TB_PESSOA_REMETENTE_ID: {
+            TB_SOLICITACAO_DT_SOLICITACAO: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            TB_SOLICITACAO_DT_APROVACAO: {
+                type: Sequelize.DATE
+            },
+            TB_SOLICITACAO_SITUACAO: {
+                allowNull: false,
+                type: Sequelize.STRING(12),
+                defaultValue: 'EM ANDAMENTO'
+            },
+            TB_TIPO_SOLICITACAO_ID: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'TB_PESSOA',
-                    key: 'TB_PESSOA_ID'
+                    model: 'TB_TIPO_SOLICITACAO',
+                    key: 'TB_TIPO_SOLICITACAO_ID'
                 },
                 onUpdate: 'cascade',
                 onDelete: 'cascade'
-            },
-            TB_CHAT_STATUS: {
-                allowNull: false,
-                type: Sequelize.BOOLEAN,
-                defaultValue: true
             },
             createdAt: {
                 allowNull: false,
@@ -54,6 +62,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('TB_CHAT');
+        await queryInterface.dropTable('TB_SOLICITACAO');
     }
 };

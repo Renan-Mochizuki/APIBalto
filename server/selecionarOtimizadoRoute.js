@@ -7,7 +7,7 @@ selecaoOtimizado.get('/selpessoas/', async (req, res) => {
     try {
         const Selecionar = await model.TB_PESSOA.findAll({
             where: {
-                TB_PESSOA_STATUS: 'ATIVADO'
+                TB_PESSOA_STATUS: true
             },
             attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
         });
@@ -26,7 +26,7 @@ selecaoOtimizado.post('/selpessoas/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_PESSOA_STATUS = 'ATIVADO';
+        whereClause.TB_PESSOA_STATUS = true;
 
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_PESSOA_NOME_PERFIL) whereClause.TB_PESSOA_NOME_PERFIL = TB_PESSOA_NOME_PERFIL;
@@ -49,7 +49,7 @@ selecaoOtimizado.get('/selanimais/', async (req, res) => {
     try {
         const Selecionar = await model.TB_ANIMAL.findAll({
             where: {
-                TB_ANIMAL_STATUS: 'ATIVADO'
+                TB_ANIMAL_STATUS: true
             },
             attributes: ['TB_ANIMAL_ID', 'TB_PESSOA_ID', 'TB_ANIMAL_NOME', 'TB_ANIMAL_SAUDE', 'TB_ANIMAL_ALERTA', 'createdAt', 'updatedAt'],
             include: [
@@ -74,7 +74,7 @@ selecaoOtimizado.post('/selanimais/filtrar/', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_ANIMAL_STATUS = 'ATIVADO';
+        whereClause.TB_ANIMAL_STATUS = true;
 
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;

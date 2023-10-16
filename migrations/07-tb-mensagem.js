@@ -32,16 +32,27 @@ module.exports = {
       TB_MENSAGEM_TEXTO: {
         type: Sequelize.STRING(256)
       },
-      TB_MENSAGEM_IMG: {
-        type: Sequelize.BLOB
-      },
       TB_MENSAGEM_TEXTO_ALTERADO: {
         type: Sequelize.STRING(256)
       },
+      TB_MENSAGEM_IMG: {
+        type: Sequelize.BLOB
+      },
+      TB_MENSAGEM_POSSUI_IMG: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      TB_MENSAGEM_LATITUDE: {
+        type: Sequelize.DECIMAL
+      },
+      TB_MENSAGEM_LONGITUDE: {
+        type: Sequelize.DECIMAL
+      },
       TB_MENSAGEM_STATUS: {
         allowNull: false,
-        type: Sequelize.STRING(10),
-        defaultValue: 'ATIVADO'
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,

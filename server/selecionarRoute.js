@@ -7,11 +7,10 @@ selecao.get('/selpessoa/', async (req, res) => {
     try {
         const Selecionar = await model.TB_PESSOA.findAll({ // Selecione todos campos com status ativado
             where: {
-                TB_PESSOA_STATUS: 'ATIVADO'
+                TB_PESSOA_STATUS: true
             },
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] } // Excluindo TB_PESSOA_SENHA e TB_PESSOA_IMG do select
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário desativado' }); // Enviar mensagem caso o select der uma array vazia
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -44,7 +43,7 @@ selecao.get('/selanimal/', async (req, res) => {
     try {
         const Selecionar = await model.TB_ANIMAL.findAll({
             where: {
-                TB_ANIMAL_STATUS: 'ATIVADO'
+                TB_ANIMAL_STATUS: true
             },
             attributes: { exclude: ['TB_ANIMAL_IMG1', 'TB_ANIMAL_IMG2', 'TB_ANIMAL_IMG3', 'TB_ANIMAL_IMG4', 'TB_ANIMAL_IMG5'] },
             include: [
@@ -54,7 +53,6 @@ selecao.get('/selanimal/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal desativado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -67,10 +65,9 @@ selecao.get('/selchat/', async (req, res) => {
     try {
         const Selecionar = await model.TB_CHAT.findAll({
             where: {
-                TB_CHAT_STATUS: 'ATIVADO'
+                TB_CHAT_STATUS: true
             }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat desativado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -83,11 +80,10 @@ selecao.get('/selmensagem/', async (req, res) => {
     try {
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: {
-                TB_MENSAGEM_STATUS: 'ATIVADO',
+                TB_MENSAGEM_STATUS: true,
             },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem desativada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -100,7 +96,7 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
     try {
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
             where: {
-                TB_PONTO_ALIMENTACAO_STATUS: 'ATIVADO'
+                TB_PONTO_ALIMENTACAO_STATUS: true
             },
             include: [
                 {
@@ -109,7 +105,6 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação desativado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -178,6 +173,23 @@ selecao.get('/seltrauma/', async (req, res) => {
     }
 });
 
+selecao.get('/selsolicitacao/', async (req, res) => {
+    try {
+        const Selecionar = await model.TB_SOLICITACAO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
+    }
+});
+
 selecao.get('/seltratamento/', async (req, res) => {
     try {
         const Selecionar = await model.TB_TRATAMENTO.findAll({
@@ -195,45 +207,11 @@ selecao.get('/seltratamento/', async (req, res) => {
     }
 });
 
-selecao.get('/seladocao/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ADOCAO.findAll({
-            include: [
-                {
-                    model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
-    }
-});
-
-selecao.get('/selabrigo/', async (req, res) => {
-    try {
-        const Selecionar = await model.TB_ABRIGO.findAll({
-            include: [
-                {
-                    model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
-                },
-            ],
-        });
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
-    }
-});
-
 selecao.get('/selpostagem/', async (req, res) => {
     try {
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: {
-                TB_POSTAGEM_STATUS: 'ATIVADO',
+                TB_POSTAGEM_STATUS: true,
             },
             attributes: { exclude: ['TB_POSTAGEM_IMG1', 'TB_POSTAGEM_VIDEO'] },
             include: [
@@ -243,7 +221,6 @@ selecao.get('/selpostagem/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem desativada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -269,6 +246,7 @@ selecao.get('/seldenuncia/', async (req, res) => {
                 },
             ],
         });
+        
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

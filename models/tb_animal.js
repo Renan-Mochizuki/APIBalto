@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_ANIMAL_IMG3: DataTypes.BLOB,
     TB_ANIMAL_IMG4: DataTypes.BLOB,
     TB_ANIMAL_IMG5: DataTypes.BLOB,
-    TB_ANIMAL_STATUS: DataTypes.STRING(10),
+    TB_ANIMAL_STATUS: DataTypes.BOOLEAN,
   }, {
     freezeTableName: true,
     tableName: "TB_ANIMAL",
@@ -39,8 +39,7 @@ module.exports = function (sequelize, DataTypes) {
   TB_ANIMAL.associate = function (models) {
     TB_ANIMAL.belongsTo(models.TB_PESSOA, { foreignKey: "TB_PESSOA_ID" });
     TB_ANIMAL.hasMany(models.TB_TRATAMENTO, { foreignKey: "TB_ANIMAL_ID" });
-    TB_ANIMAL.hasMany(models.TB_ADOCAO, { foreignKey: "TB_ANIMAL_ID" });
-    TB_ANIMAL.hasMany(models.TB_ABRIGO, { foreignKey: "TB_ANIMAL_ID" });
+    TB_ANIMAL.hasMany(models.TB_SOLICITACAO, { foreignKey: "TB_ANIMAL_ID" });
     TB_ANIMAL.hasMany(models.TB_VACINA, { foreignKey: "TB_ANIMAL_ID" });
     TB_ANIMAL.hasMany(models.TB_ANIMAL_COR, { foreignKey: "TB_ANIMAL_ID" });
     TB_ANIMAL.hasMany(models.TB_ANIMAL_TEMPERAMENTO, { foreignKey: "TB_ANIMAL_ID" });

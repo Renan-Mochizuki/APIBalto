@@ -49,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA_ATIVO: DataTypes.BOOLEAN,
     TB_PESSOA_LATITUDE: DataTypes.DECIMAL,
     TB_PESSOA_LONGITUDE: DataTypes.DECIMAL,
-    TB_PESSOA_STATUS: DataTypes.STRING(10),
+    TB_PESSOA_STATUS: DataTypes.BOOLEAN,
   }, {
     freezeTableName: true,
     tableName: "TB_PESSOA",
@@ -61,8 +61,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA.hasMany(models.TB_ANIMAL, { foreignKey: "TB_PESSOA_ID" });
     TB_PESSOA.hasMany(models.TB_PONTO_ALIMENTACAO, { foreignKey: "TB_PESSOA_ID" });
     TB_PESSOA.hasMany(models.TB_TRATAMENTO, { foreignKey: "TB_PESSOA_ID" });
-    TB_PESSOA.hasMany(models.TB_ADOCAO, { foreignKey: "TB_PESSOA_ID" });
-    TB_PESSOA.hasMany(models.TB_ABRIGO, { foreignKey: "TB_PESSOA_ID" });
+    TB_PESSOA.hasMany(models.TB_SOLICITACAO, { foreignKey: "TB_PESSOA_ID" });
     TB_PESSOA.hasMany(models.TB_POSTAGEM, { foreignKey: "TB_PESSOA_ID" });
     TB_PESSOA.hasMany(models.TB_DENUNCIA, { foreignKey: "TB_PESSOA_DENUNCIANTE_ID" });
     TB_PESSOA.hasMany(models.TB_MENSAGEM, { foreignKey: "TB_PESSOA_ID" });

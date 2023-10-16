@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_POSTAGEM_VIDEO: DataTypes.BLOB,
     TB_POSTAGEM_TEXTO: DataTypes.STRING(256),
     TB_POSTAGEM_TEXTO_ALTERADO: DataTypes.STRING(256),
-    TB_POSTAGEM_STATUS: DataTypes.STRING(10),
+    TB_POSTAGEM_STATUS: DataTypes.BOOLEAN
   },
     {
       freezeTableName: true,

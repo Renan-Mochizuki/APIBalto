@@ -10,7 +10,7 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_PESSOA_STATUS = 'ATIVADO';
+        whereClause.TB_PESSOA_STATUS = true;
 
         // Coloque os where que foram pedidos pelo frontend
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
@@ -77,7 +77,7 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_ANIMAL_STATUS = 'ATIVADO';
+        whereClause.TB_ANIMAL_STATUS = true;
 
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
@@ -120,8 +120,6 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_CHAT_STATUS = 'ATIVADO';
-
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
         if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
@@ -154,12 +152,15 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
                 },
                 {
                     model: model.TB_ANIMAL,
-                    attributes: ['TB_PESSOA_ID','TB_ANIMAL_NOME'],
+                    attributes: ['TB_PESSOA_ID', 'TB_ANIMAL_NOME'],
                 }
+            ],
+            order: [
+                ['TB_CHAT_ID', 'DESC'],
             ],
             raw: true
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat não encontrado' });
+        // if (Selecionar.length == 0) return res.status(404).json({ message:  'Chat não encontrado' });
 
         const FiltrarPessoa = Selecionar.map(item => {
             const dadoNovo = { ...item };
@@ -168,7 +169,7 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             } else {
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
-            if(dadoNovo["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID){
+            if (dadoNovo["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID) {
                 dadoNovo.TB_ANIMAL_CADASTRADO = false;
             } else {
                 dadoNovo.TB_ANIMAL_CADASTRADO = true;
@@ -192,15 +193,16 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_MENSAGEM_STATUS = 'ATIVADO';
-
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
         if (TB_MENSAGEM_ID) whereClause.TB_MENSAGEM_ID = TB_MENSAGEM_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
 
         const Selecionar = await model.TB_MENSAGEM.findAll({
             where: whereClause,
-            attributes: { exclude: ['TB_MENSAGEM_IMG'] }
+            attributes: { exclude: ['TB_MENSAGEM_IMG'] },
+            order: [
+                ['TB_MENSAGEM_ID', 'DESC'],
+            ]
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem não encontrada' });
 
@@ -217,7 +219,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_PONTO_ALIMENTACAO_STATUS = 'ATIVADO';
+        whereClause.TB_PONTO_ALIMENTACAO_STATUS = true;
 
         if (TB_PONTO_ALIMENTACAO_ID) whereClause.TB_PONTO_ALIMENTACAO_ID = TB_PONTO_ALIMENTACAO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
@@ -273,6 +275,39 @@ selecaoFiltrar.post('/selvacina/filtrar', async (req, res) => {
         const Selecionar = await model.TB_VACINA.findAll({
             where: whereClause
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Vacina não encontrada' });
+
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
+    }
+});
+
+selecaoFiltrar.post('/selsolicitacao/filtrar', async (req, res) => {
+    try {
+        const { TB_SOLICITACAO_ID ,TB_SOLICITACAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID, TB_SOLICITACAO_DT_SOLICITACAO, TB_SOLICITACAO_DT_APROVACAO, TB_TIPO_SOLICITACAO_ID } = req.body
+
+        let whereClause = {};
+
+        if (TB_SOLICITACAO_ID) whereClause.TB_SOLICITACAO_ID = TB_SOLICITACAO_ID;
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
+        if (TB_SOLICITACAO_SITUACAO) whereClause.TB_SOLICITACAO_SITUACAO = TB_SOLICITACAO_SITUACAO;
+        if (TB_SOLICITACAO_DT_SOLICITACAO) whereClause.TB_SOLICITACAO_DT_SOLICITACAO = TB_SOLICITACAO_DT_SOLICITACAO;
+        if (TB_SOLICITACAO_DT_APROVACAO) whereClause.TB_SOLICITACAO_DT_APROVACAO = TB_SOLICITACAO_DT_APROVACAO;
+        if (TB_TIPO_SOLICITACAO_ID) whereClause.TB_TIPO_SOLICITACAO_ID = TB_TIPO_SOLICITACAO_ID;
+
+        const Selecionar = await model.TB_SOLICITACAO.findAll({
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                },
+            ],
+        });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Solicitação não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -283,15 +318,17 @@ selecaoFiltrar.post('/selvacina/filtrar', async (req, res) => {
 
 selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
     try {
-        const { TB_TRATAMENTO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
+        const { TB_TRATAMENTO_ID, TB_PESSOA_ID, TB_ANIMAL_ID, TB_TRATAMENTO_ANONIMO } = req.body
 
         let whereClause = {};
 
-        whereClause.TB_POSTAGEM_STATUS = 'ATIVADO';
+        whereClause.TB_POSTAGEM_STATUS = true;
 
         if (TB_TRATAMENTO_ID) whereClause.TB_TRATAMENTO_ID = TB_TRATAMENTO_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
+        if (TB_TRATAMENTO_ANONIMO) whereClause.TB_TRATAMENTO_ANONIMO = TB_TRATAMENTO_ANONIMO;
+
 
         const Selecionar = await model.TB_TRATAMENTO.findAll({
             where: whereClause,
@@ -302,6 +339,8 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
                 },
             ],
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Tratamento não encontrado' });
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -309,59 +348,7 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
     }
 });
 
-selecaoFiltrar.post('/seladocao/filtrar', async (req, res) => {
-    try {
-        const { TB_ADOCAO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
 
-        let whereClause = {};
-
-        if (TB_ADOCAO_ID) whereClause.TB_ADOCAO_ID = TB_ADOCAO_ID;
-        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
-        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
-
-        const Selecionar = await model.TB_ADOCAO.findAll({
-            where: whereClause,
-            include: [
-                {
-                    model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
-                },
-            ],
-        });
-
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
-    }
-});
-
-selecaoFiltrar.post('/selabrigo/filtrar', async (req, res) => {
-    try {
-        const { TB_ABRIGO_ID, TB_PESSOA_ID, TB_ANIMAL_ID } = req.body
-
-        let whereClause = {};
-
-        if (TB_ABRIGO_ID) whereClause.TB_ABRIGO_ID = TB_ABRIGO_ID;
-        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
-        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
-
-        const Selecionar = await model.TB_ABRIGO.findAll({
-            where: whereClause,
-            include: [
-                {
-                    model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
-                },
-            ],
-        });
-
-        return res.status(200).json(Selecionar);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
-    }
-});
 
 selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
     try {
@@ -369,7 +356,7 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
 
         let whereClause = {};
 
-        whereClause.TB_POSTAGEM_STATUS = 'ATIVADO';
+        whereClause.TB_POSTAGEM_STATUS = true;
 
         if (TB_POSTAGEM_ID) whereClause.TB_POSTAGEM_ID = TB_POSTAGEM_ID;
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
