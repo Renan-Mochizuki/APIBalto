@@ -2,7 +2,7 @@
   "name": "apibalto",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx nodemon server",
+    "start": "npx nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all",
     "database": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"

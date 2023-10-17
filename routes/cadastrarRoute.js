@@ -197,7 +197,7 @@ cadastro.post('/cadchat', async (req, res) => {
 
 cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_PESSOA_ID, TB_MENSAGEM_TEXTO } = req.body
+        const { TB_CHAT_ID, TB_PESSOA_ID, TB_MENSAGEM_TEXTO, TB_MENSAGEM_POSSUI_IMG } = req.body
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
@@ -206,6 +206,7 @@ cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
             TB_CHAT_ID,
             TB_PESSOA_ID,
             TB_MENSAGEM_TEXTO,
+            TB_MENSAGEM_POSSUI_IMG,
             TB_MENSAGEM_IMG: imageBuffer,
         });
         return res.status(200).json({ message: "Cadastrado", Cadastrar });
