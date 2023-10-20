@@ -22,7 +22,7 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado', error: 'Usuário não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -43,6 +43,7 @@ selecaoFiltrar.post('/selseguindo/filtrar', async (req, res) => {
         const Selecionar = await model.TB_SEGUINDO.findAll({
             where: whereClause
         });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Seguindo não encontrado', error: 'Seguindo não encontrado' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -63,7 +64,7 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
         const Selecionar = await model.TB_AVALIACAO.findAll({
             where: whereClause,
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Avaliação não encontrada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Avaliação não encontrada', error: 'Avaliação não encontrada' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -105,7 +106,7 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado', error: 'Animal não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -160,7 +161,7 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             ],
             raw: true
         });
-        // if (Selecionar.length == 0) return res.status(404).json({ message:  'Chat não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat não encontrado', error: 'Chat não encontrado' });
 
         const FiltrarPessoa = Selecionar.map(item => {
             const dadoNovo = { ...item };
@@ -179,7 +180,7 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             delete dadoNovo["TB_ANIMAL.TB_ANIMAL_NOME"];
             return dadoNovo;
         });
-
+        console.log(Selecionar, FiltrarPessoa)
         return res.status(200).json(FiltrarPessoa);
     } catch (error) {
         console.error(error);
@@ -204,7 +205,7 @@ selecaoFiltrar.post('/selmensagem/filtrar', async (req, res) => {
                 ['TB_MENSAGEM_ID', 'DESC'],
             ]
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem não encontrada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Mensagem não encontrada', error: 'Mensagem não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -234,7 +235,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Ponto de alimentação não encontrado', error: 'Ponto de alimentação não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -256,7 +257,7 @@ selecaoFiltrar.post('/selformulariodiario/filtrar', async (req, res) => {
             where: whereClause,
             attributes: { exclude: ['TB_FORMULARIO_DIARIO_IMG'] }
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Formulário diário não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Formulário diário não encontrado', error: 'Formulário diário não encontrado' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -276,7 +277,7 @@ selecaoFiltrar.post('/selvacina/filtrar', async (req, res) => {
         const Selecionar = await model.TB_VACINA.findAll({
             where: whereClause
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Vacina não encontrada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Vacina não encontrada', error: 'Vacina não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -287,7 +288,7 @@ selecaoFiltrar.post('/selvacina/filtrar', async (req, res) => {
 
 selecaoFiltrar.post('/selsolicitacao/filtrar', async (req, res) => {
     try {
-        const { TB_SOLICITACAO_ID ,TB_SOLICITACAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID, TB_SOLICITACAO_DT_SOLICITACAO, TB_SOLICITACAO_DT_APROVACAO, TB_TIPO_SOLICITACAO_ID } = req.body
+        const { TB_SOLICITACAO_ID, TB_SOLICITACAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID, TB_SOLICITACAO_DT_SOLICITACAO, TB_SOLICITACAO_DT_APROVACAO, TB_TIPO_SOLICITACAO_ID } = req.body
 
         let whereClause = {};
 
@@ -338,7 +339,7 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Tratamento não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Tratamento não encontrado', error: 'Tratamento não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -346,8 +347,6 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
     }
 });
-
-
 
 selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
     try {
@@ -371,7 +370,7 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem não encontrada' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem não encontrada', error: 'Postagem não encontrada' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {

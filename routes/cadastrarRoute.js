@@ -308,7 +308,7 @@ cadastro.post('/cadtrauma', async (req, res) => {
 cadastro.post('/cadsolicitacao', async (req, res) => {
     try {
         const { TB_SOLICITACAO_SITUACAO, TB_ANIMAL_ID, TB_PESSOA_ID, TB_SOLICITACAO_DT_SOLICITACAO, TB_SOLICITACAO_DT_APROVACAO, TB_TIPO_SOLICITACAO_ID } = req.body
-        await model.TB_ADOCAO.create({
+        await model.TB_SOLICITACAO.create({
             TB_ANIMAL_ID,
             TB_PESSOA_ID,
             TB_SOLICITACAO_SITUACAO,
