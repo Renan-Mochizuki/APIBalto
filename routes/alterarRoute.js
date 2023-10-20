@@ -14,7 +14,7 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res)
     try {
         const campo = await model.TB_PESSOA.findByPk(TB_PESSOA_ID); // Encontre o campo pelo ID
         if (!campo) // Se não for encontrado o campo
-            return res.status(404).json({ message: "Campo não encontrado" });
+            return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         let imageBuffer = undefined;
         if (req.file) {
@@ -70,7 +70,7 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
 
     try {
         const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         let imageBuffer = null;
         if (req.file) {
@@ -118,7 +118,7 @@ alteracao.put('/altchat/:TB_CHAT_ID', async (req, res) => {
 
     try {
         const campo = await model.TB_CHAT.findByPk(TB_CHAT_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         await campo.update({
             TB_ANIMAL_ID,
@@ -136,7 +136,7 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, 
 
     try {
         const campo = await model.TB_MENSAGEM.findByPk(TB_MENSAGEM_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         let imageBuffer = null;
         if (req.file) {
@@ -161,7 +161,7 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) 
 
     try {
         const campo = await model.TB_PONTO_ALIMENTACAO.findByPk(TB_PONTO_ALIMENTACAO_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         await campo.update({
             TB_PONTO_ALIMENTACAO_LATITUDE,
@@ -180,7 +180,7 @@ alteracao.put('/altsolicitacao/:TB_SOLICITACAO_ID', async (req, res) => {
 
     try {
         const campo = await model.TB_SOLICITACAO.findByPk(TB_SOLICITACAO_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         await campo.update({
             TB_SOLICITACAO_SITUACAO,
@@ -200,7 +200,7 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, 
 
     try {
         const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
-        if (!campo) return res.status(404).json({ message: "Campo não encontrado" });
+        if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
         let imageBuffer = null;
         if (req.file) {

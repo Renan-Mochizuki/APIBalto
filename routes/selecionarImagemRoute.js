@@ -14,7 +14,7 @@ selecaoImagem.get('/selpessoaimg/:TB_PESSOA_ID', async (req, res) => {
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_PESSOA_IMG);
+        return res.send(campo.TB_PESSOA_IMG);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }
@@ -31,7 +31,7 @@ selecaoImagem.get('/selanimalimg/:TB_ANIMAL_ID', async (req, res) => {
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_ANIMAL_IMG1);
+        return res.send(campo.TB_ANIMAL_IMG1);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }
@@ -48,7 +48,7 @@ selecaoImagem.get('/selmensagemimg/:TB_MENSAGEM_ID', async (req, res) => {
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_MENSAGEM_IMG);
+        return res.send(campo.TB_MENSAGEM_IMG);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }
@@ -65,7 +65,7 @@ selecaoImagem.get('/selformulariodiarioimg/:TB_FORMULARIO_DIARIO_ID', async (req
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_FORMULARIO_DIARIO_IMG);
+        return res.send(campo.TB_FORMULARIO_DIARIO_IMG);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }
@@ -82,7 +82,7 @@ selecaoImagem.get('/selpostagemimg/:TB_POSTAGEM_ID', async (req, res) => {
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_POSTAGEM_IMG1);
+        return res.send(campo.TB_POSTAGEM_IMG1);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }
@@ -99,7 +99,7 @@ selecaoImagem.get('/seldenunciaimg/:TB_DENUNCIA_ID', async (req, res) => {
             return res.status(404).json({ message: 'Imagem não cadastrada' });
 
         res.setHeader('Content-Type', 'image/jpg');
-        res.send(campo.TB_DENUNCIA_IMG1);
+        return res.send(campo.TB_DENUNCIA_IMG1);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
     }

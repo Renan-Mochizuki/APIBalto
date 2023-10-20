@@ -21,15 +21,6 @@ module.exports = {
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
-            {
-                TB_TIPO_ID: 7,
-                TB_PESSOA_NOME: 'Vitor Hugo Gomes',
-                TB_PESSOA_NOME_PERFIL: 'VitorG',
-                TB_PESSOA_EMAIL: 'gomesdesouza017@gmail.com',
-                TB_PESSOA_SENHA: md5('123'),
-                createdAt: new Date(),
-                updatedAt: new Date()
-            },
         ];
         return queryInterface.bulkInsert('TB_PESSOA', datapessoa)
     },

@@ -16,7 +16,7 @@ selecaoID.get('/selpessoa/:TB_PESSOA_ID', async (req, res) => {
             attributes: { exclude: ['TB_PESSOA_SENHA', 'TB_PESSOA_IMG'] }
         });
 
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado', error: 'Usuário não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {

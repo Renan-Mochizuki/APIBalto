@@ -11,7 +11,6 @@ selecaoOtimizado.get('/selpessoas/', async (req, res) => {
             },
             attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -36,7 +35,7 @@ selecaoOtimizado.post('/selpessoas/filtrar', async (req, res) => {
             where: whereClause,
             attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Usuário não encontrado', error: 'Usuário não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -59,7 +58,6 @@ selecaoOtimizado.get('/selanimais/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -89,7 +87,7 @@ selecaoOtimizado.post('/selanimais/filtrar/', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado', error: 'Animal não encontrado' });
 
         return res.status(200).json(Selecionar);
     } catch (error) {
