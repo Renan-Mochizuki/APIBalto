@@ -46,6 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_ANIMAL.hasMany(models.TB_ANIMAL_SITUACAO, { foreignKey: "TB_ANIMAL_ID" });
     TB_ANIMAL.hasMany(models.TB_ANIMAL_TRAUMA, { foreignKey: "TB_ANIMAL_ID" });
     TB_ANIMAL.hasMany(models.TB_POSTAGEM_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
+    TB_ANIMAL.hasMany(models.TB_CHAT_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
   };
   return TB_ANIMAL;
 };

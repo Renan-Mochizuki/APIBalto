@@ -117,12 +117,11 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
 
 selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_ANIMAL_ID, TB_PESSOA_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID, TB_PESSOA_IDD } = req.body
+        const { TB_CHAT_ID, TB_PESSOA_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID, TB_PESSOA_IDD } = req.body
 
         let whereClause = {};
 
         if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
-        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
         if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
         if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
         if (TB_PESSOA_ID && TB_PESSOA_IDD) {
@@ -138,7 +137,7 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             ];
         }
 
-        const Selecionar = await model.TB_CHAT.findAll({
+        const Chats = await model.TB_CHAT.findAll({
             where: whereClause,
             include: [
                 {
@@ -150,10 +149,6 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
                     attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
-                },
-                {
-                    model: model.TB_ANIMAL,
-                    attributes: ['TB_PESSOA_ID', 'TB_ANIMAL_NOME'],
                 }
             ],
             order: [
@@ -161,27 +156,42 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             ],
             raw: true
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat não encontrado', error: 'Chat não encontrado' });
+        if (Chats.length == 0) return res.status(404).json({ message: 'Chat não encontrado', error: 'Chat não encontrado' });
 
-        const FiltrarPessoa = Selecionar.map(item => {
+        const chatIds = Chats.map(chat => chat.TB_CHAT_ID);
+        const Animais = await model.TB_CHAT_ANIMAL.findAll({
+            where: {
+                TB_CHAT_ID: chatIds
+            },
+            include: [
+                {
+                    model: model.TB_ANIMAL,
+                    attributes: ['TB_ANIMAL_NOME', 'TB_PESSOA_ID'],
+                },
+            ],
+            raw: true
+        });
+
+        const Selecionar = Chats.map(item => {
             const dadoNovo = { ...item };
             if (dadoNovo.TB_PESSOA_REMETENTE_ID == TB_PESSOA_ID) {
                 dadoNovo.TB_CHAT_INICIADO = false;
             } else {
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
-            if (dadoNovo["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID) {
-                dadoNovo.TB_ANIMAL_CADASTRADO = false;
-            } else {
-                dadoNovo.TB_ANIMAL_CADASTRADO = true;
-            }
-            delete dadoNovo["TB_ANIMAL.TB_PESSOA_ID"];
-            dadoNovo.TB_ANIMAL_NOME = item["TB_ANIMAL.TB_ANIMAL_NOME"];
-            delete dadoNovo["TB_ANIMAL.TB_ANIMAL_NOME"];
+            Animais.map(animalItem => {
+                if (animalItem["TB_CHAT_ID"] == item["TB_CHAT_ID"]) {
+                    if (animalItem["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID) {
+                        dadoNovo.TB_ANIMAL_CADASTRADO = false
+                    } else {
+                        dadoNovo.TB_ANIMAL_CADASTRADO = true;
+                    }
+                }
+            });
             return dadoNovo;
         });
-        console.log(Selecionar, FiltrarPessoa)
-        return res.status(200).json(FiltrarPessoa);
+
+        return res.status(200).json({ Selecionar, Animais });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })

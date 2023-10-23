@@ -14,6 +14,7 @@ module.exports = function (sequelize, DataTypes) {
                 key: "TB_CHAT_ID"
             }
         },
+        TB_MENSAGEM_RESPOSTA_ID: DataTypes.INTEGER,
         TB_MENSAGEM_TEXTO: DataTypes.STRING(256),
         TB_MENSAGEM_TEXTO_ALTERADO: DataTypes.STRING(256),
         TB_MENSAGEM_IMG: DataTypes.BLOB,

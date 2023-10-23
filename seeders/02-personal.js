@@ -2,7 +2,7 @@
 let md5 = require('md5');
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const datapessoa = [
+        const data = [
             {
                 TB_TIPO_ID: 7,
                 TB_PESSOA_NOME: 'Renan Mochizuki',
@@ -22,7 +22,7 @@ module.exports = {
                 updatedAt: new Date()
             },
         ];
-        return queryInterface.bulkInsert('TB_PESSOA', datapessoa)
+        return queryInterface.bulkInsert('TB_PESSOA', data)
     },
 
     down: async (queryInterface, Sequelize) => {

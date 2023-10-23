@@ -88,6 +88,23 @@ selecaoAssociativa.get('/selmarcacoes/', async (req, res) => {
     }
 });
 
+selecaoAssociativa.get('/selchatmarcacoes/', async (req, res) => {
+    try {
+        const Selecionar = await model.TB_CHAT_ANIMAL.findAll({
+            include: [
+                {
+                    model: model.TB_ANIMAL,
+                    attributes: ['TB_ANIMAL_NOME'],
+                },
+            ],
+        });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
+    }
+});
+
 selecaoAssociativa.get('/selcores/:TB_ANIMAL_ID', async (req, res) => {
     try {
         const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
@@ -190,7 +207,29 @@ selecaoAssociativa.get('/selmarcacoes/:TB_POSTAGEM_ID', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontrados', error: 'Marcações não encontrados' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontradas', error: 'Marcações não encontradas' });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
+    }
+});
+
+selecaoAssociativa.get('/selchatmarcacoes/:TB_CHAT_ID', async (req, res) => {
+    try {
+        const TB_CHAT_ID = req.params.TB_CHAT_ID;
+        const Selecionar = await model.TB_CHAT_ANIMAL.findAll({
+            where: {
+                TB_CHAT_ID
+            },
+            include: [
+                {
+                    model: model.TB_ANIMAL,
+                    attributes: ['TB_ANIMAL_NOME'],
+                },
+            ],
+        });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontradas', error: 'Marcações não encontradas' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -315,7 +354,32 @@ selecaoAssociativa.post('/selmarcacoes/filtrar', async (req, res) => {
                 },
             ],
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontrados', error: 'Marcações não encontrados' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontradas', error: 'Marcações não encontradas' });
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message })
+    }
+});
+
+selecaoAssociativa.post('/selchatmarcacoes/filtrar', async (req, res) => {
+    try {
+        const { TB_ANIMAL_ID, TB_CHAT_ID } = req.body
+
+        let whereClause = {};
+
+        if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
+        if (TB_CHAT_ID) whereClause.TB_CHAT_ID = TB_CHAT_ID;
+        const Selecionar = await model.TB_CHAT_ANIMAL.findAll({
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_ANIMAL,
+                    attributes: ['TB_ANIMAL_NOME'],
+                },
+            ],
+        });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Marcações não encontradas', error: 'Marcações não encontradas' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

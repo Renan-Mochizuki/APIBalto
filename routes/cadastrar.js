@@ -184,10 +184,15 @@ cadastro.post('/cadchat', async (req, res) => {
     try {
         const { TB_ANIMAL_ID, TB_PESSOA_DESTINATARIO_ID, TB_PESSOA_REMETENTE_ID } = req.body
         const Cadastrar = await model.TB_CHAT.create({
-            TB_ANIMAL_ID,
             TB_PESSOA_DESTINATARIO_ID,
             TB_PESSOA_REMETENTE_ID,
         });
+        if(TB_ANIMAL_ID){
+            await model.TB_CHAT_ANIMAL.create({
+                TB_CHAT_ID: Cadastrar.TB_CHAT_ID,
+                TB_ANIMAL_ID,
+            });
+        }
         return res.status(200).json({ message: "Cadastrado", Cadastrar });
     } catch (error) {
         console.error(error);

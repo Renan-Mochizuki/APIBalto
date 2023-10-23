@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const dataanimaltemperamentos = [
+        const data = [
             {
                 TB_ANIMAL_ID: 1,
                 TB_TEMPERAMENTO_ID: 3,
@@ -31,7 +31,7 @@ module.exports = {
                 TB_TEMPERAMENTO_ID: 8,
             },
         ];
-        return queryInterface.bulkInsert('TB_ANIMAL_TEMPERAMENTO', dataanimaltemperamentos)
+        return queryInterface.bulkInsert('TB_ANIMAL_TEMPERAMENTO', data)
     },
 
     down: async (queryInterface, Sequelize) => {

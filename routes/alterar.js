@@ -193,7 +193,6 @@ alteracao.put('/altsolicitacao/:TB_SOLICITACAO_ID', async (req, res) => {
     }
 });
 
-
 alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
     const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO } = req.body

@@ -6,15 +6,6 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        TB_ANIMAL_ID: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'TB_ANIMAL',
-                key: 'TB_ANIMAL_ID'
-            },
-            onUpdate: 'cascade',
-            onDelete: 'cascade'
-        },
         TB_PESSOA_DESTINATARIO_ID: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -47,9 +38,9 @@ module.exports = function (sequelize, DataTypes) {
             targetKey: 'TB_PESSOA_ID',
             as: 'TB_PESSOA_DESTINATARIO'
         });
-        TB_CHAT.belongsTo(models.TB_ANIMAL, { foreignKey: "TB_ANIMAL_ID" });
         TB_CHAT.hasMany(models.TB_MENSAGEM, { foreignKey: "TB_CHAT_ID" });
         TB_CHAT.hasMany(models.TB_DENUNCIA, { foreignKey: "TB_CHAT_ID" });
+        TB_CHAT.hasMany(models.TB_CHAT_ANIMAL, { foreignKey: "TB_CHAT_ID" });
     };
     return TB_CHAT;
 };

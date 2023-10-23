@@ -29,6 +29,9 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      TB_MENSAGEM_RESPOSTA_ID:{
+        type: Sequelize.INTEGER
+      },
       TB_MENSAGEM_TEXTO: {
         type: Sequelize.STRING(256)
       },

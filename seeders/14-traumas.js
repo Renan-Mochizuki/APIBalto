@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const datatrauma = [
+        const data = [
             {
                 TB_TRAUMA_DESCRICAO: 'Não consegue ficar perto de pessoas',
                 createdAt: new Date(),
@@ -28,7 +28,7 @@ module.exports = {
                 updatedAt: new Date()
             },
         ];
-        return queryInterface.bulkInsert('TB_TRAUMA', datatrauma)
+        return queryInterface.bulkInsert('TB_TRAUMA', data)
     },
 
     down: async (queryInterface, Sequelize) => {

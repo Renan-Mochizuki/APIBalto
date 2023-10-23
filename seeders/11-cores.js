@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const datacores = [
+        const data = [
             {
                 TB_COR_DESCRICAO: 'Branco'
             },
@@ -27,7 +27,7 @@ module.exports = {
                 TB_COR_DESCRICAO: 'Rajado'
             },
         ];
-        return queryInterface.bulkInsert('TB_COR', datacores)
+        return queryInterface.bulkInsert('TB_COR', data)
     },
 
     down: async (queryInterface, Sequelize) => {

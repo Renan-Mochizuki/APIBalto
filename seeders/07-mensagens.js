@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const datamensagem = [
+        const data = [
             {
                 TB_CHAT_ID: 1,
                 TB_MENSAGEM_TEXTO: 'Eae Fernando',
@@ -66,7 +66,7 @@ module.exports = {
                 updatedAt: new Date()
             },
         ];
-        return queryInterface.bulkInsert('TB_MENSAGEM', datamensagem)
+        return queryInterface.bulkInsert('TB_MENSAGEM', data)
     },
 
     down: async (queryInterface, Sequelize) => {
