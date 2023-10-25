@@ -57,7 +57,7 @@ module.exports = function (sequelize, DataTypes) {
   });
   TB_PESSOA.associate = function (models) {
     TB_PESSOA.belongsTo(models.TB_TIPO, { foreignKey: "TB_TIPO_ID" });
-    TB_PESSOA.hasMany(models.TB_SEGUINDO, { foreignKey: "TB_PESSOA_SEGUIDA_ID" });
+    TB_PESSOA.hasMany(models.TB_INTERACAO, { foreignKey: "TB_PESSOA_REMETENTE_ID" });
     TB_PESSOA.hasMany(models.TB_AVALIACAO, { foreignKey: "TB_PESSOA_AVALIADORA_ID" });
     TB_PESSOA.hasMany(models.TB_ANIMAL, { foreignKey: "TB_PESSOA_ID" });
     TB_PESSOA.hasMany(models.TB_PONTO_ALIMENTACAO, { foreignKey: "TB_PESSOA_ID" });

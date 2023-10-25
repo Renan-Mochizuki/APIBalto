@@ -72,13 +72,14 @@ cadastro.post('/cadpessoa', upload.single('img'), async (req, res) => {
     }
 });
 
-cadastro.post('/cadseguindo', async (req, res) => {
+cadastro.post('/cadinteracao', async (req, res) => {
     try {
-        const { TB_PESSOA_SEGUIDORA_ID, TB_PESSOA_SEGUIDA_ID } = req.body;
+        const { TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID, TB_TIPO_INTERACAO_ID } = req.body;
         // Recebe os campos do front-end
-        await model.TB_SEGUINDO.create({ // Cadastra
-            TB_PESSOA_SEGUIDORA_ID,
-            TB_PESSOA_SEGUIDA_ID,
+        await model.TB_INTERACAO.create({ // Cadastra
+            TB_PESSOA_REMETENTE_ID,
+            TB_PESSOA_DESTINATARIO_ID,
+            TB_TIPO_INTERACAO_ID
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {

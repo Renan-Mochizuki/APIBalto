@@ -31,19 +31,19 @@ selecaoFiltrar.post('/selpessoa/filtrar', async (req, res) => {
     }
 });
 
-selecaoFiltrar.post('/selseguindo/filtrar', async (req, res) => {
+selecaoFiltrar.post('/selinteracao/filtrar', async (req, res) => {
     try {
-        const { TB_PESSOA_SEGUIDA_ID, TB_PESSOA_SEGUIDORA_ID } = req.body
+        const { TB_PESSOA_REMETENTE_ID, TB_PESSOA_DESTINATARIO_ID } = req.body
 
         let whereClause = {};
 
-        if (TB_PESSOA_SEGUIDA_ID) whereClause.TB_PESSOA_SEGUIDA_ID = TB_PESSOA_SEGUIDA_ID;
-        if (TB_PESSOA_SEGUIDORA_ID) whereClause.TB_PESSOA_SEGUIDORA_ID = TB_PESSOA_SEGUIDORA_ID;
+        if (TB_PESSOA_REMETENTE_ID) whereClause.TB_PESSOA_REMETENTE_ID = TB_PESSOA_REMETENTE_ID;
+        if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
 
-        const Selecionar = await model.TB_SEGUINDO.findAll({
+        const Selecionar = await model.TB_INTERACAO.findAll({
             where: whereClause
         });
-        if (Selecionar.length == 0) return res.status(404).json({ message: 'Seguindo não encontrado', error: 'Seguindo não encontrado' });
+        if (Selecionar.length == 0) return res.status(404).json({ message: 'Interação não encontrada', error: 'Interação não encontrada' });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

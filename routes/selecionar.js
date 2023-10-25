@@ -19,9 +19,9 @@ selecao.get('/selpessoa/', async (req, res) => {
     }
 });
 
-selecao.get('/selseguindo/', async (req, res) => {
+selecao.get('/selinteracao/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_SEGUINDO.findAll();
+        const Selecionar = await model.TB_INTERACAO.findAll();
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

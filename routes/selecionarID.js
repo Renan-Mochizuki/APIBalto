@@ -25,13 +25,13 @@ selecaoID.get('/selpessoa/:TB_PESSOA_ID', async (req, res) => {
     }
 });
 
-selecaoID.get('/selseguindo/:TB_PESSOA_SEGUIDORA_ID', async (req, res) => {
+selecaoID.get('/selinteracao/:TB_PESSOA_REMETENTE_ID', async (req, res) => {
     try {
-        const TB_PESSOA_SEGUIDORA_ID = req.params.TB_PESSOA_SEGUIDORA_ID;
+        const TB_PESSOA_REMETENTE_ID = req.params.TB_PESSOA_REMETENTE_ID;
 
-        const Selecionar = await model.TB_SEGUINDO.findAll({
+        const Selecionar = await model.TB_INTERACAO.findAll({
             where: {
-                TB_PESSOA_SEGUIDORA_ID
+                TB_PESSOA_REMETENTE_ID
             }
         });
         return res.status(200).json(Selecionar);

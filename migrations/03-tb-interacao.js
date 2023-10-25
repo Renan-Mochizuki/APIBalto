@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TB_SEGUINDO', {
-      TB_SEGUINDO_ID: {
+    await queryInterface.createTable('TB_INTERACAO', {
+      TB_INTERACAO_ID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TB_PESSOA_SEGUIDORA_ID: {
+      TB_PESSOA_REMETENTE_ID: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TB_PESSOA_SEGUIDA_ID: {
+      TB_PESSOA_DESTINATARIO_ID: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -28,6 +28,10 @@ module.exports = {
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
+      },
+      TB_TIPO_INTERACAO_ID: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TB_SEGUINDO');
+    await queryInterface.dropTable('TB_INTERACAO');
   }
 };

@@ -43,13 +43,7 @@ module.exports = {
             },
             TB_TIPO_SOLICITACAO_ID: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'TB_TIPO_SOLICITACAO',
-                    key: 'TB_TIPO_SOLICITACAO_ID'
-                },
-                onUpdate: 'cascade',
-                onDelete: 'cascade'
+                type: Sequelize.INTEGER
             },
             createdAt: {
                 allowNull: false,
