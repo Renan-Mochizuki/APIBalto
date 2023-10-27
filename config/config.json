@@ -1,38 +1,41 @@
 {
   "development": {
-    "dialect": "postgres",
+    "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
         "require": true,
+        "minVersion": "TLSv1.2",
         "rejectUnauthorized": false
-      },
-      "useUTC": false
+      }
     },
-    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "host": "gateway01.us-west-2.prod.aws.tidbcloud.com",
+    "port": 4000,
     "timezone": "-03:00"
   },
   "test": {
-    "dialect": "postgres",
+    "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
         "require": true,
+        "minVersion": "TLSv1.2",
         "rejectUnauthorized": false
-      },
-      "useUTC": false
+      }
     },
-    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "host": "gateway01.us-west-2.prod.aws.tidbcloud.com",
+    "port": 4000,
     "timezone": "-03:00"
   },
   "production": {
-    "dialect": "postgres",
+    "dialect": "mysql",
     "dialectOptions": {
       "ssl": {
         "require": true,
+        "minVersion": "TLSv1.2",
         "rejectUnauthorized": false
-      },
-      "useUTC": false
+      }
     },
-    "host": "ep-tight-shape-33035985.us-east-2.aws.neon.tech",
+    "host": "gateway01.us-west-2.prod.aws.tidbcloud.com",
+    "port": 4000,
     "timezone": "-03:00"
   }
 }
