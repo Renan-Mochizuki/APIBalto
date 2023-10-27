@@ -1,4 +1,4 @@
 module.exports = {
-    'secret': 'ermelinda',
-    'captchaKey': '6LfxfKEoAAAAALSQzTRXYw6xsYpDPUoM7VsZWtjF'
+    'secret': process.env.secret,
+    'captchaKey': process.env.captchaKey
 };
