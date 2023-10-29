@@ -93,19 +93,19 @@ module.exports = {
         type: Sequelize.STRING(128)
       },
       TB_ANIMAL_IMG1: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_ANIMAL_IMG2: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_ANIMAL_IMG3: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_ANIMAL_IMG4: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_ANIMAL_IMG5: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_ANIMAL_STATUS: {
         allowNull: false,

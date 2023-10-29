@@ -55,13 +55,13 @@ module.exports = {
         type: Sequelize.STRING(256)
       },
       TB_DENUNCIA_IMG1: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_DENUNCIA_IMG2: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_DENUNCIA_IMG3: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_DENUNCIA_SITUACAO: {
         allowNull: false,

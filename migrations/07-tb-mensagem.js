@@ -39,7 +39,7 @@ module.exports = {
         type: Sequelize.STRING(256)
       },
       TB_MENSAGEM_IMG: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_MENSAGEM_POSSUI_IMG: {
         allowNull: false,

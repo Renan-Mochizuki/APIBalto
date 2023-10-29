@@ -8,7 +8,8 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_PESSOA_ID: DataTypes.INTEGER,
     TB_PONTO_ALIMENTACAO_LATITUDE: DataTypes.DECIMAL,
-    TB_PONTO_ALIMENTACAO_LONGITUDE: DataTypes.DECIMAL,
+    TB_PONTO_ALIMENTACAO_LONGITUDE: DataTypes.DECIMAL, 
+    TB_PONTO_ALIMENTACAO_IMG: DataTypes.BLOB,
     TB_PONTO_ALIMENTACAO_STATUS: DataTypes.BOOLEAN
   }, {
     freezeTableName: true,

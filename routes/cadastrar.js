@@ -188,7 +188,7 @@ cadastro.post('/cadchat', async (req, res) => {
             TB_PESSOA_DESTINATARIO_ID,
             TB_PESSOA_REMETENTE_ID,
         });
-        if(TB_ANIMAL_ID){
+        if (TB_ANIMAL_ID) {
             await model.TB_CHAT_ANIMAL.create({
                 TB_CHAT_ID: Cadastrar.TB_CHAT_ID,
                 TB_ANIMAL_ID,
@@ -203,7 +203,7 @@ cadastro.post('/cadchat', async (req, res) => {
 
 cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
     try {
-        const { TB_CHAT_ID, TB_PESSOA_ID, TB_MENSAGEM_TEXTO, TB_MENSAGEM_POSSUI_IMG } = req.body
+        const { TB_CHAT_ID, TB_PESSOA_ID, TB_MENSAGEM_TEXTO, TB_MENSAGEM_POSSUI_IMG, TB_MENSAGEM_RESPOSTA_ID, TB_MENSAGEM_LATITUDE, TB_MENSAGEM_LONGITUDE } = req.body
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
@@ -211,8 +211,11 @@ cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
         const Cadastrar = await model.TB_MENSAGEM.create({
             TB_CHAT_ID,
             TB_PESSOA_ID,
+            TB_MENSAGEM_RESPOSTA_ID,
             TB_MENSAGEM_TEXTO,
             TB_MENSAGEM_POSSUI_IMG,
+            TB_MENSAGEM_LATITUDE,
+            TB_MENSAGEM_LONGITUDE,
             TB_MENSAGEM_IMG: imageBuffer,
         });
         return res.status(200).json({ message: "Cadastrado", Cadastrar });
@@ -222,13 +225,18 @@ cadastro.post('/cadmensagem', upload.single('img'), async (req, res) => {
     }
 });
 
-cadastro.post('/cadpontoalimentacao', async (req, res) => {
+cadastro.post('/cadpontoalimentacao', upload.single('img'), async (req, res) => {
     try {
         const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE, TB_PESSOA_ID } = req.body
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await model.TB_PONTO_ALIMENTACAO.create({
             TB_PESSOA_ID,
             TB_PONTO_ALIMENTACAO_LATITUDE,
             TB_PONTO_ALIMENTACAO_LONGITUDE,
+            TB_PONTO_ALIMENTACAO_IMG: imageBuffer
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {

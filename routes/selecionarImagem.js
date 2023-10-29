@@ -54,6 +54,23 @@ selecaoImagem.get('/selmensagemimg/:TB_MENSAGEM_ID', async (req, res) => {
     }
 });
 
+selecaoImagem.get('/selpontoalimentacaoimg/:TB_PONTO_ALIMENTACAO_ID', async (req, res) => {
+    try {
+        const TB_PONTO_ALIMENTACAO_ID = req.params.TB_PONTO_ALIMENTACAO_ID;
+        const campo = await model.TB_PONTO_ALIMENTACAO.findByPk(TB_PONTO_ALIMENTACAO_ID);
+
+        if (!campo)
+            return res.status(404).json({ message: 'Campo não encontrado' });
+        if (campo.TB_PONTO_ALIMENTACAO_IMG == null)
+            return res.status(404).json({ message: 'Imagem não cadastrada' });
+
+        res.setHeader('Content-Type', 'image/jpg');
+        return res.send(campo.TB_PONTO_ALIMENTACAO_IMG);
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao buscar imagem', error: error.message });
+    }
+});
+
 selecaoImagem.get('/selformulariodiarioimg/:TB_FORMULARIO_DIARIO_ID', async (req, res) => {
     try {
         const TB_FORMULARIO_DIARIO_ID = req.params.TB_FORMULARIO_DIARIO_ID;

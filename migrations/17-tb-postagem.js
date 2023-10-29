@@ -20,10 +20,10 @@ module.exports = {
         onDelete: 'cascade'
       },
       TB_POSTAGEM_IMG1: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_POSTAGEM_VIDEO: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('long')
       },
       TB_POSTAGEM_TEXTO: {
         type: Sequelize.STRING(256)

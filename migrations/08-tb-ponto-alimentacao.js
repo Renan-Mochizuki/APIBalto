@@ -27,6 +27,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL
       },
+      TB_PONTO_ALIMENTACAO_IMG: {
+        type: Sequelize.BLOB('medium')
+      },
       TB_PONTO_ALIMENTACAO_STATUS: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

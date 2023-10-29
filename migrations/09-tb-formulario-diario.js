@@ -20,7 +20,7 @@ module.exports = {
         onDelete: 'cascade'
       },
       TB_FORMULARIO_DIARIO_IMG: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_FORMULARIO_DIARIO_DT_ABASTECIMENTO: {
         allowNull: false,

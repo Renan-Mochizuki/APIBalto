@@ -108,7 +108,7 @@ module.exports = {
         type: Sequelize.STRING(128)
       },
       TB_PESSOA_IMG: {
-        type: Sequelize.BLOB
+        type: Sequelize.BLOB('medium')
       },
       TB_PESSOA_ATIVO: {
         type: Sequelize.BOOLEAN,
