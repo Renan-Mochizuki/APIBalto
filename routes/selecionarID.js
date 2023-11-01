@@ -275,14 +275,15 @@ selecaoID.get('/selpostagemseguindo/:TB_PESSOA_ID', async (req, res) => {
     try {
         const TB_PESSOA_ID = req.params.TB_PESSOA_ID;
 
-        const SelecionarIDs = await model.TB_SEGUINDO.findAll({
+        const SelecionarIDs = await model.TB_INTERACAO.findAll({
             where: {
-                TB_PESSOA_SEGUIDORA_ID: TB_PESSOA_ID
+                TB_TIPO_INTERACAO_ID: 1,
+                TB_PESSOA_REMETENTE_ID: TB_PESSOA_ID
             },
-            attributes: ['TB_PESSOA_SEGUIDA_ID']
+            attributes: ['TB_PESSOA_DESTINATARIO_ID']
         });
 
-        const seguindoIDs = SelecionarIDs.map(item => item.TB_PESSOA_SEGUIDA_ID);
+        const seguindoIDs = SelecionarIDs.map(item => item.TB_PESSOA_DESTINATARIO_ID);
 
         const Selecionar = await model.TB_POSTAGEM.findAll({
             where: {
