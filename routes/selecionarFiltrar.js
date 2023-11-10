@@ -63,6 +63,19 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
 
         const Selecionar = await model.TB_AVALIACAO.findAll({
             where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADORA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Avaliação não encontrada', error: 'Avaliação não encontrada' });
         return res.status(200).json(Selecionar);
