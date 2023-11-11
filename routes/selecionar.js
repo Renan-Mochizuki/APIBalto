@@ -21,7 +21,21 @@ selecao.get('/selpessoa/', async (req, res) => {
 
 selecao.get('/selinteracao/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_INTERACAO.findAll();
+        const Selecionar = await model.TB_INTERACAO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_REMETENTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DESTINATARIO',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -31,7 +45,21 @@ selecao.get('/selinteracao/', async (req, res) => {
 
 selecao.get('/selavaliacao/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_AVALIACAO.findAll();
+        const Selecionar = await model.TB_AVALIACAO.findAll({
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADORA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -101,7 +129,7 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
                 },
             ],
         });
@@ -196,7 +224,7 @@ selecao.get('/seltratamento/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID','TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });
@@ -246,7 +274,7 @@ selecao.get('/seldenuncia/', async (req, res) => {
                 },
             ],
         });
-        
+
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);

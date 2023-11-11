@@ -32,7 +32,20 @@ selecaoID.get('/selinteracao/:TB_PESSOA_REMETENTE_ID', async (req, res) => {
         const Selecionar = await model.TB_INTERACAO.findAll({
             where: {
                 TB_PESSOA_REMETENTE_ID
-            }
+            },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_REMETENTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DESTINATARIO',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -49,6 +62,19 @@ selecaoID.get('/selavaliacao/:TB_PESSOA_AVALIADA_ID', async (req, res) => {
             where: {
                 TB_PESSOA_AVALIADA_ID
             },
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_AVALIADORA',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
         });
         return res.status(200).json(Selecionar);
     } catch (error) {
@@ -234,7 +260,7 @@ selecaoID.get('/seltratamento/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID','TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });

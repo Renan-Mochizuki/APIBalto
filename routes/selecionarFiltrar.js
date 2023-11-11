@@ -41,7 +41,20 @@ selecaoFiltrar.post('/selinteracao/filtrar', async (req, res) => {
         if (TB_PESSOA_DESTINATARIO_ID) whereClause.TB_PESSOA_DESTINATARIO_ID = TB_PESSOA_DESTINATARIO_ID;
 
         const Selecionar = await model.TB_INTERACAO.findAll({
-            where: whereClause
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_REMETENTE',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+                {
+                    model: model.TB_PESSOA,
+                    as: 'TB_PESSOA_DESTINATARIO',
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                }
+            ],
+            raw: true
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Interação não encontrada', error: 'Interação não encontrada' });
         return res.status(200).json(Selecionar);
@@ -352,13 +365,12 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
         if (TB_ANIMAL_ID) whereClause.TB_ANIMAL_ID = TB_ANIMAL_ID;
         if (TB_TRATAMENTO_ANONIMO) whereClause.TB_TRATAMENTO_ANONIMO = TB_TRATAMENTO_ANONIMO;
 
-
         const Selecionar = await model.TB_TRATAMENTO.findAll({
             where: whereClause,
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID','TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });

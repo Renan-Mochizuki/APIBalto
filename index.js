@@ -13,7 +13,6 @@ const selecaoAssociativa = require('./routes/selecionarAssociativa');
 const selecaoImagem = require('./routes/selecionarImagem');
 const selecaoOtimizado = require('./routes/selecionarOtimizado');
 const exclusao = require('./routes/deletar');
-const chat = require('./routes/chat');
 require('dotenv').config()
 
 let app = express();
@@ -35,7 +34,6 @@ app.use(selecaoAssociativa);
 app.use(selecaoImagem);
 app.use(selecaoOtimizado);
 app.use(exclusao);
-app.use(chat);
 
 const port = process.env.port || 3000;
 app.listen(port, () => {
