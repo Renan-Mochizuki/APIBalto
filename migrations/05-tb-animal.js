@@ -29,7 +29,7 @@ module.exports = {
       },
       TB_ANIMAL_IDADE_TIPO: {
         allowNull: false,
-        type: Sequelize.STRING(5)
+        type: Sequelize.STRING(3)
       },
       TB_ANIMAL_PORTE: {
         allowNull: false,

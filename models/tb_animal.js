@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA_ID: DataTypes.INTEGER,
     TB_ANIMAL_NOME: DataTypes.STRING(64),
     TB_ANIMAL_IDADE: DataTypes.INTEGER,
-    TB_ANIMAL_IDADE_TIPO: DataTypes.STRING(5),
+    TB_ANIMAL_IDADE_TIPO: DataTypes.STRING(3),
     TB_ANIMAL_PORTE: DataTypes.STRING(7),
     TB_ANIMAL_PESO: DataTypes.FLOAT,
     TB_ANIMAL_SEXO: DataTypes.STRING(16),
