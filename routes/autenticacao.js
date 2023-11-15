@@ -24,6 +24,7 @@ autenticacao.post('/login', async (req, res) => {
         const payload = {
             'TB_PESSOA_IDD': user.TB_PESSOA_ID,
             'TB_TIPO_IDD': user.TB_TIPO_ID,
+            'TB_PESSOA_NOME_PERFIL': user.TB_PESSOA_NOME_PERFIL
         };
 
         jwt.sign(payload, chave, { expiresIn: 60 * 60 * 60 * 24 }, (err, token) => {
