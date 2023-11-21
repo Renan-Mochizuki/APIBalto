@@ -91,7 +91,11 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
             raw: true
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Avaliação não encontrada', error: 'Avaliação não encontrada' });
-        return res.status(200).json(Selecionar);
+
+        const notas = Selecionar.map(avaliacao => avaliacao.TB_AVALIACAO_NOTA);
+        const media = notas.reduce((soma, nota) => soma + nota, 0) / notas.length;
+
+        return res.status(200).json({ Selecionar, media });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
@@ -370,7 +374,7 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID','TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });

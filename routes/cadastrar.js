@@ -357,7 +357,7 @@ cadastro.post('/cadtratamento', async (req, res) => {
 
 cadastro.post('/cadpostagem', upload.single('img'), async (req, res) => {
     try {
-        const { TB_POSTAGEM_TEXTO, TB_POSTAGEM_TEXTO_ALTERADO, TB_POSTAGEM_DT_ALTERACAO, TB_PESSOA_ID } = req.body
+        const { TB_POSTAGEM_TEXTO, TB_PESSOA_ID } = req.body
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
@@ -369,10 +369,8 @@ cadastro.post('/cadpostagem', upload.single('img'), async (req, res) => {
             // TB_POSTAGEM_IMG3,
             // TB_POSTAGEM_IMG4,
             // TB_POSTAGEM_IMG5,
-            TB_POSTAGEM_DT_ALTERACAO,
             // TB_POSTAGEM_VIDEO,
             TB_POSTAGEM_TEXTO,
-            TB_POSTAGEM_TEXTO_ALTERADO,
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
@@ -455,6 +453,20 @@ cadastro.post('/cadpostagemanimal', async (req, res) => {
         await model.TB_POSTAGEM_ANIMAL.create({
             TB_ANIMAL_ID,
             TB_POSTAGEM_ID,
+        });
+        return res.status(200).json({ message: "Cadastrado" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
+    }
+});
+
+cadastro.post('/cadchatanimal', async (req, res) => {
+    try {
+        const { TB_ANIMAL_ID, TB_CHAT_ID } = req.body
+        await model.TB_CHAT_ANIMAL.create({
+            TB_ANIMAL_ID,
+            TB_CHAT_ID,
         });
         return res.status(200).json({ message: "Cadastrado" });
     } catch (error) {
