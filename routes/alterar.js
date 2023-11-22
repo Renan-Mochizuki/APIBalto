@@ -155,7 +155,7 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, 
     }
 });
 
-alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) => {
+alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', upload.single('img'), async (req, res) => {
     const TB_PONTO_ALIMENTACAO_ID = req.params.TB_PONTO_ALIMENTACAO_ID;
     const { TB_PONTO_ALIMENTACAO_LATITUDE, TB_PONTO_ALIMENTACAO_LONGITUDE } = req.body
 
@@ -163,9 +163,14 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', async (req, res) 
         const campo = await model.TB_PONTO_ALIMENTACAO.findByPk(TB_PONTO_ALIMENTACAO_ID);
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
+        let imageBuffer = null;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+        }
         await campo.update({
             TB_PONTO_ALIMENTACAO_LATITUDE,
-            TB_PONTO_ALIMENTACAO_LONGITUDE
+            TB_PONTO_ALIMENTACAO_LONGITUDE,
+            TB_PONTO_ALIMENTACAO_IMG: imageBuffer
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {

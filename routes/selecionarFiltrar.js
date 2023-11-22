@@ -267,6 +267,7 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
 
         const Selecionar = await model.TB_PONTO_ALIMENTACAO.findAll({
             where: whereClause,
+            attributes: { exclude: ['TB_PONTO_ALIMENTACAO_IMG'] },
             include: [
                 {
                     model: model.TB_PESSOA,

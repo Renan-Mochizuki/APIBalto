@@ -126,6 +126,7 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
             where: {
                 TB_PONTO_ALIMENTACAO_STATUS: true
             },
+            attributes: { exclude: ['TB_PONTO_ALIMENTACAO_IMG'] },
             include: [
                 {
                     model: model.TB_PESSOA,
@@ -143,7 +144,9 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
 
 selecao.get('/selformulariodiario/', async (req, res) => {
     try {
-        const Selecionar = await model.TB_FORMULARIO_DIARIO.findAll();
+        const Selecionar = await model.TB_FORMULARIO_DIARIO.findAll({
+            attributes: { exclude: ['TB_FORMULARIO_DIARIO_IMG'] }
+        });
         return res.status(200).json(Selecionar);
     } catch (error) {
         console.error(error);
@@ -224,7 +227,7 @@ selecao.get('/seltratamento/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID','TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
                 },
             ],
         });

@@ -21,11 +21,11 @@ module.exports = {
       },
       TB_PONTO_ALIMENTACAO_LATITUDE: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(9.6)
       },
       TB_PONTO_ALIMENTACAO_LONGITUDE: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(9.6)
       },
       TB_PONTO_ALIMENTACAO_IMG: {
         type: Sequelize.BLOB('medium')

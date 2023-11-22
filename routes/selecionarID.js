@@ -204,6 +204,7 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
                 TB_PONTO_ALIMENTACAO_STATUS: true,
                 TB_PESSOA_ID
             },
+            attributes: { exclude: ['TB_PONTO_ALIMENTACAO_IMG'] },
             include: [
                 {
                     model: model.TB_PESSOA,
