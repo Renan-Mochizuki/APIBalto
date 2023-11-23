@@ -143,36 +143,39 @@ cadastro.post('/cadanimal', upload.single('img'), async (req, res) => {
         })
         const TB_ANIMAL_IDD = response.TB_ANIMAL_ID;
         if (TEMPERAMENTOS) {
-            for (const temperamento of TEMPERAMENTOS) {
+            const arrayTemperamentos = TEMPERAMENTOS.split(',').map(Number);
+            arrayTemperamentos.map(async item => {
                 await model.TB_ANIMAL_TEMPERAMENTO.create({
                     TB_ANIMAL_ID: TB_ANIMAL_IDD,
-                    TB_TEMPERAMENTO_ID: temperamento,
+                    TB_TEMPERAMENTO_ID: item,
                 });
-            }
+            })
         }
         if (SITUACOES) {
-            for (const situacao of SITUACOES) {
+            const arraySituacoes = SITUACOES.split(',').map(Number);
+            arraySituacoes.map(async item => {
                 await model.TB_ANIMAL_SITUACAO.create({
                     TB_ANIMAL_ID: TB_ANIMAL_IDD,
-                    TB_SITUACAO_ID: situacao,
+                    TB_SITUACAO_ID: item,
                 });
-            }
+            })
         }
         if (TRAUMAS) {
-            for (const trauma of TRAUMAS) {
-                await model.TB_ANIMAL_TEMPERAMENTO.create({
+            const arrayTraumas = TRAUMAS.split(',').map(Number);
+            arrayTraumas.map(async item => {
+                await model.TB_ANIMAL_TRAUMA.create({
                     TB_ANIMAL_ID: TB_ANIMAL_IDD,
-                    TB_TRAUMA_ID: trauma,
+                    TB_TRAUMA_ID: item,
                 });
-            }
+            })
         }
         if (CORES) {
-            for (const cor of CORES) {
+            CORES.map(async item => {
                 await model.TB_ANIMAL_COR.create({
                     TB_ANIMAL_ID: TB_ANIMAL_IDD,
-                    TB_COR_ID: cor,
+                    TB_COR_ID: item,
                 });
-            }
+            })
         }
         return res.status(200).json({ message: "Cadastrado", TB_ANIMAL_IDD });
     } catch (error) {
@@ -398,7 +401,7 @@ cadastro.post('/caddenuncia', upload.single('img'), async (req, res) => {
             // TB_DENUNCIA_IMG2,
             // TB_DENUNCIA_IMG3,
         });
-        return res.status(200).json({ message: "Cadastrado", response});
+        return res.status(200).json({ message: "Cadastrado", response });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erro ao cadastrar", error: error.message });
