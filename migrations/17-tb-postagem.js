@@ -31,6 +31,11 @@ module.exports = {
       TB_POSTAGEM_TEXTO_ALTERADO: {
         type: Sequelize.STRING(256)
       },
+      TB_POSTAGEM_POSSUI_IMG: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       TB_POSTAGEM_STATUS: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

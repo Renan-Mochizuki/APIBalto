@@ -360,7 +360,7 @@ cadastro.post('/cadtratamento', async (req, res) => {
 
 cadastro.post('/cadpostagem', upload.single('img'), async (req, res) => {
     try {
-        const { TB_POSTAGEM_TEXTO, TB_PESSOA_ID } = req.body
+        const { TB_POSTAGEM_TEXTO, TB_PESSOA_ID, TB_POSTAGEM_POSSUI_IMG } = req.body
         let imageBuffer = null;
         if (req.file) {
             imageBuffer = req.file.buffer;
@@ -368,6 +368,7 @@ cadastro.post('/cadpostagem', upload.single('img'), async (req, res) => {
         const response = await model.TB_POSTAGEM.create({
             TB_PESSOA_ID,
             TB_POSTAGEM_IMG1: imageBuffer,
+            TB_POSTAGEM_POSSUI_IMG,
             // TB_POSTAGEM_IMG2,
             // TB_POSTAGEM_IMG3,
             // TB_POSTAGEM_IMG4,

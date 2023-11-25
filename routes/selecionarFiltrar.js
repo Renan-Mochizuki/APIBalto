@@ -54,6 +54,9 @@ selecaoFiltrar.post('/selinteracao/filtrar', async (req, res) => {
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 }
             ],
+            order: [
+                ['TB_INTERACAO_ID', 'DESC'],
+            ],
             raw: true
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Interação não encontrada', error: 'Interação não encontrada' });
@@ -87,6 +90,9 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
                     as: 'TB_PESSOA_AVALIADORA',
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 }
+            ],
+            order: [
+                ['TB_AVALIACAO_ID', 'DESC'],
             ],
             raw: true
         });
@@ -134,6 +140,9 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
                     model: model.TB_PESSOA,
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 },
+            ],
+            order: [
+                ['TB_ANIMAL_ID', 'DESC'],
             ],
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Animal não encontrado', error: 'Animal não encontrado' });
@@ -408,6 +417,9 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
                     model: model.TB_PESSOA,
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 },
+            ],
+            order: [
+                ['TB_POSTAGEM_ID', 'DESC'],
             ],
         });
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Postagem não encontrada', error: 'Postagem não encontrada' });

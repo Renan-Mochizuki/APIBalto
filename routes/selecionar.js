@@ -34,6 +34,9 @@ selecao.get('/selinteracao/', async (req, res) => {
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 }
             ],
+            order: [
+                ['TB_INTERACAO_ID', 'DESC'],
+            ],
             raw: true
         });
         return res.status(200).json(Selecionar);
@@ -58,6 +61,9 @@ selecao.get('/selavaliacao/', async (req, res) => {
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 }
             ],
+            order: [
+                ['TB_AVALIACAO_ID', 'DESC'],
+            ],
             raw: true
         });
         return res.status(200).json(Selecionar);
@@ -80,6 +86,9 @@ selecao.get('/selanimal/', async (req, res) => {
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 },
             ],
+            order: [
+                ['TB_ANIMAL_ID', 'DESC'],
+            ]
         });
 
         return res.status(200).json(Selecionar);
@@ -251,6 +260,9 @@ selecao.get('/selpostagem/', async (req, res) => {
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 },
             ],
+            order: [
+                ['TB_POSTAGEM_ID', 'DESC'],
+            ]
         });
 
         return res.status(200).json(Selecionar);

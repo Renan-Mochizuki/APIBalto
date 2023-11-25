@@ -200,7 +200,7 @@ alteracao.put('/altsolicitacao/:TB_SOLICITACAO_ID', async (req, res) => {
 
 alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, res) => {
     const TB_POSTAGEM_ID = req.params.TB_POSTAGEM_ID;
-    const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO } = req.body
+    const { TB_PESSOA_ID, TB_POSTAGEM_TEXTO_ALTERADO, TB_POSTAGEM_POSSUI_IMG } = req.body
 
     try {
         const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
@@ -218,6 +218,7 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, 
             // TB_POSTAGEM_IMG4,
             // TB_POSTAGEM_IMG5,
             // TB_POSTAGEM_VIDEO,
+            TB_POSTAGEM_POSSUI_IMG,
             TB_POSTAGEM_TEXTO_ALTERADO
         });
         return res.status(200).json({ message: "Campo atualizado com sucesso" });

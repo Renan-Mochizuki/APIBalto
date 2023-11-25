@@ -9,7 +9,10 @@ selecaoOtimizado.get('/selpessoas/', async (req, res) => {
             where: {
                 TB_PESSOA_STATUS: true
             },
-            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL']
+            attributes: ['TB_PESSOA_ID', 'TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL'],
+            order: [
+                ['TB_PESSOA_ID', 'DESC'],
+            ],
         });
 
         return res.status(200).json(Selecionar);
@@ -31,6 +34,9 @@ selecaoOtimizado.get('/selanimais/', async (req, res) => {
                     model: model.TB_PESSOA,
                     attributes: ['TB_PESSOA_NOME_PERFIL'],
                 },
+            ],
+            order: [
+                ['TB_ANIMAL_ID', 'DESC'],
             ],
         });
 
