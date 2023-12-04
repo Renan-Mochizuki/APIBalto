@@ -85,4 +85,31 @@ selecaoOtimizado.get('/selanimaispesquisa/', async (req, res) => {
     }
 });
 
+selecaoOtimizado.post('/selanimaisperfil/filtrar', async (req, res) => {
+    try {
+        const { TB_PESSOA_ID } = req.body
+        let whereClause = {};
+        if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
+
+        const Selecionar = await model.TB_ANIMAL.findAll({
+            attributes: ['TB_ANIMAL_ID', 'TB_PESSOA_ID', 'TB_ANIMAL_NOME', 'TB_ANIMAL_SAUDE', 'TB_ANIMAL_ALERTA', 'createdAt', 'updatedAt'],
+            where: whereClause,
+            include: [
+                {
+                    model: model.TB_PESSOA,
+                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                },
+            ],
+            order: [
+                ['TB_ANIMAL_ID', 'DESC'],
+            ],
+        });
+
+        return res.status(200).json(Selecionar);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erro ao selecionar', error: error.message });
+    }
+});
+
 module.exports = selecaoOtimizado;
