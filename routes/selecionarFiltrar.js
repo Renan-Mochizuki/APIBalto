@@ -220,11 +220,7 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
             }
             Animais.map(animalItem => {
                 if (animalItem["TB_CHAT_ID"] == item["TB_CHAT_ID"]) {
-                    if (animalItem["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID) {
-                        dadoNovo.TB_ANIMAL_CADASTRADO = false
-                    } else {
-                        dadoNovo.TB_ANIMAL_CADASTRADO = true;
-                    }
+                    dadoNovo.TB_ANIMAL_CADASTRADO = !animalItem["TB_ANIMAL.TB_PESSOA_ID"] == TB_PESSOA_ID;
                 }
             });
             return dadoNovo;

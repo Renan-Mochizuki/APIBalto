@@ -92,7 +92,7 @@ selecaoOtimizado.post('/selanimaisperfil/filtrar', async (req, res) => {
         if (TB_PESSOA_ID) whereClause.TB_PESSOA_ID = TB_PESSOA_ID;
 
         const Selecionar = await model.TB_ANIMAL.findAll({
-            attributes: ['TB_ANIMAL_ID', 'TB_PESSOA_ID', 'TB_ANIMAL_NOME', 'TB_ANIMAL_SAUDE', 'TB_ANIMAL_ALERTA', 'createdAt', 'updatedAt'],
+            attributes: ['TB_ANIMAL_ID', 'TB_PESSOA_ID', 'TB_ANIMAL_NOME', 'TB_ANIMAL_SAUDE', 'TB_ANIMAL_ALERTA', 'TB_ANIMAL_STATUS', 'createdAt', 'updatedAt'],
             where: whereClause,
             include: [
                 {

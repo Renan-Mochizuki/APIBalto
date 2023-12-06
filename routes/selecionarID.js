@@ -143,8 +143,11 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
 
         if (Selecionar.length == 0) return res.status(404).json({ message: 'Chat não encontrado' });
 
-        const FiltrarPessoa = Selecionar.map(item => {
+        const FiltrarPessoa = await Promise.all(Selecionar.map(async item => {
             const dadoNovo = { ...item };
+            const Animais = await model.TB_CHAT_ANIMAL.findAll({
+                where: { TB_CHAT_ID: dadoNovo.TB_CHAT_ID }
+            });
             if (dadoNovo.TB_PESSOA_DESTINATARIO_ID == TB_PESSOA_IDD) {
                 dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
                 dadoNovo.TB_TIPO_ID = item["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
@@ -156,6 +159,7 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
                 dadoNovo.TB_PESSOA_ID = item["TB_PESSOA_DESTINATARIO_ID"];
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
+            dadoNovo.Animais = Animais;
             delete dadoNovo["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
             delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
             delete dadoNovo["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
@@ -163,8 +167,8 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
             delete dadoNovo["TB_PESSOA_REMETENTE_ID"];
             delete dadoNovo["TB_PESSOA_DESTINATARIO_ID"];
             return dadoNovo;
-        });
-
+        }));
+        
         return res.status(200).json(FiltrarPessoa);
     } catch (error) {
         console.error(error);
