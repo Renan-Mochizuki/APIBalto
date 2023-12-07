@@ -66,7 +66,8 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res)
 
 alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res) => {
     const TB_ANIMAL_ID = req.params.TB_ANIMAL_ID;
-    const { TB_PESSOA_ID, TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADOS_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE } = req.body;
+    const { TB_ANIMAL_NOME, TB_ANIMAL_IDADE, TB_ANIMAL_IDADE_TIPO, TB_ANIMAL_PORTE, TB_ANIMAL_PESO, TB_ANIMAL_COR, TB_ANIMAL_SEXO, TB_ANIMAL_ESPECIE, TB_ANIMAL_SAUDE, TB_ANIMAL_DESCRICAO, TB_ANIMAL_ALERTA, TB_ANIMAL_LOCALIZACAO_UF, TB_ANIMAL_LOCALIZACAO_CIDADE, TB_ANIMAL_LOCALIZACAO_BAIRRO, TB_ANIMAL_LOCALIZACAO_RUA, TB_ANIMAL_CUIDADOS_ESPECIAL, TB_ANIMAL_VERMIFUGADO, TB_ANIMAL_CASTRADO, TB_ANIMAL_MICROCHIP, TB_ANIMAL_LOCAL_RESGATE,
+        TEMPERAMENTOS, SITUACOES, TRAUMAS, CORES } = req.body;
 
     try {
         const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
@@ -103,8 +104,53 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
             // TB_ANIMAL_IMG3,
             // TB_ANIMAL_IMG4,
             // TB_ANIMAL_IMG5,
-            TB_PESSOA_ID,
         });
+
+        // const TB_ANIMAL_IDD = campo.TB_ANIMAL_ID;
+        // const Selecionar = await model.TB_ANIMAL_TEMPERAMENTO.findAll({
+        //     where: {
+        //         TB_ANIMAL_ID: TB_ANIMAL_IDD,
+        //     },
+        // });
+
+        // if (TEMPERAMENTOS) {
+        //     const arrayTemperamentos = TEMPERAMENTOS.split(',').map(Number);
+        //     arrayTemperamentos.map(async item => {
+        //         if (Selecionar.length == 0) {
+        //             await model.TB_ANIMAL_TEMPERAMENTO.create({
+        //                 TB_ANIMAL_ID: TB_ANIMAL_IDD,
+        //                 TB_TEMPERAMENTO_ID: item,
+        //             });
+        //         }
+        //     })
+        // }
+        // if (SITUACOES) {
+        //     const arraySituacoes = SITUACOES.split(',').map(Number);
+        //     arraySituacoes.map(async item => {
+        //         await model.TB_ANIMAL_SITUACAO.create({
+        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
+        //             TB_SITUACAO_ID: item,
+        //         });
+        //     })
+        // }
+        // if (TRAUMAS) {
+        //     const arrayTraumas = TRAUMAS.split(',').map(Number);
+        //     arrayTraumas.map(async item => {
+        //         await model.TB_ANIMAL_TRAUMA.create({
+        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
+        //             TB_TRAUMA_ID: item,
+        //         });
+        //     })
+        // }
+        // if (CORES) {
+        //     CORES.map(async item => {
+        //         await model.TB_ANIMAL_COR.create({
+        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
+        //             TB_COR_ID: item,
+        //         });
+        //     })
+        // }
+
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);

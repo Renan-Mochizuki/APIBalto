@@ -142,6 +142,7 @@ cadastro.post('/cadanimal', upload.single('img'), async (req, res) => {
             // TB_ANIMAL_IMG5,
         })
         const TB_ANIMAL_IDD = response.TB_ANIMAL_ID;
+        
         if (TEMPERAMENTOS) {
             const arrayTemperamentos = TEMPERAMENTOS.split(',').map(Number);
             arrayTemperamentos.map(async item => {

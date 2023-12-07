@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     TB_PESSOA_REMETENTE_ID: DataTypes.INTEGER,
     TB_PESSOA_DESTINATARIO_ID: DataTypes.INTEGER,
+    TB_TIPO_INTERACAO_ID: DataTypes.INTEGER
   }, {
     freezeTableName: true,
     tableName: "TB_INTERACAO",

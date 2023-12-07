@@ -21,10 +21,10 @@ exclusao.put('/delpessoa/:TB_PESSOA_ID', async (req, res) => {
     }
 });
 
-exclusao.put('/delseguindo/:TB_SEGUINDO_ID', async (req, res) => {
+exclusao.put('/delinteracao/:TB_INTERACAO', async (req, res) => {
     try {
-        const TB_SEGUINDO_ID = req.params.TB_SEGUINDO_ID;
-        const campo = await model.TB_SEGUINDO.findByPk(TB_SEGUINDO_ID);
+        const TB_INTERACAO = req.params.TB_INTERACAO;
+        const campo = await model.TB_INTERACAO.findByPk(TB_INTERACAO);
 
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
