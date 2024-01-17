@@ -50,6 +50,7 @@ module.exports = function (sequelize, DataTypes) {
     TB_PESSOA_ATIVO: DataTypes.BOOLEAN,
     TB_PESSOA_LATITUDE: DataTypes.DECIMAL,
     TB_PESSOA_LONGITUDE: DataTypes.DECIMAL,
+    TB_PESSOA_POSSUI_IMG: DataTypes.BOOLEAN,
     TB_PESSOA_STATUS: DataTypes.BOOLEAN,
   }, {
     freezeTableName: true,

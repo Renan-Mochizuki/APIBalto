@@ -120,6 +120,11 @@ module.exports = {
       TB_PESSOA_LONGITUDE: {
         type: Sequelize.DECIMAL
       },
+      TB_PESSOA_POSSUI_IMG: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       TB_PESSOA_STATUS: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

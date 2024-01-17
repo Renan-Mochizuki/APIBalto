@@ -37,12 +37,12 @@ selecaoID.get('/selinteracao/:TB_PESSOA_REMETENTE_ID', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             raw: true
@@ -66,12 +66,12 @@ selecaoID.get('/selavaliacao/:TB_PESSOA_AVALIADA_ID', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADORA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             raw: true
@@ -102,7 +102,7 @@ selecaoID.get('/selanimal/:TB_ANIMAL_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -130,12 +130,12 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
             raw: true
@@ -151,11 +151,13 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
             if (dadoNovo.TB_PESSOA_DESTINATARIO_ID == TB_PESSOA_IDD) {
                 dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_REMETENTE.TB_PESSOA_NOME_PERFIL"];
                 dadoNovo.TB_TIPO_ID = item["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
+                dadoNovo.TB_PESSOA_POSSUI_IMG = item["TB_PESSOA_REMETENTE.TB_PESSOA_POSSUI_IMG"];
                 dadoNovo.TB_PESSOA_ID = item["TB_PESSOA_REMETENTE_ID"];
                 dadoNovo.TB_CHAT_INICIADO = false;
             } else {
                 dadoNovo.TB_PESSOA_NOME_PERFIL = item["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
                 dadoNovo.TB_TIPO_ID = item["TB_PESSOA_DESTINATARIO.TB_TIPO_ID"];
+                dadoNovo.TB_PESSOA_POSSUI_IMG = item["TB_PESSOA_DESTINATARIO.TB_PESSOA_POSSUI_IMG"];
                 dadoNovo.TB_PESSOA_ID = item["TB_PESSOA_DESTINATARIO_ID"];
                 dadoNovo.TB_CHAT_INICIADO = true;
             }
@@ -164,6 +166,8 @@ selecaoID.get('/selchat/:TB_PESSOA_IDD', async (req, res) => {
             delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_PESSOA_NOME_PERFIL"];
             delete dadoNovo["TB_PESSOA_REMETENTE.TB_TIPO_ID"];
             delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_TIPO_ID"];
+            delete dadoNovo["TB_PESSOA_REMETENTE.TB_PESSOA_POSSUI_IMG"];
+            delete dadoNovo["TB_PESSOA_DESTINATARIO.TB_PESSOA_POSSUI_IMG"];
             delete dadoNovo["TB_PESSOA_REMETENTE_ID"];
             delete dadoNovo["TB_PESSOA_DESTINATARIO_ID"];
             return dadoNovo;
@@ -212,7 +216,7 @@ selecaoID.get('/selpontoalimentacao/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID','TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -271,7 +275,7 @@ selecaoID.get('/seltratamento/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME','TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -295,7 +299,7 @@ selecaoID.get('/selpostagem/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });

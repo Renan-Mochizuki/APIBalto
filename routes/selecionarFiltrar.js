@@ -46,12 +46,12 @@ selecaoFiltrar.post('/selinteracao/filtrar', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             order: [
@@ -83,12 +83,12 @@ selecaoFiltrar.post('/selavaliacao/filtrar', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADORA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             order: [
@@ -138,7 +138,7 @@ selecaoFiltrar.post('/selanimal/filtrar/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
             order: [
@@ -182,12 +182,12 @@ selecaoFiltrar.post('/selchat/filtrar', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             order: [
@@ -276,8 +276,8 @@ selecaoFiltrar.post('/selpontoalimentacao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -351,7 +351,7 @@ selecaoFiltrar.post('/selsolicitacao/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -380,7 +380,7 @@ selecaoFiltrar.post('/seltratamento/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -411,7 +411,7 @@ selecaoFiltrar.post('/selpostagem/filtrar', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
             order: [

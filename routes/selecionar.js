@@ -26,12 +26,12 @@ selecao.get('/selinteracao/', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_REMETENTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DESTINATARIO',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             order: [
@@ -53,12 +53,12 @@ selecao.get('/selavaliacao/', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_AVALIADORA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 }
             ],
             order: [
@@ -83,7 +83,7 @@ selecao.get('/selanimal/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
             order: [
@@ -139,7 +139,7 @@ selecao.get('/selpontoalimentacao/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_TIPO_ID', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -219,7 +219,7 @@ selecao.get('/selsolicitacao/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -236,7 +236,7 @@ selecao.get('/seltratamento/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_TIPO_ID', 'TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
@@ -257,7 +257,7 @@ selecao.get('/selpostagem/', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
             order: [
@@ -280,12 +280,12 @@ selecao.get('/seldenuncia/', async (req, res) => {
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DENUNCIANTE',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME', 'TB_PESSOA_POSSUI_IMG'],
                 },
                 {
                     model: model.TB_PESSOA,
                     as: 'TB_PESSOA_DENUNCIADA',
-                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL', 'TB_PESSOA_NOME', 'TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
