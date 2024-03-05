@@ -336,7 +336,7 @@ selecaoID.get('/selpostagemseguindo/:TB_PESSOA_ID', async (req, res) => {
             include: [
                 {
                     model: model.TB_PESSOA,
-                    attributes: ['TB_PESSOA_NOME_PERFIL'],
+                    attributes: ['TB_PESSOA_NOME_PERFIL','TB_PESSOA_POSSUI_IMG'],
                 },
             ],
         });
