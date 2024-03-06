@@ -6,15 +6,15 @@ Nessa API, que faz conexão com o banco de dados, o aplicativo pode fazer divers
 
 ## Tecnologias usadas 🖥️
 
-Nossa API foi desenvolvida utilizando **Node.js** e **Express**. 
+Nossa API foi desenvolvida utilizando **Node.js** e **Express** e foi hospedada com o **Vercel**. 
 
 A API faz uso do **Sequelize**, para comunicação e conexão com o banco de dados MySQL, **jsonwebtoken**, para identificação de usuário, **md5**, para ocultação de senha e **multer** para conversão das imagens enviadas pelo usuário.
 
 ## Features futuras 🔨
 
-Sistema de chat em tempo real utilizando Socket.io, sistema de limitação e verificação de token em cada ação do usuário, melhorias de segurança, melhorias na autenticação e melhorias nas rotas da API.
+Sistema de chat em tempo real utilizando Socket.io, limitação de ações do usuário, verificação de token em cada ação, melhorias de segurança, melhorias na autenticação e melhorias nas rotas da API.
 
-Obs.: O site da API serve apenas para consulta rápida dos dados no banco para os criadores enquanto o projeto é desenvolvido.
+Obs.: O site da API tem o intuito de apenas ajudar a serve consulta rápida no banco de dados enquanto o projeto é desenvolvido.
 
 ## Licença ⚖️
 
