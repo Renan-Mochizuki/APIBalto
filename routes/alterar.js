@@ -16,11 +16,7 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res)
         if (!campo) // Se não for encontrado o campo
             return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
-        let imageBuffer = undefined;
-        if (req.file) {
-            imageBuffer = req.file.buffer;
-        }
-        await campo.update({ // Atualizar os campos
+        const update = {
             TB_PESSOA_NOME,
             TB_PESSOA_NOME_PERFIL,
             TB_PESSOA_BIO,
@@ -51,12 +47,20 @@ alteracao.put('/altpessoa/:TB_PESSOA_ID', upload.single('img'), async (req, res)
             TB_PESSOA_CNPJ,
             TB_PESSOA_PIX,
             TB_PESSOA_LINK,
-            TB_PESSOA_IMG: imageBuffer,
             TB_PESSOA_ATIVO,
             TB_PESSOA_SOCKET_ID,
             TB_PESSOA_LATITUDE,
             TB_PESSOA_LONGITUDE,
-        });
+        }
+
+        let imageBuffer = undefined;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+            update.TB_PESSOA_IMG = imageBuffer;
+            update.TB_PESSOA_POSSUI_IMG = true;
+        }
+
+        await campo.update(update);
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
@@ -73,12 +77,7 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
         const campo = await model.TB_ANIMAL.findByPk(TB_ANIMAL_ID);
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
-        let imageBuffer = null;
-        if (req.file) {
-            imageBuffer = req.file.buffer;
-        }
-
-        await campo.update({
+        const update = {
             TB_ANIMAL_NOME,
             TB_ANIMAL_IDADE,
             TB_ANIMAL_IDADE_TIPO,
@@ -99,57 +98,93 @@ alteracao.put('/altanimal/:TB_ANIMAL_ID', upload.single('img'), async (req, res)
             TB_ANIMAL_CASTRADO,
             TB_ANIMAL_MICROCHIP,
             TB_ANIMAL_LOCAL_RESGATE,
-            TB_ANIMAL_IMG1: imageBuffer,
-            // TB_ANIMAL_IMG2,
-            // TB_ANIMAL_IMG3,
-            // TB_ANIMAL_IMG4,
-            // TB_ANIMAL_IMG5,
+        };
+
+        let imageBuffer = undefined;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+            update.TB_ANIMAL_IMG1 = imageBuffer;
+        }
+
+        await campo.update(update);
+
+        const arrayTemperamentos = TEMPERAMENTOS.split(',').map(Number);
+        const TemperamentosBanco = await model.TB_ANIMAL_TEMPERAMENTO.findAll({
+            where: {
+                TB_ANIMAL_ID
+            }
         });
+        // Adicionar novos temperamentos
+        for (const item of arrayTemperamentos) {
+            const encontrado = TemperamentosBanco.some(temp => temp.TB_TEMPERAMENTO_ID === item);
+            if (!encontrado) {
+                await model.TB_ANIMAL_TEMPERAMENTO.create({
+                    TB_ANIMAL_ID,
+                    TB_TEMPERAMENTO_ID: item
+                });
+            }
+        }
+        // Remover temperamentos não mais presentes
+        for (const item of TemperamentosBanco) {
+            const aindaPresente = arrayTemperamentos.includes(item.TB_TEMPERAMENTO_ID);
+            if (!aindaPresente) {
+                const campoParaSerApagado = await model.TB_ANIMAL_TEMPERAMENTO.findByPk(item.TB_ANIMAL_TEMPERAMENTO_ID);
+                await campoParaSerApagado.destroy();
+            }
+        }
 
-        // const TB_ANIMAL_IDD = campo.TB_ANIMAL_ID;
-        // const Selecionar = await model.TB_ANIMAL_TEMPERAMENTO.findAll({
-        //     where: {
-        //         TB_ANIMAL_ID: TB_ANIMAL_IDD,
-        //     },
-        // });
+        const arraySituacoes = SITUACOES.split(',').map(Number);
+        const SituacoesBanco = await model.TB_ANIMAL_SITUACAO.findAll({
+            where: {
+                TB_ANIMAL_ID
+            }
+        });
+        // Adicionar novas situações
+        for (const item of arraySituacoes) {
+            const encontrado = SituacoesBanco.some(temp => temp.TB_SITUACAO_ID === item);
+            if (!encontrado) {
+                await model.TB_ANIMAL_SITUACAO.create({
+                    TB_ANIMAL_ID,
+                    TB_SITUACAO_ID: item
+                });
+            }
+        }
+        // Remover situações não mais presentes
+        for (const item of SituacoesBanco) {
+            const aindaPresente = arraySituacoes.includes(item.TB_SITUACAO_ID);
+            if (!aindaPresente) {
+                const campoParaSerApagado = await model.TB_ANIMAL_SITUACAO.findByPk(item.TB_ANIMAL_SITUACAO_ID);
+                await campoParaSerApagado.destroy();
+            }
+        }
 
-        // if (TEMPERAMENTOS) {
-        //     const arrayTemperamentos = TEMPERAMENTOS.split(',').map(Number);
-        //     arrayTemperamentos.map(async item => {
-        //         if (Selecionar.length == 0) {
-        //             await model.TB_ANIMAL_TEMPERAMENTO.create({
-        //                 TB_ANIMAL_ID: TB_ANIMAL_IDD,
-        //                 TB_TEMPERAMENTO_ID: item,
-        //             });
-        //         }
-        //     })
-        // }
-        // if (SITUACOES) {
-        //     const arraySituacoes = SITUACOES.split(',').map(Number);
-        //     arraySituacoes.map(async item => {
-        //         await model.TB_ANIMAL_SITUACAO.create({
-        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
-        //             TB_SITUACAO_ID: item,
-        //         });
-        //     })
-        // }
-        // if (TRAUMAS) {
-        //     const arrayTraumas = TRAUMAS.split(',').map(Number);
-        //     arrayTraumas.map(async item => {
-        //         await model.TB_ANIMAL_TRAUMA.create({
-        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
-        //             TB_TRAUMA_ID: item,
-        //         });
-        //     })
-        // }
-        // if (CORES) {
-        //     CORES.map(async item => {
-        //         await model.TB_ANIMAL_COR.create({
-        //             TB_ANIMAL_ID: TB_ANIMAL_IDD,
-        //             TB_COR_ID: item,
-        //         });
-        //     })
-        // }
+        let arrayTraumas = [];
+        if (TRAUMAS.length > 0) {
+            arrayTraumas = TRAUMAS.split(',').map(Number);
+        }
+        const TraumasBanco = await model.TB_ANIMAL_TRAUMA.findAll({
+            where: {
+                TB_ANIMAL_ID
+            }
+        });
+        // Adicionar novos traumas
+        for (const item of arrayTraumas) {
+            const encontrado = TraumasBanco.some(temp => temp.TB_TRAUMA_ID === item);
+            if (!encontrado) {
+                await model.TB_ANIMAL_TRAUMA.create({
+                    TB_ANIMAL_ID,
+                    TB_TRAUMA_ID: item
+                });
+            }
+        }
+        // Remover traumas não mais presentes
+        for (const item of TraumasBanco) {
+            const aindaPresente = arrayTraumas.includes(item.TB_TRAUMA_ID);
+            if (!aindaPresente) {
+                const campoParaSerApagado = await model.TB_ANIMAL_TRAUMA.findByPk(item.TB_ANIMAL_TRAUMA_ID);
+                await campoParaSerApagado.destroy();
+            }
+        }
 
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
@@ -184,16 +219,19 @@ alteracao.put('/altmensagem/:TB_MENSAGEM_ID', upload.single('img'), async (req, 
         const campo = await model.TB_MENSAGEM.findByPk(TB_MENSAGEM_ID);
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
-        let imageBuffer = null;
-        if (req.file) {
-            imageBuffer = req.file.buffer;
-        }
-        await campo.update({
-            TB_MENSAGEM_IMG: imageBuffer,
+        const update = {
             TB_MENSAGEM_TEXTO_ALTERADO,
             TB_PESSOA_REMENTE_ID,
             TB_PESSOA_DESTINARIO_ID
-        });
+        }
+
+        let imageBuffer = undefined;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+            update.TB_MENSAGEM_IMG = imageBuffer;
+        }
+
+        await campo.update(update);
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
@@ -209,15 +247,17 @@ alteracao.put('/altpontoalimentacao/:TB_PONTO_ALIMENTACAO_ID', upload.single('im
         const campo = await model.TB_PONTO_ALIMENTACAO.findByPk(TB_PONTO_ALIMENTACAO_ID);
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
-        let imageBuffer = null;
+        const update = {
+            TB_PONTO_ALIMENTACAO_LATITUDE,
+            TB_PONTO_ALIMENTACAO_LONGITUDE
+        }
+
+        let imageBuffer = undefined;
         if (req.file) {
             imageBuffer = req.file.buffer;
+            update.TB_PONTO_ALIMENTACAO_IMG = imageBuffer;
         }
-        await campo.update({
-            TB_PONTO_ALIMENTACAO_LATITUDE,
-            TB_PONTO_ALIMENTACAO_LONGITUDE,
-            TB_PONTO_ALIMENTACAO_IMG: imageBuffer
-        });
+        await campo.update(update);
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);
@@ -252,21 +292,19 @@ alteracao.put('/altpostagem/:TB_POSTAGEM_ID', upload.single('img'), async (req, 
         const campo = await model.TB_POSTAGEM.findByPk(TB_POSTAGEM_ID);
         if (!campo) return res.status(404).json({ message: "Campo não encontrado", error: "Campo não encontrado" });
 
-        let imageBuffer = null;
-        if (req.file) {
-            imageBuffer = req.file.buffer;
-        }
-        await campo.update({
+        const update = {
             TB_PESSOA_ID,
-            TB_POSTAGEM_IMG1: imageBuffer,
-            // TB_POSTAGEM_IMG2,
-            // TB_POSTAGEM_IMG3,
-            // TB_POSTAGEM_IMG4,
-            // TB_POSTAGEM_IMG5,
-            // TB_POSTAGEM_VIDEO,
             TB_POSTAGEM_POSSUI_IMG,
             TB_POSTAGEM_TEXTO_ALTERADO
-        });
+        }
+
+        let imageBuffer = undefined;
+        if (req.file) {
+            imageBuffer = req.file.buffer;
+            update.TB_POSTAGEM_IMG1 = imageBuffer;
+        }
+
+        await campo.update(update);
         return res.status(200).json({ message: "Campo atualizado com sucesso" });
     } catch (error) {
         console.error(error);

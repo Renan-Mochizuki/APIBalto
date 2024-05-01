@@ -116,9 +116,6 @@ selecao.get('/selchat/', async (req, res) => {
 selecao.get('/selmensagem/', async (req, res) => {
     try {
         const Selecionar = await model.TB_MENSAGEM.findAll({
-            where: {
-                TB_MENSAGEM_STATUS: true,
-            },
             attributes: { exclude: ['TB_MENSAGEM_IMG'] }
         });
 
