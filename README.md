@@ -4,6 +4,8 @@ API-REST para o aplicativo Balto-PetGate, veja o repositório do aplicativo [aqu
 
 Nessa API, que faz conexão com o banco de dados, o aplicativo pode fazer diversas requisições de cadastro, consulta, alteração e remoção de dados, além de contar com um sistema de autenticação.
 
+Veja a diagramação do projeto [aqui](https://github.com/sandycavalcanti/BaltoPetGate/blob/main/README.md#diagrama%C3%A7%C3%A3o-).
+
 ## Tecnologias usadas 🖥️
 
 Nossa API foi desenvolvida utilizando **Node.js** e **Express** e foi hospedada com o **Vercel**. 
@@ -14,7 +16,7 @@ A API faz uso do **Sequelize**, para comunicação e conexão com o banco de dad
 
 Sistema de chat em tempo real utilizando Socket.io, limitação de ações do usuário, verificação de token em cada ação, melhorias de segurança, melhorias na autenticação e melhorias nas rotas da API.
 
-Obs.: O site da API tem o intuito de apenas ajudar a serve consulta rápida no banco de dados enquanto o projeto é desenvolvido.
+Obs.: O site da API tem o intuito de apenas ajudar na consulta rápida no banco de dados enquanto o projeto é desenvolvido.
 
 ## Licença ⚖️
 
