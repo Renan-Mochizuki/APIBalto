@@ -4,6 +4,8 @@ API-REST para o aplicativo Balto-PetGate, veja o repositório do aplicativo [aqu
 
 Nessa API, que faz conexão com o banco de dados, o aplicativo pode fazer diversas requisições de cadastro, consulta, alteração e remoção de dados, além de contar com um sistema de autenticação.
 
+### Diagramação
+
 Veja a diagramação do projeto [aqui](https://github.com/sandycavalcanti/BaltoPetGate/blob/main/README.md#diagrama%C3%A7%C3%A3o-).
 
 ## Tecnologias usadas 🖥️
